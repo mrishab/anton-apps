@@ -32,7 +32,26 @@ services:
     volumes:
       - samba:/home/mrishab
 
+  nexus:
+    hostname: nexus
+    image: sonatype/nexus3
+    ports:
+      - 8081:8081
+    volumes:
+      - nexus-data:/nexus-data
+
+  registry:
+    hostname: registry
+    image: registry:2
+    ports:
+      - 5000:5000
+    restart: always
+    volumes:
+      - registry-data:/var/lib/registry
+
 volumes:
   plex_config:
   jenkins_home:
   samba:
+  nexus-data:
+  registry-data:
