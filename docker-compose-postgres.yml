@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:9.6.20-alpine
+    environment:
+      # PG Super User
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+      # PG: Nextcloud
+      NEXTCLOUD_USER: ${NC_USERNAME}
+      NEXTCLOUD_PASSWORD: ${NC_PASSWORD}
+      NEXTCLOUD_DB: ${NC_DATABASE}
+    ports:
+      - ${PG_PORT}:5432
+    restart: always
+    volumes:
+      - pgdata:/var/lib/registry
+      - ./db-init-scripts:/docker-entrypoint-initdb.d
+volumes:
+  pgdata:

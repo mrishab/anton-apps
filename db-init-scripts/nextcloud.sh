@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+
+psql -d postgres -U postgres -c "CREATE USER $NEXTCLOUD_USER PASSWORD '$NEXTCLOUD_PASSWORD';"
+psql -d postgres -U postgres -c "CREATE DATABASE $NEXTCLOUD_DB WITH OWNER $NEXTCLOUD_USER;"
+psql -d postgres -U postgres -c "REVOKE CONNECT ON DATABASE $NEXTCLOUD_DB FROM PUBLIC;"
+psql -d postgres -U postgres -c "GRANT CONNECT ON DATABASE $NEXTCLOUD_DB TO $NEXTCLOUD_USER WITH GRANT OPTION;"
+psql -d postgres -U postgres -c "GRANT CREATE ON DATABASE $NEXTCLOUD_DB TO $NEXTCLOUD_USER WITH GRANT OPTION;"
+psql -d postgres -U postgres -c "ALTER ROLE $NEXTCLOUD_USER WITH CREATEROLE;"
