@@ -45,6 +45,7 @@ start_all:
 	make start APP=jenkins
 	make start APP=nextcloud
 	make start APP=nexus
+	make start APP=pgadmin
 	make start APP=plex
 	make start APP=registry
 
@@ -52,6 +53,7 @@ stop_all:
 	make stop APP=jenkins
 	make stop APP=nextcloud
 	make stop APP=nexus
+	make stop APP=pgadmin
 	make stop APP=plex
 	make stop APP=registry
 
@@ -59,6 +61,7 @@ restart_all:
 	make restart APP=jenkins
 	make restart APP=nextcloud
 	make restart APP=nexus
+	make restart APP=pgadmin
 	make restart APP=plex
 	make restart APP=registry
 
@@ -66,6 +69,7 @@ clean_all:
 	make clean APP=jenkins
 	make clean APP=nextcloud
 	make clean APP=nexus
+	make clean APP=pgadmin
 	make clean APP=plex
 	make clean APP=registry
 
@@ -76,6 +80,7 @@ pack_all:
 	make pack APP=jenkins
 	make pack APP=nextcloud
 	make pack APP=nexus
+	make pack APP=pgadmin
 	make pack APP=plex
 	make pack APP=registry
 
