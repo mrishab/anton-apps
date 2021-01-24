@@ -10,7 +10,4 @@ services:
     environment:
       - JAVA_OPTS=-Duser.timezone=${JENKINS_TIMEZOME}
     volumes:
-      - jenkins_home:/var/jenkins_home
-
-volumes:
-  jenkins_home:
+      - ${JENKINS_MOUNT_DIR}:/var/jenkins_home

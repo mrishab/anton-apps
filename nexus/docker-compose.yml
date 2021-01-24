@@ -7,6 +7,4 @@ services:
     ports:
       - ${REGISTRY_WEB_PORT}:8081
     volumes:
-      - nexus-data:/nexus-data
-volumes:
-  nexus-data:
+      - ${REGISTRY_MOUNT_DIR}:/nexus-data
