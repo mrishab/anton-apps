@@ -29,7 +29,7 @@ deploy:
 
 upload:
 	ssh ${USERNAME}@${HOST} "mkdir -p ${HOST_APP_DIR}/${APP}"
-	rsync -a ${TARGET}/${APP}/.??* ${USERNAME}@${HOST}:${HOST_APP_DIR}/${APP}
+	rsync -a ${TARGET}/${APP}/ ${USERNAME}@${HOST}:${HOST_APP_DIR}/${APP}/
 
 restart: stop start
 
