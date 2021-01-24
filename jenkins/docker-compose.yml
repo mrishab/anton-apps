@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  jenkins:
+    hostname: jenkins
+    image: jenkins/jenkins:lts
+    ports:
+      - ${JENKINS_HTTP_PORT}:8080
+      - ${JENKINS_SLAVE_PORT}:50000
+    environment:
+      - JAVA_OPTS=-Duser.timezone=${JENKINS_TIMEZOME}
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    container_name: anton_jenkins
+
+volumes:
+  jenkins_home:
