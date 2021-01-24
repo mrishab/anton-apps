@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  registry:
+    hostname: registry
+    image: registry:2
+    ports:
+      - ${REGISTRY_PORT}:5000
+    restart: always
+    volumes:
+      - ${REGISTRY_MOUNT_DIR}:/var/lib/registry
