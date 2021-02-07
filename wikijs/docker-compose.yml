@@ -3,6 +3,7 @@ version: '3'
 services:
   wikijs:
     image: requarks/wiki:2
+    restart: unless-stopped
     ports:
       - ${WIKIJS_WEB_PORT}:3000
     environment:

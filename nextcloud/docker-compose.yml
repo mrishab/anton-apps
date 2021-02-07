@@ -17,7 +17,7 @@ services:
       NEXTCLOUD_TRUSTED_DOMAINS: ${NC_TRUSTED_DOMAINS}
       # Reverse Proxy Config
       OVERWRITEPROTOCOL: https
-    restart: always
+    restart: unless-stopped
     volumes:
       - ${NC_MOUNT_DIR}:/var/www/html
     depends_on: 
@@ -34,7 +34,7 @@ services:
       NEXTCLOUD_DB: ${NC_DATABASE}
       NEXTCLOUD_USER: ${NC_USERNAME}
       NEXTCLOUD_PASSWORD: ${NC_PASSWORD}
-    restart: always
+    restart: unless-stopped
     volumes:
       - ${PG_MOUNT_DIR}:/var/lib/postgresql/data
       - ./db-init-scripts:/docker-entrypoint-initdb.d

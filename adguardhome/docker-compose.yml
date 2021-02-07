@@ -3,6 +3,7 @@ version: '3'
 services:
   adguardhome:
     image: adguard/adguardhome:edge
+    restart: unless-stopped
     ports:
     volumes:
       - ${ADGUARD_WORK_MOUNT_DIR}:/opt/adguardhome/work

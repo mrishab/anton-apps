@@ -5,6 +5,7 @@ services:
     hostname: plex
     network_mode: host
     image: plexinc/pms-docker
+    restart: unless-stopped
     environment:
       TZ: ${PLEX_TIMEZONE}
       PLEX_CLAIM: ${PLEX_CLAIM}
