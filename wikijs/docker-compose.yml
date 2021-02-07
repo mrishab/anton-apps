@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  wikijs:
+    image: requarks/wiki:2
+    ports:
+      - ${WIKIJS_WEB_PORT}:3000
+    environment:
+      DB_TYPE: ${WIKIJS_DB_TYPE}
+      DB_HOST: ${WIKIJS_DB_HOST} 
+      DB_PORT: ${WIKIJS_DB_PORT}
+      DB_NAME: ${WIKIJS_DB_NAME}
+      DB_USER: ${WIKIJS_DB_USER}
+      DB_PASS: ${WIKIJS_DB_PASS}
+    depends_on: 
+      - postgres
+
+  postgres:
+    image: postgres:9.6.20-alpine
+    environment:
+      # PG Super User
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+      # PG: WikiJS
+      WIKIJS_DB_NAME: ${WIKIJS_DB_NAME}
+      WIKIJS_DB_USER: ${WIKIJS_DB_USER}
+      WIKIJS_DB_PASS: ${WIKIJS_DB_PASS}
+    restart: unless-stopped
+    volumes:
+      - ${PG_MOUNT_DIR}:/var/lib/postgresql/data
+      - ./db-init-scripts:/docker-entrypoint-initdb.d
