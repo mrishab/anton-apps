@@ -15,3 +15,8 @@ chown -R 5050:5050 $HOST_DIR/pgadmin
 mkdir -p $HOST_DIR/nexus/
 rm -rf $HOST_DIR/nexus/*
 chown -R 200:200 $HOST_DIR/nexus
+
+# Configure CodeServer folder permissions
+mkdir -p $HOST_DIR/codeserver
+rm -rf $HOST_DIR/codeserver/*
+chown -R 2311:2311 $HOST_DIR/codeserver

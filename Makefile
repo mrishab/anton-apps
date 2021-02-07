@@ -1,7 +1,7 @@
 TARGET := ./dist
 HOST_APP_DIR := /var/server/anton
 
-APPS := nexus jenkins nextcloud pgadmin registry plex adguardhome wikijs
+APPS := nexus jenkins nextcloud pgadmin registry plex adguardhome wikijs codeserver
 
 start:
 	for app in $(APPS) ; do \

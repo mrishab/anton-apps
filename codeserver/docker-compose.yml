@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  codeserver:
+    image: codercom/code-server:latest
+    restart: unless-stopped
+    user: "${CODESERVER_UID}:${CODESERVER_GID}"
+    environment:
+      DOCKER_USER: ${CODESERVER_USER}
+    volumes:
+      - ${CODESERVER_MOUNT_DIR}:/home/coder
+    ports:
+      - ${CODESERVER_WEB_UI_PORT}:8080
