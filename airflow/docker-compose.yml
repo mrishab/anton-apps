@@ -1,0 +1,75 @@
+version: '3'
+
+services:
+  airflow_setup:
+    image: apache/airflow:2.0.0
+    entrypoint: []
+    command: >
+      bash -c ' 
+        airflow db upgrade &&
+        airflow users create --username "${AIRFLOW_ADMIN_USER}" --firstname "${AIRFLOW_ADMIN_FIRSTNAME}" --lastname "${AIRFLOW_ADMIN_LASTNAME}" --role "${AIRFLOW_ADMIN_ROLE}" --email "${AIRFLOW_ADMIN_EMAIL}" --password "${AIRFLOW_ADMIN_PASS}"
+      '
+    environment:
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: ${AIRFLOW_DB_SCHEME}://${AIRFLOW_DB_USER}:${AIRFLOW_DB_PASS}@${AIRFLOW_DB_HOST}:${AIRFLOW_DB_PORT}/${AIRFLOW_DB_NAME}
+      AIRFLOW__WEBSERVER__BASE_URL: ${AIRFLOW_PUBLIC_URL}
+      # Admin Configuration
+      AIRFLOW_ADMIN_USER: ${AIRFLOW_ADMIN_USER}
+      AIRFLOW_ADMIN_FIRSTNAME: ${AIRFLOW_ADMIN_FIRSTNAME}
+      AIRFLOW_ADMIN_LASTNAME: ${AIRFLOW_ADMIN_LASTNAME}
+      AIRFLOW_ADMIN_ROLE: ${AIRFLOW_ADMIN_ROLE}
+      AIRFLOW_ADMIN_EMAIL: ${AIRFLOW_ADMIN_EMAIL}
+      AIRFLOW_ADMIN_PASS: ${AIRFLOW_ADMIN_PASS}
+    volumes:
+      - ${AIRFLOW_MOUNT_DIR_PLUGINS}:/opt/airflow/plugins
+      - ${AIRFLOW_MOUNT_DIR_DAGS}:/opt/airflow/dags
+      - ${AIRFLOW_MOUNT_DIR_LOGS}:/opt/airflow/logs
+
+  airflow_webserver:
+    image: apache/airflow:2.0.0
+    restart: unless-stopped
+    command: ['webserver']
+    environment:
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: ${AIRFLOW_DB_SCHEME}://${AIRFLOW_DB_USER}:${AIRFLOW_DB_PASS}@${AIRFLOW_DB_HOST}:${AIRFLOW_DB_PORT}/${AIRFLOW_DB_NAME}
+      AIRFLOW__WEBSERVER__BASE_URL: ${AIRFLOW_PUBLIC_URL}
+      AIRFLOW__CORE__EXECUTOR: ${AIRFLOW_CORE_EXECUTOR}
+    ports:
+      - ${AIRFLOW_WEB_PORT}:8080
+    volumes:
+      - ${AIRFLOW_MOUNT_DIR_PLUGINS}:/opt/airflow/plugins
+      - ${AIRFLOW_MOUNT_DIR_DAGS}:/opt/airflow/dags
+      - ${AIRFLOW_MOUNT_DIR_LOGS}:/opt/airflow/logs
+    depends_on: 
+      - postgres
+      - airflow_setup
+
+  airflow_scheduler:
+    image: apache/airflow:2.0.0
+    restart: unless-stopped
+    command: ['scheduler']
+    environment:
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: ${AIRFLOW_DB_SCHEME}://${AIRFLOW_DB_USER}:${AIRFLOW_DB_PASS}@${AIRFLOW_DB_HOST}:${AIRFLOW_DB_PORT}/${AIRFLOW_DB_NAME}
+      AIRFLOW__WEBSERVER__BASE_URL: ${AIRFLOW_PUBLIC_URL}
+      AIRFLOW__CORE__EXECUTOR: ${AIRFLOW_CORE_EXECUTOR}
+    volumes:
+      - ${AIRFLOW_MOUNT_DIR_PLUGINS}:/opt/airflow/plugins
+      - ${AIRFLOW_MOUNT_DIR_DAGS}:/opt/airflow/dags
+      - ${AIRFLOW_MOUNT_DIR_LOGS}:/opt/airflow/logs
+    depends_on: 
+      - postgres
+      - airflow_setup
+
+  postgres:
+    image: postgres:9.6.20-alpine
+    restart: unless-stopped
+    environment:
+      # PG Super User
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+      # PG: Airflow
+      AIRFLOW_DB_NAME: ${AIRFLOW_DB_NAME}
+      AIRFLOW_DB_USER: ${AIRFLOW_DB_USER}
+      AIRFLOW_DB_PASS: ${AIRFLOW_DB_PASS}
+    volumes:
+      - ${PG_MOUNT_DIR}:/var/lib/postgresql/data
+      - ./db-init-scripts:/docker-entrypoint-initdb.d

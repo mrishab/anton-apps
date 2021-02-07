@@ -1,4 +1,4 @@
-HOST_DIR=/mnt/external_hdd/
+HOST_DIR=$HOST_DIR/
 HOST_USER=mrishab
 
 # Configure Jenkins folder Permissions
@@ -20,3 +20,15 @@ chown -R 200:200 $HOST_DIR/nexus
 mkdir -p $HOST_DIR/codeserver
 rm -rf $HOST_DIR/codeserver/*
 chown -R 2311:2311 $HOST_DIR/codeserver
+
+# Configure Airflow folder permissions 
+mkdir -p $HOST_DIR/airflow/app/plugins
+rm -rf $HOST_DIR/airflow/app/plugins/*
+
+mkdir -p $HOST_DIR/airflow/app/dags
+rm -rf $HOST_DIR/airflow/app/dags/*
+
+mkdir -p $HOST_DIR/airflow/app/logs
+rm -rf $HOST_DIR/airflow/app/logs/*
+
+chown -R 50000:50000 $HOST_DIR/airflow/app/
