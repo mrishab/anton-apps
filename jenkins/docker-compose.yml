@@ -12,3 +12,12 @@ services:
       - JAVA_OPTS=-Duser.timezone=${JENKINS_TIMEZOME}
     volumes:
       - ${JENKINS_MOUNT_DIR}:/var/jenkins_home
+
+  socat:
+    image: alpine/socat
+    restart: unless-stopped
+    ports:
+      - ${SOCAT_HOST_PORT}:2375
+    volumes:
+      - ${SOCAT_HOST_DOCKER_SOCK}:/var/run/docker.sock
+    command: ['tcp-listen:2375,fork,reuseaddr', 'unix-connect:/var/run/docker.sock']
