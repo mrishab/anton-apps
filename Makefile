@@ -1,7 +1,7 @@
 TARGET := ./dist
 HOST_APP_DIR := /var/server/anton
 
-APPS := nexus jenkins nextcloud pgadmin registry plex adguardhome wikijs codeserver airflow
+APPS := nexus jenkins nextcloud pgadmin registry plex adguardhome wikijs codeserver airflow mediaserver
 
 start:
 	for app in $(APPS) ; do \

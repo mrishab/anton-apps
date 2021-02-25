@@ -32,3 +32,15 @@ mkdir -p $HOST_DIR/airflow/app/logs
 rm -rf $HOST_DIR/airflow/app/logs/*
 
 chown -R 50000:50000 $HOST_DIR/airflow/app/
+
+# MediaServer
+mkdir -p $HOST_DIR/mediaserver/downloads/torrents
+rm -rf $HOST_DIR/mediaserver/downloads/torrents/*
+
+mkdir -p $HOST_DIR/mediaserver/downloads/movies
+rm -rf $HOST_DIR/mediaserver/downloads/movies/*
+
+mkdir -p $HOST_DIR/mediaserver/downloads/tv
+rm -rf $HOST_DIR/mediaserver/downloads/tv/*
+
+chown -R 201:201 $HOST_DIR/mediaserver/

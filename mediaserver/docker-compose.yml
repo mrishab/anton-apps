@@ -1,0 +1,90 @@
+version: '3'
+
+services:
+  deluge:
+    image: ghcr.io/linuxserver/deluge
+    container_name: deluge
+    environment:
+      PUID: ${MEDIA_PUID}
+      PGID: ${MEDIA_PGID}
+      TZ: ${HOST_TZ}
+      DELUGE_LOGLEVEL: ${DELUGE_LOGLEVEL}
+    volumes:
+      - ${DELUGE_CONFIG_MOUNT_DIR}:/config
+      - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
+    ports:
+      - ${DELUGE_WEB_UI_PORT}:8112
+    restart: unless-stopped
+
+  jackett:
+    image: ghcr.io/linuxserver/jackett
+    container_name: jackett
+    environment:
+      PUID: ${MEDIA_PUID}
+      PGID: ${MEDIA_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${JACKETT_CONFIG_MOUNT_DIR}:/config
+      - ${TORRENT_DOWNLOADS_MOUNT_DIR}:/downloads
+    ports:
+      - ${JACKETT_WEB_UI_PORT}:9117
+    restart: unless-stopped
+
+  nzbget:
+    image: ghcr.io/linuxserver/nzbget
+    container_name: nzbget
+    environment:
+      PUID: ${MEDIA_PUID}
+      PGID: ${MEDIA_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${NZBGET_CONFIG_MOUNT_DIR}:/config
+      - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
+    ports:
+      - ${NZBGET_WEB_UI_PORT}:6789
+    restart: unless-stopped
+
+  sonarr:
+    image: ghcr.io/linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      PUID: ${MEDIA_PUID}
+      PGID: ${MEDIA_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${SONARR_CONFIG_MOUNT_DIR}:/config
+      - ${MEDIA_COMPLETE_TV_MOUNT_DIR}:/tv
+      - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
+    ports:
+      - ${SONARR_WEB_UI_PORT}:8989
+    restart: unless-stopped
+
+  radarr:
+    image: ghcr.io/linuxserver/radarr
+    container_name: radarr
+    environment:
+      PUID: ${MEDIA_PUID}
+      PGID: ${MEDIA_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${RADARR_CONFIG_MOUNT_DIR}:/config
+      - ${MEDIA_COMPLETE_MOVIES_MOUNT_DIR}:/movies
+      - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
+    ports:
+      - ${RADARR_WEB_UI_PORT}:7878
+    restart: unless-stopped
+
+  bazarr:
+    image: ghcr.io/linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      PUID: ${MEDIA_PUID}
+      PGID: ${MEDIA_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${BAZARR_CONFIG_MOUNT_DIR}:/config
+      - ${MEDIA_COMPLETE_MOVIES_MOUNT_DIR}:/movies
+      - ${MEDIA_COMPLETE_TV_MOUNT_DIR}:/tv
+    ports:
+      - ${BAZARR_WEB_UI_PORT}:6767
+    restart: unless-stopped
