@@ -53,7 +53,7 @@ services:
       TZ: ${HOST_TZ}
     volumes:
       - ${SONARR_CONFIG_MOUNT_DIR}:/config
-      - ${MEDIA_COMPLETE_TV_MOUNT_DIR}:/tv
+      - ${MEDIA_TV_MOUNT_DIR}:/tv
       - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
     ports:
       - ${SONARR_WEB_UI_PORT}:8989
@@ -68,7 +68,7 @@ services:
       TZ: ${HOST_TZ}
     volumes:
       - ${RADARR_CONFIG_MOUNT_DIR}:/config
-      - ${MEDIA_COMPLETE_MOVIES_MOUNT_DIR}:/movies
+      - ${MEDIA_MOVIES_MOUNT_DIR}:/movies
       - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
     ports:
       - ${RADARR_WEB_UI_PORT}:7878
@@ -83,8 +83,24 @@ services:
       TZ: ${HOST_TZ}
     volumes:
       - ${BAZARR_CONFIG_MOUNT_DIR}:/config
-      - ${MEDIA_COMPLETE_MOVIES_MOUNT_DIR}:/movies
-      - ${MEDIA_COMPLETE_TV_MOUNT_DIR}:/tv
+      - ${MEDIA_MOVIES_MOUNT_DIR}:/movies
+      - ${MEDIA_TV_MOUNT_DIR}:/tv
     ports:
       - ${BAZARR_WEB_UI_PORT}:6767
+    restart: unless-stopped
+
+  plex:
+    image: plexinc/pms-docker
+    container_name: plex
+    environment:
+      PLEX_UID: ${MEDIA_PUID}
+      PLEX_GID: ${MEDIA_PGID}
+      ALLOWED_NETWORKS: ${PLEX_ALLOWED_NETWORKS}
+    volumes:
+      - ${PLEX_CONFIG_MOUNT_DIR}:/config
+      - ${PLEX_TRANSCODE_MOUNT_DIR}:/transcode
+      - ${MEDIA_MOVIES_MOUNT_DIR}:/movies
+      - ${MEDIA_TV_MOUNT_DIR}:/tv
+    ports:
+      - ${PLEX_WEB_UI_PORT}:32400
     restart: unless-stopped
