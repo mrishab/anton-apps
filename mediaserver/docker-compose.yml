@@ -1,9 +1,27 @@
 version: '3'
 
 services:
+  vpn:
+    image: dperson/openvpn-client:latest
+    container_name: deluge_vpn
+    command: "-v ${REMOTE_SERVER};${REMOTE_USERNAME};${REMOTE_PASSWORD};${REMOTE_PORT}"
+    cap_add:
+      - net_admin
+    security_opt:
+      - label:disable
+    environment:
+      TZ: ${HOST_TZ}
+    ports:
+      - ${DELUGE_WEB_UI_PORT}:8112
+    volumes:
+      - /dev/net:/dev/net:z # tun device
+      - ./services/deluge_vpn/vpn/ca.crt:/vpn/ca.crt
+    restart: unless-stopped
+
   deluge:
     image: ghcr.io/linuxserver/deluge
     container_name: deluge
+    network_mode: service:vpn
     environment:
       PUID: ${MEDIA_PUID}
       PGID: ${MEDIA_PGID}
@@ -12,9 +30,9 @@ services:
     volumes:
       - ${DELUGE_CONFIG_MOUNT_DIR}:/config
       - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
-    ports:
-      - ${DELUGE_WEB_UI_PORT}:8112
     restart: unless-stopped
+    depends_on:
+      - vpn
 
   jackett:
     image: ghcr.io/linuxserver/jackett
