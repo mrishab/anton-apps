@@ -3,14 +3,15 @@ version: '3'
 services:
   nextcloud:
     image: nextcloud:stable-apache
+    container_name: nextcloud
     ports:
       - ${NC_PORT}:80
     environment:
       # DB Config
-      POSTGRES_DB: ${NC_DATABASE}
-      POSTGRES_USER: ${NC_USERNAME}
-      POSTGRES_PASSWORD: ${NC_PASSWORD}
-      POSTGRES_HOST: postgres
+      # POSTGRES_DB: ${NC_DATABASE}
+      # POSTGRES_USER: ${NC_USERNAME}
+      # POSTGRES_PASSWORD: ${NC_PASSWORD}
+      # POSTGRES_HOST: postgres
       # App Config
       NEXTCLOUD_ADMIN_USER: ${NC_ADMIN_USERNAME}
       NEXTCLOUD_ADMIN_PASSWORD: ${NC_ADMIN_PASSWORD}
@@ -25,6 +26,7 @@ services:
 
   postgres:
     image: postgres:9.6.20-alpine
+    container_name: nextcloud_postgres
     environment:
       # PG Super User
       POSTGRES_USER: ${PG_USERNAME}

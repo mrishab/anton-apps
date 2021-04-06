@@ -3,6 +3,7 @@ version: '3'
 services:
   airflow_setup:
     image: apache/airflow:2.0.0
+    container_name: airflow_setup
     entrypoint: []
     command: >
       bash -c ' 
@@ -26,6 +27,7 @@ services:
 
   airflow_webserver:
     image: apache/airflow:2.0.0
+    container_name: airflow_webserver
     restart: unless-stopped
     command: ['webserver']
     environment:
@@ -44,6 +46,7 @@ services:
 
   airflow_scheduler:
     image: apache/airflow:2.0.0
+    container_name: airflow_scheduler
     restart: unless-stopped
     command: ['scheduler']
     environment:
@@ -60,6 +63,7 @@ services:
 
   postgres:
     image: postgres:9.6.20-alpine
+    container_name: airflow_postgres
     restart: unless-stopped
     environment:
       # PG Super User

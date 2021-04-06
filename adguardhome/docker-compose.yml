@@ -3,6 +3,7 @@ version: '3'
 services:
   adguardhome:
     image: adguard/adguardhome:edge
+    container_name: adguard
     restart: unless-stopped
     ports:
     volumes:

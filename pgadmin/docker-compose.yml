@@ -3,6 +3,7 @@ version: '3'
 services:
   pg-admin:
     image: dpage/pgadmin4
+    container_name: pgadmin
     restart: unless-stopped
     ports:
       - ${PGADMIN_WEB_PORT}:443

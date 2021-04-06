@@ -3,6 +3,7 @@ version: '3'
 services:
   registry:
     hostname: registry
+    container_name: registry
     image: registry:2
     ports:
       - ${REGISTRY_PORT}:5000

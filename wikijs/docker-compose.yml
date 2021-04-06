@@ -3,6 +3,7 @@ version: '3'
 services:
   wikijs:
     image: requarks/wiki:2
+    container_name: wikijs
     restart: unless-stopped
     ports:
       - ${WIKIJS_WEB_PORT}:3000
@@ -18,6 +19,7 @@ services:
 
   postgres:
     image: postgres:9.6.20-alpine
+    container_name: wikijs_postgres
     environment:
       # PG Super User
       POSTGRES_USER: ${PG_USERNAME}
