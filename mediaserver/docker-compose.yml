@@ -4,7 +4,7 @@ services:
   vpn:
     image: dperson/openvpn-client:latest
     container_name: deluge_vpn
-    command: "-v ${REMOTE_SERVER};${REMOTE_USERNAME};${REMOTE_PASSWORD};${REMOTE_PORT}"
+    command: "-a ${REMOTE_USERNAME};${REMOTE_PASSWORD}"
     cap_add:
       - net_admin
     security_opt:
@@ -14,8 +14,8 @@ services:
     ports:
       - ${DELUGE_WEB_UI_PORT}:8112
     volumes:
-      - /dev/net:/dev/net:z # tun device
-      - ./services/deluge_vpn/vpn/ca.crt:/vpn/ca.crt
+      - /dev/net/tun:/dev/net/tun:z # tun device
+      - ./services/deluge_vpn/vpn/vpn.conf:/vpn/vpn.conf
     restart: unless-stopped
 
   deluge:
