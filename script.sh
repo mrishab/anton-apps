@@ -56,3 +56,23 @@ mkdir -p $HOST_DIR/mediaserver/plex/transcode
 rm -rf $HOST_DIR/mediaserver/plex/transcode/*
 
 chown -R 201:201 $HOST_DIR/mediaserver/
+
+# Duplicati
+export BACKUP_DIR=/mnt/wd_1000/backups/
+export PRIMARY_RESTORE_DIR=/mnt/hitachi_500/restore
+export SECONDARY_RESTORE_DIR=/mnt/external_hdd/restore
+
+mkdir -p $HOST_DIR/duplicati/config/
+chown -R 2234:2234 $HOST_DIR/duplicati
+
+chgrp -R 2234 $HOST_DIR
+chmod -R g+r $HOST_DIR
+
+mkdir -p $BACKUP_DIR
+chown -R 2234:2234 $BACKUP_DIR
+
+mkdir -p $PRIMARY_RESTORE_DIR
+chown -R 2234:2234 $PRIMARY_RESTORE_DIR
+
+mkdir -p $SECONDARY_RESTORE_DIR
+chown -R 2234:2234 $SECONDARY_RESTORE_DIR
