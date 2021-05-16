@@ -120,5 +120,6 @@ services:
       - ${PLEX_TRANSCODE_MOUNT_DIR}:/transcode
       - ${MEDIA_MOVIES_MOUNT_DIR}:/movies
       - ${MEDIA_TV_MOUNT_DIR}:/tv
+      - ${MEDIA_COURSES_MOUNT_DIR}:/courses
     ports:
       - ${PLEX_WEB_UI_PORT}:32400
