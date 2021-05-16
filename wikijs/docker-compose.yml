@@ -20,6 +20,7 @@ services:
   postgres:
     image: postgres:9.6.20-alpine
     container_name: wikijs_postgres
+    restart: unless-stopped
     environment:
       # PG Super User
       POSTGRES_USER: ${PG_USERNAME}
@@ -29,7 +30,6 @@ services:
       WIKIJS_DB_NAME: ${WIKIJS_DB_NAME}
       WIKIJS_DB_USER: ${WIKIJS_DB_USER}
       WIKIJS_DB_PASS: ${WIKIJS_DB_PASS}
-    restart: unless-stopped
     volumes:
       - ${PG_MOUNT_DIR}:/var/lib/postgresql/data
       - ./db-init-scripts:/docker-entrypoint-initdb.d

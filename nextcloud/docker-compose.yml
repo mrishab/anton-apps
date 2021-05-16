@@ -4,6 +4,7 @@ services:
   nextcloud:
     image: nextcloud:stable-apache
     container_name: nextcloud
+    restart: unless-stopped
     ports:
       - ${NC_PORT}:80
     environment:
@@ -18,7 +19,6 @@ services:
       NEXTCLOUD_TRUSTED_DOMAINS: ${NC_TRUSTED_DOMAINS}
       # Reverse Proxy Config
       OVERWRITEPROTOCOL: https
-    restart: unless-stopped
     volumes:
       - ${NC_MOUNT_DIR}:/var/www/html
     depends_on: 
@@ -27,6 +27,7 @@ services:
   postgres:
     image: postgres:9.6.20-alpine
     container_name: nextcloud_postgres
+    restart: unless-stopped
     environment:
       # PG Super User
       POSTGRES_USER: ${PG_USERNAME}
@@ -36,7 +37,6 @@ services:
       NEXTCLOUD_DB: ${NC_DATABASE}
       NEXTCLOUD_USER: ${NC_USERNAME}
       NEXTCLOUD_PASSWORD: ${NC_PASSWORD}
-    restart: unless-stopped
     volumes:
       - ${PG_MOUNT_DIR}:/var/lib/postgresql/data
       - ./db-init-scripts:/docker-entrypoint-initdb.d

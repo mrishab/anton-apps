@@ -2,8 +2,8 @@ version: '3'
 
 services:
   nexus:
-    container_name: nexus
     image: sonatype/nexus3
+    container_name: nexus
     restart: unless-stopped
     ports:
       - ${NEXUS_WEB_PORT}:8081

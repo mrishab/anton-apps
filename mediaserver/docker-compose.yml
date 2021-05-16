@@ -4,6 +4,7 @@ services:
   vpn:
     image: dperson/openvpn-client:latest
     container_name: deluge_vpn
+    restart: unless-stopped
     command: "-d -a ${REMOTE_USERNAME};${REMOTE_PASSWORD}"
     cap_add:
       - net_admin
@@ -16,11 +17,11 @@ services:
     volumes:
       - /dev/net/tun:/dev/net/tun:z # tun device
       - ./services/deluge_vpn/vpn/vpn.conf:/vpn/vpn.conf
-    restart: unless-stopped
 
   deluge:
     image: ghcr.io/linuxserver/deluge
     container_name: deluge
+    restart: unless-stopped
     network_mode: service:vpn
     environment:
       PUID: ${MEDIA_PUID}
@@ -30,13 +31,13 @@ services:
     volumes:
       - ${DELUGE_CONFIG_MOUNT_DIR}:/config
       - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
-    restart: unless-stopped
     depends_on:
       - vpn
 
   jackett:
     image: ghcr.io/linuxserver/jackett
     container_name: jackett
+    restart: unless-stopped
     environment:
       PUID: ${MEDIA_PUID}
       PGID: ${MEDIA_PGID}
@@ -46,11 +47,11 @@ services:
       - ${TORRENT_DOWNLOADS_MOUNT_DIR}:/downloads
     ports:
       - ${JACKETT_WEB_UI_PORT}:9117
-    restart: unless-stopped
 
   nzbget:
     image: ghcr.io/linuxserver/nzbget
     container_name: nzbget
+    restart: unless-stopped
     environment:
       PUID: ${MEDIA_PUID}
       PGID: ${MEDIA_PGID}
@@ -60,11 +61,11 @@ services:
       - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
     ports:
       - ${NZBGET_WEB_UI_PORT}:6789
-    restart: unless-stopped
 
   sonarr:
     image: ghcr.io/linuxserver/sonarr
     container_name: sonarr
+    restart: unless-stopped
     environment:
       PUID: ${MEDIA_PUID}
       PGID: ${MEDIA_PGID}
@@ -75,11 +76,11 @@ services:
       - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
     ports:
       - ${SONARR_WEB_UI_PORT}:8989
-    restart: unless-stopped
 
   radarr:
     image: ghcr.io/linuxserver/radarr
     container_name: radarr
+    restart: unless-stopped
     environment:
       PUID: ${MEDIA_PUID}
       PGID: ${MEDIA_PGID}
@@ -90,11 +91,11 @@ services:
       - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
     ports:
       - ${RADARR_WEB_UI_PORT}:7878
-    restart: unless-stopped
 
   bazarr:
     image: ghcr.io/linuxserver/bazarr
     container_name: bazarr
+    restart: unless-stopped
     environment:
       PUID: ${MEDIA_PUID}
       PGID: ${MEDIA_PGID}
@@ -105,11 +106,11 @@ services:
       - ${MEDIA_TV_MOUNT_DIR}:/tv
     ports:
       - ${BAZARR_WEB_UI_PORT}:6767
-    restart: unless-stopped
 
   plex:
     image: plexinc/pms-docker
     container_name: plex
+    restart: unless-stopped
     environment:
       PLEX_UID: ${MEDIA_PUID}
       PLEX_GID: ${MEDIA_PGID}
@@ -121,4 +122,3 @@ services:
       - ${MEDIA_TV_MOUNT_DIR}:/tv
     ports:
       - ${PLEX_WEB_UI_PORT}:32400
-    restart: unless-stopped
