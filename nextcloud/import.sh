@@ -1,0 +1,1 @@
+docker exec -ti --user www-data nextcloud /var/www/html/occ files:scan --all
