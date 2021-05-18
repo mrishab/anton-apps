@@ -92,6 +92,22 @@ services:
     ports:
       - ${RADARR_WEB_UI_PORT}:7878
 
+  lazylibrarian:
+    image: ghcr.io/linuxserver/lazylibrarian
+    container_name: lazylibrarian
+    restart: unless-stopped
+    environment:
+      PUID: ${MEDIA_PUID}
+      PGID: ${MEDIA_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${LAZYLIBRARIAN_CONFIG_MOUNT_DIR}:/config
+      - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
+      - ${MEDIA_EBOOKS_MOUNT_DIR}:/ebooks
+      - ${MEDIA_AUDIOBOOKS_MOUNT_DIR}:/audiobooks
+    ports:
+      - ${LAZYLIBRARIAN_WEB_UI_PORT}:5299
+
   bazarr:
     image: ghcr.io/linuxserver/bazarr
     container_name: bazarr

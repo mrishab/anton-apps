@@ -49,11 +49,16 @@ rm -rf $HOST_DIR/mediaserver/movies/*
 mkdir -p $HOST_DIR/mediaserver/tv
 rm -rf $HOST_DIR/mediaserver/tv/*
 
+## Plex
 mkdir -p $HOST_DIR/mediaserver/plex/config
 rm -rf $HOST_DIR/mediaserver/plex/config/*
 
 mkdir -p $HOST_DIR/mediaserver/plex/transcode
 rm -rf $HOST_DIR/mediaserver/plex/transcode/*
+
+## Lazy Librarian
+mkdir -p $HOST_DIR/mediaserver/ebooks
+mkdir -p $HOST_DIR/mediaserver/audiobooks
 
 chown -R 201:201 $HOST_DIR/mediaserver/
 
