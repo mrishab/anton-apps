@@ -9,7 +9,6 @@ services:
     volumes:
       - ${ADGUARD_WORK_MOUNT_DIR}:/opt/adguardhome/work
       - ${ADGUARD_CONF_MOUNT_DIR}:/opt/adguardhome/conf
-      - ${PWD}/static/opt/adguardhome/work/data/filters/1.txt:/opt/adguardhome/work/data/filters/1.txt
     ports:
       - ${ADGUARD_WEBUI_PORT}:3000
       - ${ADGUARD_DNS_PORT}:53/tcp
