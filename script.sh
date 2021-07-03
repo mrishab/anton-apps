@@ -43,6 +43,9 @@ rm -rf $HOST_DIR/mediaserver/downloads/completed/*
 mkdir -p $HOST_DIR/mediaserver/downloads/completed/Movies
 rm -rf $HOST_DIR/mediaserver/downloads/completed/Movies/*
 
+mkdir -p $HOST_DIR/mediaserver/music
+rm -rf $HOST_DIR/mediaserver/music/*
+
 mkdir -p $HOST_DIR/mediaserver/movies
 rm -rf $HOST_DIR/mediaserver/movies/*
 

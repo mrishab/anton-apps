@@ -92,6 +92,21 @@ services:
     ports:
       - ${RADARR_WEB_UI_PORT}:7878
 
+  lidarr:
+    image: ghcr.io/linuxserver/lidarr
+    container_name: lidarr
+    restart: unless-stopped
+    environment:
+      PUID: ${MEDIA_PUID}
+      PGID: ${MEDIA_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${LIDARR_CONFIG_MOUNT_DIR}:/config
+      - ${MEDIA_MUSIC_MOUNT_DIR}:/music
+      - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
+    ports:
+      - ${LIDARR_WEB_UI_PORT}:8686
+
   lazylibrarian:
     image: ghcr.io/linuxserver/lazylibrarian
     container_name: lazylibrarian
@@ -134,6 +149,7 @@ services:
     volumes:
       - ${PLEX_CONFIG_MOUNT_DIR}:/config
       - ${PLEX_TRANSCODE_MOUNT_DIR}:/transcode
+      - ${MEDIA_MUSIC_MOUNT_DIR}:/music
       - ${MEDIA_MOVIES_MOUNT_DIR}:/movies
       - ${MEDIA_TV_MOUNT_DIR}:/tv
       - ${MEDIA_COURSES_MOUNT_DIR}:/courses
