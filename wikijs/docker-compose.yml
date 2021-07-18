@@ -2,7 +2,7 @@ version: '3'
 
 services:
   wikijs:
-    image: requarks/wiki:2
+    image: requarks/wiki:2.5
     container_name: wikijs
     restart: unless-stopped
     ports:
@@ -18,7 +18,7 @@ services:
       - postgres
 
   postgres:
-    image: postgres:9.6.20-alpine
+    image: postgres:9.6.22-alpine3.14
     container_name: wikijs_postgres
     restart: unless-stopped
     environment:

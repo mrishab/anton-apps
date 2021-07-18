@@ -2,7 +2,7 @@ version: '3'
 
 services:
   freshrss:
-    image: ghcr.io/linuxserver/freshrss
+    image: ghcr.io/linuxserver/freshrss:version-1.18.1
     container_name: freshrss
     restart: unless-stopped
     environment: 
@@ -17,7 +17,7 @@ services:
         - postgres
 
   postgres:
-    image: postgres:9.6.20-alpine
+    image: postgres:9.6.22-alpine3.14
     container_name: freshrss_postgres
     restart: unless-stopped
     environment:

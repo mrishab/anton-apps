@@ -19,7 +19,7 @@ services:
       - ./services/deluge_vpn/vpn/vpn.conf:/vpn/vpn.conf
 
   deluge:
-    image: ghcr.io/linuxserver/deluge
+    image: ghcr.io/linuxserver/deluge:version-2.0.3-2201906121747ubuntu18.04.1
     container_name: deluge
     restart: unless-stopped
     network_mode: service:vpn
@@ -35,7 +35,7 @@ services:
       - vpn
 
   jackett:
-    image: ghcr.io/linuxserver/jackett
+    image: ghcr.io/linuxserver/jackett:version-v0.18.444
     container_name: jackett
     restart: unless-stopped
     environment:
@@ -49,7 +49,7 @@ services:
       - ${JACKETT_WEB_UI_PORT}:9117
 
   nzbget:
-    image: ghcr.io/linuxserver/nzbget
+    image: ghcr.io/linuxserver/nzbget:version-v21.1
     container_name: nzbget
     restart: unless-stopped
     environment:
@@ -63,7 +63,7 @@ services:
       - ${NZBGET_WEB_UI_PORT}:6789
 
   sonarr:
-    image: ghcr.io/linuxserver/sonarr
+    image: ghcr.io/linuxserver/sonarr:version-3.0.6.1265
     container_name: sonarr
     restart: unless-stopped
     environment:
@@ -78,7 +78,7 @@ services:
       - ${SONARR_WEB_UI_PORT}:8989
 
   radarr:
-    image: ghcr.io/linuxserver/radarr
+    image: ghcr.io/linuxserver/radarr:version-3.2.2.5080
     container_name: radarr
     restart: unless-stopped
     environment:
@@ -93,7 +93,7 @@ services:
       - ${RADARR_WEB_UI_PORT}:7878
 
   lidarr:
-    image: ghcr.io/linuxserver/lidarr
+    image: ghcr.io/linuxserver/lidarr:version-0.8.1.2135
     container_name: lidarr
     restart: unless-stopped
     environment:
@@ -108,7 +108,7 @@ services:
       - ${LIDARR_WEB_UI_PORT}:8686
 
   lazylibrarian:
-    image: ghcr.io/linuxserver/lazylibrarian
+    image: ghcr.io/linuxserver/lazylibrarian:version-60681d34
     container_name: lazylibrarian
     restart: unless-stopped
     environment:
@@ -124,7 +124,7 @@ services:
       - ${LAZYLIBRARIAN_WEB_UI_PORT}:5299
 
   bazarr:
-    image: ghcr.io/linuxserver/bazarr
+    image: ghcr.io/linuxserver/bazarr:version-v0.9.5
     container_name: bazarr
     restart: unless-stopped
     environment:
@@ -139,7 +139,7 @@ services:
       - ${BAZARR_WEB_UI_PORT}:6767
 
   plex:
-    image: plexinc/pms-docker
+    image: plexinc/pms-docker:1.23.4.4805-186bae04e
     container_name: plex
     restart: unless-stopped
     environment:

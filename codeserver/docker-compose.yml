@@ -2,7 +2,7 @@ version: '3'
 
 services:
   codeserver:
-    image: codercom/code-server:latest
+    image: codercom/code-server:3.10.2
     container_name: codeserver
     restart: unless-stopped
     user: "${CODESERVER_UID}:${CODESERVER_GID}"
