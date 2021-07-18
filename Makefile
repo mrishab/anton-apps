@@ -1,7 +1,7 @@
 TARGET := ./dist
 HOST_APP_DIR := /var/server/anton
 
-APPS := nexus jenkins nextcloud pgadmin registry adguardhome wikijs codeserver airflow mediaserver duplicati freshrss
+APPS := nexus jenkins nextcloud pgadmin registry adguardhome wikijs codeserver airflow mediaserver duplicati freshrss tautulli
 
 start:
 	for app in $(APPS) ; do \

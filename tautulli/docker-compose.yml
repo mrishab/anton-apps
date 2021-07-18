@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+    tautulli:
+        image: ghcr.io/linuxserver/tautulli:version-v2.7.5
+        container_name: tautulli
+        restart: unless-stopped
+        environment:
+            PUID: ${TAUTULLI_PUID}
+            PGID: ${TAUTULLI_PGID}
+            TZ: ${HOST_TZ}
+        volumes:
+        - ${TAUTULLI_CONFIG_MOUNT_DIR}:/config
+        ports:
+        - ${TAUTULLI_WEB_PORT}:8181
