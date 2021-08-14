@@ -1,7 +1,7 @@
-TARGET := ./dist
-HOST_APP_DIR := /var/server/anton
+TARGET:=./dist
+HOST_APP_DIR:=/var/server/anton
 
-APPS := nexus jenkins nextcloud pgadmin registry adguardhome wikijs codeserver airflow mediaserver duplicati freshrss tautulli ombi
+APPS:=airflow codeserver deluge duplicati freshrss jackett jenkins lazylibrarian mediaserver nextcloud nexus nzbget ombi pgadmin plex registry tautulli wikijs
 
 start:
 	for app in $(APPS) ; do \
@@ -32,11 +32,12 @@ pack:
 	done
 
 deploy:
+	# Asserting that .env file is present.
 	ssh $(USERNAME)@$(HOST) "cd $(HOST_APP_DIR) && make restart APPS='$(APPS)'"
 
 upload:
-	ssh $(USERNAME)@$(HOST) "mkdir -p $(HOST_APP_DIR)"
-	rsync -a $(TARGET)/ $(USERNAME)@$(HOST):$(HOST_APP_DIR)
+	ssh $(USERNAME)@$(HOST) "mkdir -p ${HOST_APP_DIR}"
+	rsync --progress -avz $(TARGET)/ $(USERNAME)@$(HOST):$(HOST_APP_DIR)
 
 clean: stop remove
 

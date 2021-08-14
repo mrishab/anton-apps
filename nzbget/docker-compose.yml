@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  nzbget:
+    image: ghcr.io/linuxserver/nzbget:version-v21.1
+    container_name: nzbget
+    restart: unless-stopped
+    environment:
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${NZBGET_CONFIG_MOUNT_DIR}:/config
+      - ${DOWNLOADS_MOUNT_DIR}:/downloads
+    ports:
+      - ${NZBGET_WEB_UI_PORT}:6789

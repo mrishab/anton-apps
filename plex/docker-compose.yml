@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  plex:
+    image: plexinc/pms-docker:1.23.4.4805-186bae04e
+    container_name: plex
+    restart: unless-stopped
+    environment:
+      PLEX_UID: ${APP_PUID}
+      PLEX_GID: ${APP_PGID}
+      ALLOWED_NETWORKS: ${PLEX_ALLOWED_NETWORKS}
+    volumes:
+      - ${PLEX_CONFIG_MOUNT_DIR}:/config
+      - ${PLEX_TRANSCODE_MOUNT_DIR}:/transcode
+      - ${MEDIA_MUSIC_MOUNT_DIR}:/music
+      - ${MEDIA_MOVIES_MOUNT_DIR}:/movies
+      - ${MEDIA_TV_MOUNT_DIR}:/tv
+      - ${MEDIA_COURSES_MOUNT_DIR}:/courses
+    ports:
+      - ${PLEX_WEB_UI_PORT}:32400

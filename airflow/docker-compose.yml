@@ -6,7 +6,7 @@ services:
     container_name: airflow_setup
     entrypoint: []
     command: >
-      bash -c ' 
+      bash -c '
         airflow db upgrade &&
         airflow users create --username "${AIRFLOW_ADMIN_USER}" --firstname "${AIRFLOW_ADMIN_FIRSTNAME}" --lastname "${AIRFLOW_ADMIN_LASTNAME}" --role "${AIRFLOW_ADMIN_ROLE}" --email "${AIRFLOW_ADMIN_EMAIL}" --password "${AIRFLOW_ADMIN_PASS}"
       '
@@ -40,7 +40,7 @@ services:
       - ${AIRFLOW_MOUNT_DIR_PLUGINS}:/opt/airflow/plugins
       - ${AIRFLOW_MOUNT_DIR_DAGS}:/opt/airflow/dags
       - ${AIRFLOW_MOUNT_DIR_LOGS}:/opt/airflow/logs
-    depends_on: 
+    depends_on:
       - postgres
       - airflow_setup
 
@@ -57,7 +57,7 @@ services:
       - ${AIRFLOW_MOUNT_DIR_PLUGINS}:/opt/airflow/plugins
       - ${AIRFLOW_MOUNT_DIR_DAGS}:/opt/airflow/dags
       - ${AIRFLOW_MOUNT_DIR_LOGS}:/opt/airflow/logs
-    depends_on: 
+    depends_on:
       - postgres
       - airflow_setup
 

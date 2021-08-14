@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  jackett:
+    image: ghcr.io/linuxserver/jackett:version-v0.18.444
+    container_name: jackett
+    restart: unless-stopped
+    environment:
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${JACKETT_CONFIG_MOUNT_DIR}:/config
+      - ${DOWNLOADS_MOUNT_DIR}/torrent:/downloads
+    ports:
+      - ${JACKETT_WEB_UI_PORT}:9117

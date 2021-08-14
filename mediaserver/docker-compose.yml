@@ -1,79 +1,18 @@
 version: '3'
 
 services:
-  vpn:
-    image: dperson/openvpn-client:latest
-    container_name: deluge_vpn
-    restart: unless-stopped
-    command: "-d -a ${REMOTE_USERNAME};${REMOTE_PASSWORD}"
-    cap_add:
-      - net_admin
-    security_opt:
-      - label:disable
-    environment:
-      TZ: ${HOST_TZ}
-    ports:
-      - ${DELUGE_WEB_UI_PORT}:8112
-    volumes:
-      - /dev/net/tun:/dev/net/tun:z # tun device
-      - ./services/deluge_vpn/vpn/vpn.conf:/vpn/vpn.conf
-
-  deluge:
-    image: ghcr.io/linuxserver/deluge:version-2.0.3-2201906121747ubuntu18.04.1
-    container_name: deluge
-    restart: unless-stopped
-    network_mode: service:vpn
-    environment:
-      PUID: ${MEDIA_PUID}
-      PGID: ${MEDIA_PGID}
-      TZ: ${HOST_TZ}
-      DELUGE_LOGLEVEL: ${DELUGE_LOGLEVEL}
-    volumes:
-      - ${DELUGE_CONFIG_MOUNT_DIR}:/config
-      - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
-    depends_on:
-      - vpn
-
-  jackett:
-    image: ghcr.io/linuxserver/jackett:version-v0.18.444
-    container_name: jackett
-    restart: unless-stopped
-    environment:
-      PUID: ${MEDIA_PUID}
-      PGID: ${MEDIA_PGID}
-      TZ: ${HOST_TZ}
-    volumes:
-      - ${JACKETT_CONFIG_MOUNT_DIR}:/config
-      - ${TORRENT_DOWNLOADS_MOUNT_DIR}:/downloads
-    ports:
-      - ${JACKETT_WEB_UI_PORT}:9117
-
-  nzbget:
-    image: ghcr.io/linuxserver/nzbget:version-v21.1
-    container_name: nzbget
-    restart: unless-stopped
-    environment:
-      PUID: ${MEDIA_PUID}
-      PGID: ${MEDIA_PGID}
-      TZ: ${HOST_TZ}
-    volumes:
-      - ${NZBGET_CONFIG_MOUNT_DIR}:/config
-      - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
-    ports:
-      - ${NZBGET_WEB_UI_PORT}:6789
-
   sonarr:
     image: ghcr.io/linuxserver/sonarr:version-3.0.6.1265
     container_name: sonarr
     restart: unless-stopped
     environment:
-      PUID: ${MEDIA_PUID}
-      PGID: ${MEDIA_PGID}
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
       TZ: ${HOST_TZ}
     volumes:
       - ${SONARR_CONFIG_MOUNT_DIR}:/config
       - ${MEDIA_TV_MOUNT_DIR}:/tv
-      - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
+      - ${DOWNLOADS_MOUNT_DIR}:/downloads
     ports:
       - ${SONARR_WEB_UI_PORT}:8989
 
@@ -82,13 +21,13 @@ services:
     container_name: radarr
     restart: unless-stopped
     environment:
-      PUID: ${MEDIA_PUID}
-      PGID: ${MEDIA_PGID}
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
       TZ: ${HOST_TZ}
     volumes:
       - ${RADARR_CONFIG_MOUNT_DIR}:/config
       - ${MEDIA_MOVIES_MOUNT_DIR}:/movies
-      - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
+      - ${DOWNLOADS_MOUNT_DIR}:/downloads
     ports:
       - ${RADARR_WEB_UI_PORT}:7878
 
@@ -97,39 +36,23 @@ services:
     container_name: lidarr
     restart: unless-stopped
     environment:
-      PUID: ${MEDIA_PUID}
-      PGID: ${MEDIA_PGID}
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
       TZ: ${HOST_TZ}
     volumes:
       - ${LIDARR_CONFIG_MOUNT_DIR}:/config
       - ${MEDIA_MUSIC_MOUNT_DIR}:/music
-      - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
+      - ${DOWNLOADS_MOUNT_DIR}:/downloads
     ports:
       - ${LIDARR_WEB_UI_PORT}:8686
-
-  lazylibrarian:
-    image: ghcr.io/linuxserver/lazylibrarian:version-60681d34
-    container_name: lazylibrarian
-    restart: unless-stopped
-    environment:
-      PUID: ${MEDIA_PUID}
-      PGID: ${MEDIA_PGID}
-      TZ: ${HOST_TZ}
-    volumes:
-      - ${LAZYLIBRARIAN_CONFIG_MOUNT_DIR}:/config
-      - ${MEDIA_DOWNLOADS_MOUNT_DIR}:/downloads
-      - ${MEDIA_EBOOKS_MOUNT_DIR}:/ebooks
-      - ${MEDIA_AUDIOBOOKS_MOUNT_DIR}:/audiobooks
-    ports:
-      - ${LAZYLIBRARIAN_WEB_UI_PORT}:5299
 
   bazarr:
     image: ghcr.io/linuxserver/bazarr:version-v0.9.5
     container_name: bazarr
     restart: unless-stopped
     environment:
-      PUID: ${MEDIA_PUID}
-      PGID: ${MEDIA_PGID}
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
       TZ: ${HOST_TZ}
     volumes:
       - ${BAZARR_CONFIG_MOUNT_DIR}:/config
@@ -137,21 +60,3 @@ services:
       - ${MEDIA_TV_MOUNT_DIR}:/tv
     ports:
       - ${BAZARR_WEB_UI_PORT}:6767
-
-  plex:
-    image: plexinc/pms-docker:1.23.4.4805-186bae04e
-    container_name: plex
-    restart: unless-stopped
-    environment:
-      PLEX_UID: ${MEDIA_PUID}
-      PLEX_GID: ${MEDIA_PGID}
-      ALLOWED_NETWORKS: ${PLEX_ALLOWED_NETWORKS}
-    volumes:
-      - ${PLEX_CONFIG_MOUNT_DIR}:/config
-      - ${PLEX_TRANSCODE_MOUNT_DIR}:/transcode
-      - ${MEDIA_MUSIC_MOUNT_DIR}:/music
-      - ${MEDIA_MOVIES_MOUNT_DIR}:/movies
-      - ${MEDIA_TV_MOUNT_DIR}:/tv
-      - ${MEDIA_COURSES_MOUNT_DIR}:/courses
-    ports:
-      - ${PLEX_WEB_UI_PORT}:32400

@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  vpn:
+    image: dperson/openvpn-client:latest
+    container_name: deluge_vpn
+    restart: unless-stopped
+    command: "-d -a ${REMOTE_USERNAME};${REMOTE_PASSWORD}"
+    cap_add:
+      - net_admin
+    security_opt:
+      - label:disable
+    environment:
+      TZ: ${HOST_TZ}
+    ports:
+      - ${DELUGE_WEB_UI_PORT}:8112
+    volumes:
+      - /dev/net/tun:/dev/net/tun:z # tun device
+      - ./services/deluge_vpn/vpn/vpn.conf:/vpn/vpn.conf
+
+  deluge:
+    image: ghcr.io/linuxserver/deluge:version-2.0.3-2201906121747ubuntu18.04.1
+    container_name: deluge
+    restart: unless-stopped
+    network_mode: service:vpn
+    environment:
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
+      DELUGE_LOGLEVEL: ${DELUGE_LOGLEVEL}
+    volumes:
+      - ${DELUGE_CONFIG_MOUNT_DIR}:/config
+      - ${DOWNLOADS_MOUNT_DIR}:/downloads
+    depends_on:
+      - vpn

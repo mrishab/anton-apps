@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  lazylibrarian:
+    image: ghcr.io/linuxserver/lazylibrarian:version-60681d34
+    container_name: lazylibrarian
+    restart: unless-stopped
+    environment:
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${LAZYLIBRARIAN_CONFIG_MOUNT_DIR}:/config
+      - ${DOWNLOADS_MOUNT_DIR}:/downloads
+      - ${EBOOKS_MOUNT_DIR}:/ebooks
+      - ${AUDIOBOOKS_MOUNT_DIR}:/audiobooks
+    ports:
+      - ${LAZYLIBRARIAN_WEB_UI_PORT}:5299

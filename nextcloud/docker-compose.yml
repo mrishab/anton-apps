@@ -21,7 +21,7 @@ services:
       OVERWRITEPROTOCOL: https
     volumes:
       - ${NC_MOUNT_DIR}:/var/www/html
-    depends_on: 
+    depends_on:
       - postgres
 
   postgres:

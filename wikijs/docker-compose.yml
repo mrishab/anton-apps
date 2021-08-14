@@ -9,12 +9,12 @@ services:
       - ${WIKIJS_WEB_PORT}:3000
     environment:
       DB_TYPE: ${WIKIJS_DB_TYPE}
-      DB_HOST: ${WIKIJS_DB_HOST} 
+      DB_HOST: ${WIKIJS_DB_HOST}
       DB_PORT: ${WIKIJS_DB_PORT}
       DB_NAME: ${WIKIJS_DB_NAME}
       DB_USER: ${WIKIJS_DB_USER}
       DB_PASS: ${WIKIJS_DB_PASS}
-    depends_on: 
+    depends_on:
       - postgres
 
   postgres:

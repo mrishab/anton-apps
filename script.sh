@@ -21,7 +21,7 @@ mkdir -p $HOST_DIR/codeserver
 rm -rf $HOST_DIR/codeserver/*
 chown -R 2311:2311 $HOST_DIR/codeserver
 
-# Configure Airflow folder permissions 
+# Configure Airflow folder permissions
 mkdir -p $HOST_DIR/airflow/app/plugins
 rm -rf $HOST_DIR/airflow/app/plugins/*
 

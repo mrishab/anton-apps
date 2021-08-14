@@ -7,10 +7,10 @@ services:
     restart: unless-stopped
     ports:
       - ${DUPLICATI_WEB_UI_PORT}:8200
-    environment: 
-      PUID: ${DUPLICATI_PUID}
-      PGID: ${DUPLICATI_PGID}
-      TZ: ${DUPLICATI_TZ}
+    environment:
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
     volumes:
       - ${DUPLICATI_CONFIG_MOUNT_DIR}:/config
       - ${DUPLICATI_BACKUPS_MOUNT_DIR}:/backups

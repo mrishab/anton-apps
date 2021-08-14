@@ -5,15 +5,15 @@ services:
     image: ghcr.io/linuxserver/freshrss:version-1.18.1
     container_name: freshrss
     restart: unless-stopped
-    environment: 
-        PUID: ${FRESHRSS_PUID}
-        PGID: ${FRESHRSS_PGID}
+    environment:
+        PUID: ${APP_PUID}
+        PGID: ${APP_PGID}
         TZ: ${HOST_TZ}
     ports:
       - ${FRESHRSS_WEB_PORT}:80
     volumes:
       - ${FRESHRSS_MOUNT_DIR}:/config
-    depends_on: 
+    depends_on:
         - postgres
 
   postgres:
