@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  jupyter:
+    image: jupyter/scipy-notebook:2021-09-15
+    container_name: jupyter
+    restart: unless-stopped
+    environment:
+      JUPYTER_ENABLE_LAB: ${JUPYTER_ENABLE_LAB}
+    volumes:
+      - ${USER_HOME_MOUNT_DIR}:/home/jovyan
+    ports:
+      - ${JUPYTER_WEB_UI_PORT}:8888
