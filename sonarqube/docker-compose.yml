@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  sonarqube:
+    image: sonarqube:9.4.0-community
+    container_name: sonarqube
+    restart: unless-stopped
+    ports:
+      - ${SONARQUBE_WEB_PORT}:9000
+    environment:
+      SONAR_JDBC_URL: jdbc:${SONARQUBE_DB_TYPE}://${SONARQUBE_DB_HOST}:${SONARQUBE_DB_PORT}/${SONARQUBE_DB_NAME}
+      SONAR_JDBC_USERNAME: ${SONARQUBE_DB_USER}
+      SONAR_JDBC_PASSWORD: ${SONARQUBE_DB_PASS}
+    volumes:
+      - ${SONARQUBE_DATA_MOUNT_DIR}:/opt/sonarqube/data
+      - ${SONARQUBE_EXTENSIONS_MOUNT_DIR}:/opt/sonarqube/extensions
+      - ${SONARQUBE_LOGS_MOUNT_DIR}:/opt/sonarqube/logs
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:9.6.22-alpine3.14
+    container_name: sonarqube_postgres
+    restart: unless-stopped
+    environment:
+      # PG Super User
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+      # PG: Sonarqube
+      SONARQUBE_DB_NAME: ${SONARQUBE_DB_NAME}
+      SONARQUBE_DB_USER: ${SONARQUBE_DB_USER}
+      SONARQUBE_DB_PASS: ${SONARQUBE_DB_PASS}
+    volumes:
+      - ${PG_MOUNT_DIR}:/var/lib/postgresql/data
+      - ./db-init-scripts:/docker-entrypoint-initdb.d

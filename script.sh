@@ -84,3 +84,11 @@ chown -R 2234:2234 $PRIMARY_RESTORE_DIR
 
 mkdir -p $SECONDARY_RESTORE_DIR
 chown -R 2234:2234 $SECONDARY_RESTORE_DIR
+
+# SonarQube
+sysctl -w vm.max_map_count=262144
+mkdir -p $HOST_DIR/sonarqube/db
+mkdir -p $HOST_DIR/sonarqube/app/data
+mkdir -p $HOST_DIR/sonarqube/app/extensions
+mkdir -p $HOST_DIR/sonarqube/app/logs
+chown -R 1000:1000 $HOST_DIR/sonarqube
