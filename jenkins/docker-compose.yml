@@ -2,7 +2,7 @@ version: '3'
 
 services:
   jenkins:
-    image: jenkins/jenkins:2.302-alpine
+    image: jenkins/jenkins:2.346.3-lts-alpine
     container_name: jenkins
     restart: unless-stopped
     ports:
