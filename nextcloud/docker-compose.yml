@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nextcloud:
-    image: nextcloud:20.0.11-apache
+    image: nextcloud:24.0.5-apache
     container_name: nextcloud
     restart: unless-stopped
     ports:

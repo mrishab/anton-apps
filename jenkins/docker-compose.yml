@@ -2,7 +2,7 @@ version: '3'
 
 services:
   jenkins:
-    image: jenkins/jenkins:2.346.3-lts-alpine
+    image: jenkins/jenkins:2.368
     container_name: jenkins
     restart: unless-stopped
     ports:
@@ -14,7 +14,7 @@ services:
       - ${JENKINS_MOUNT_DIR}:/var/jenkins_home
 
   socat:
-    image: alpine/socat:1.7.4.1-r1
+    image: alpine/socat:1.7.4.3-r1
     container_name: jenkins_socat
     restart: unless-stopped
     ports:

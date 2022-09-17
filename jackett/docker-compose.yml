@@ -2,7 +2,7 @@ version: '3'
 
 services:
   jackett:
-    image: ghcr.io/linuxserver/jackett:version-v0.18.444
+    image: ghcr.io/linuxserver/jackett:0.20.1908
     container_name: jackett
     restart: unless-stopped
     environment:

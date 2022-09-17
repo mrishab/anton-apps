@@ -2,7 +2,7 @@ version: "3"
 
 services:
   ombi:
-    image: ghcr.io/linuxserver/ombi:version-v4.0.1430
+    image: ghcr.io/linuxserver/ombi:4.22.5
     container_name: ombi
     restart: unless-stopped
     environment:

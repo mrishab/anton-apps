@@ -2,7 +2,7 @@ version: '3'
 
 services:
   tautulli:
-    image: ghcr.io/linuxserver/tautulli:version-v2.7.5
+    image: ghcr.io/linuxserver/tautulli:2.10.4
     container_name: tautulli
     restart: unless-stopped
     environment:

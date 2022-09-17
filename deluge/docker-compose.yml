@@ -19,7 +19,7 @@ services:
       - ./services/deluge_vpn/vpn/vpn.conf:/vpn/vpn.conf
 
   deluge:
-    image: ghcr.io/linuxserver/deluge:version-2.0.3-2201906121747ubuntu18.04.1
+    image: ghcr.io/linuxserver/deluge:2.1.1
     container_name: deluge
     restart: unless-stopped
     network_mode: service:vpn
