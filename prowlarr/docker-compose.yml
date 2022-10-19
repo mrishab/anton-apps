@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  jackett:
+    image: ghcr.io/linuxserver/prowlarr:0.4.7-develop
+    container_name: prowlarr
+    restart: unless-stopped
+    environment:
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${PROWLARR_CONFIG_MOUNT_DIR}:/config
+      - ${DOWNLOADS_MOUNT_DIR}/torrent:/downloads
+    ports:
+      - ${PROWLARR_WEB_UI_PORT}:9696
