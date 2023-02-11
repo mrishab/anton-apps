@@ -2,7 +2,7 @@ version: '3'
 
 services:
   lazylibrarian:
-    image: ghcr.io/linuxserver/lazylibrarian:version-3e09dfe4
+    image: ghcr.io/linuxserver/lazylibrarian:version-862c2c86
     container_name: lazylibrarian
     restart: unless-stopped
     environment:
