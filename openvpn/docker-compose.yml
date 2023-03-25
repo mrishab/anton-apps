@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  openvpn:
+    image: alekslitvinenk/openvpn:v1.9.0
+    container_name: openvpn
+    restart: unless-stopped
+    ports:
+      - ${OPENVPN_VPN_PORT}:1194
+      - ${OPENVPN_WEB_PORT}:8080
+    environment:
+      HOST_ADDR: $$(curl -s https://api.ipify.org)
+    cap_add:
+      - NET_ADMIN

@@ -1,7 +1,7 @@
 TARGET:=./dist
 HOST_APP_DIR:=/var/server/anton
 
-APPS:=airflow codeserver deluge duplicati freshrss jenkins jupyter lazylibrarian mediaserver nextcloud nexus nzbget ombi pgadmin plex prowlarr registry sonarqube tautulli wikijs
+APPS:=airflow codeserver deluge duplicati freshrss jenkins jupyter lazylibrarian mediaserver nextcloud nexus nzbget ombi openvpn pgadmin plex prowlarr registry sonarqube tautulli wikijs
 
 start:
 	for app in $(APPS) ; do \
