@@ -92,3 +92,8 @@ mkdir -p $HOST_DIR/sonarqube/app/data
 mkdir -p $HOST_DIR/sonarqube/app/extensions
 mkdir -p $HOST_DIR/sonarqube/app/logs
 chown -R 1000:1000 $HOST_DIR/sonarqube
+
+# SFTPGO
+mkdir -p $HOST_DIR/sftpgo/srv/sftpgo
+mkdir -p $HOST_DIR/sftpgo/var/lib/sftpgo
+chown -R 1100:2234 $HOST_DIR/sftpgo/var/lib/sftpgo
