@@ -5,9 +5,16 @@ services:
     image: drakkan/sftpgo:v2.5.4
     container_name: sftpgo
     restart: unless-stopped
+    environment:
+      SFTPGO_FTPD__BINDINGS__0__PORT: 2121
+      SFTPGO_FTPD__BINDINGS__0__FORCE_PASSIVE_IP: ${SFTPGO_FTPD__BINDINGS__0__FORCE_PASSIVE_IP}
+      SFTPGO_FTPD__PASSIVE_PORT_RANGE__START: ${SFTPGO_FTPD__PASSIVE_PORT_RANGE__START}
+      SFTPGO_FTPD__PASSIVE_PORT_RANGE__END: ${SFTPGO_FTPD__PASSIVE_PORT_RANGE__END}
     ports:
       - ${SFTP_WEB_PORT}:8080
       - ${SFTP_PORT}:2022
+      - ${FTP_PORT}:2121
+      - ${SFTPGO_FTPD__PASSIVE_PORT_RANGE__START}-${SFTPGO_FTPD__PASSIVE_PORT_RANGE__END}:${SFTPGO_FTPD__PASSIVE_PORT_RANGE__START}-${SFTPGO_FTPD__PASSIVE_PORT_RANGE__END}
     volumes:
-      - /srv/sftpgo
-      - /var/lib/sftpgo
+      - ${SFTP_SRV_MOUNT_DIR}:/srv/sftpgo
+      - ${SFTP_LIB_MOUNT_DIR}:/var/lib/sftpgo
