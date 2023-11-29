@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  dockovpn:
+    container_name: dockovpn
+    image: alekslitvinenk/openvpn:v1.13.0
+    restart: unless-stopped
+    ports:
+      - ${VPN_PORT}:1194/udp
+      - ${WEB_PORT}:8080/tcp
+    environment:
+      HOST_ADDR: ${HOST_ADDR}
+      HOST_CONF_PORT: ${HOST_CONF_PORT}
+    cap_add:
+      - NET_ADMIN
