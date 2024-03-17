@@ -13,3 +13,20 @@ services:
       PGADMIN_LISTEN_PORT: 443
     volumes:
       - ${PGADMIN_MOUNT_DIR}:/var/lib/pgadmin
+
+  postgres:
+    image: postgres:9.6.22-alpine3.14
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      # PG Super User
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+      # PG: Personal
+      PERSONAL_DB_NAME: ${PERSONAL_DB_NAME}
+      PERSONAL_DB_USER: ${PERSONAL_DB_USER}
+      PERSONAL_DB_PASS: ${PERSONAL_DB_PASS}
+    volumes:
+      - ${PG_MOUNT_DIR}:/var/lib/postgresql/data
+      - ./db-init-scripts:/docker-entrypoint-initdb.d
