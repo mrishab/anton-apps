@@ -97,3 +97,7 @@ chown -R 1000:1000 $HOST_DIR/sonarqube
 mkdir -p $HOST_DIR/sftpgo/srv/sftpgo
 mkdir -p $HOST_DIR/sftpgo/var/lib/sftpgo
 chown -R 1000:2234 $HOST_DIR/sftpgo/var/lib/sftpgo
+
+# Ollama
+mdkir -p $HOST_DIR/ollama
+chown -R 1000:2234 $HOST_DIR/ollama

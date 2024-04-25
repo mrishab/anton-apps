@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:0.1.32
+    container_name: ollama
+    restart: unless-stopped
+    volumes:
+      - ${OLLAMA_MOUNT_DIR}:/root/.ollama
+    ports:
+      - ${OLLAMA_WEB_PORT}:11434
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

@@ -1,7 +1,7 @@
 TARGET:=./dist
 HOST_APP_DIR:=/var/server/anton
 
-APPS:=airflow codeserver deluge duplicati freshrss jenkins jupyter lazylibrarian mediaserver nextcloud nexus nzbget ombi openvpn pgadmin plex prowlarr registry sftpgo sonarqube tautulli wikijs
+APPS:=airflow codeserver deluge duplicati freshrss jenkins jupyter lazylibrarian mediaserver nextcloud nexus nzbget ollama ombi openvpn pgadmin plex prowlarr registry sftpgo sonarqube tautulli wikijs
 
 start:
 	for app in $(APPS) ; do \
@@ -39,6 +39,9 @@ upload:
 	ssh $(USERNAME)@$(HOST) "mkdir -p ${HOST_APP_DIR}"
 	rsync --progress -avz $(TARGET)/ $(USERNAME)@$(HOST):$(HOST_APP_DIR)
 
+check-nvidia:
+	nvidia-smi
+
 clean: stop remove
 
 restart: stop start
@@ -46,3 +49,4 @@ restart: stop start
 reset: clean start
 
 setup: pack upload deploy
+
