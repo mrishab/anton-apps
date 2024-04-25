@@ -18,3 +18,11 @@ services:
       - ${MEDIA_COURSES_MOUNT_DIR}:/courses
     ports:
       - ${PLEX_WEB_UI_PORT}:32400
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
