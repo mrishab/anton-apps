@@ -2,7 +2,7 @@ version: '3'
 
 services:
   jupyter:
-    image: docker.io/jupyter/datascience-notebook
+    image: quay.io/jupyter/pytorch-notebook:cuda12-python-3.11.9
     container_name: jupyter
     restart: unless-stopped
     environment:
@@ -11,3 +11,11 @@ services:
       - ${USER_HOME_MOUNT_DIR}:/home/jovyan
     ports:
       - ${JUPYTER_WEB_UI_PORT}:8888
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
