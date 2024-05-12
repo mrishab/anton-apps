@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:git-594f2f2-ollama
+    container_name: open-webui
+    restart: unless-stopped
+    environment:
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL}
+    ports:
+      - ${OPEN_WEBUI_WEB_PORT}:8080
+    volumes:
+      - ${OPEN_WEBUI_MOUNT_DIR}:/app/backend/data

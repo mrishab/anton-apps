@@ -101,3 +101,7 @@ chown -R 1000:2234 $HOST_DIR/sftpgo/var/lib/sftpgo
 # Ollama
 mdkir -p $HOST_DIR/ollama
 chown -R 1000:2234 $HOST_DIR/ollama
+
+# Open-WebUI
+mkdir -p $HOST_DIR/open-webui
+chown -R 1000:2234 $HOST_DIR/open-webui
