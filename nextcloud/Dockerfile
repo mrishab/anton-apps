@@ -94,13 +94,4 @@ RUN wget -c -q -O facerecognition https://github.com/matiasdelellis/facerecognit
   && sed -i 's/webpack --node-env production/NODE_ENV=production webpack/g' package.json \
   && sed -i 's/webpack --node-env development/NODE_ENV=development webpack/g' package.json \
   && npm ci \
-  && make \
-  && cd /var/www/html \
-  && php occ face:setup -M 2048M \
-  && php occ face:setup -m 1 \
-  && php occ config:app:set facerecognition default_enabled --value true \
-  && php occ config:app:set facerecognition clustering_batch_size --value='1000' --type=integer \
-  && php occ config:app:set facerecognition max_image_area --value 786432 \
-  && php occ config:app:set facerecognition handle_external_files --value true \
-  && php occ config:app:set facerecognition handle_shared_files --value false \
-  && php occ config:app:set facerecognition min_image_size --value 128
+  && make
