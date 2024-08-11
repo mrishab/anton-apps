@@ -2,7 +2,10 @@ version: '3'
 
 services:
   nextcloud:
-    image: nextcloud:27.0.0-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nextcloud-mrishab:29.0.0-apache
     container_name: nextcloud
     restart: unless-stopped
     ports:
