@@ -105,3 +105,8 @@ chown -R 1000:2234 $HOST_DIR/ollama
 # Open-WebUI
 mkdir -p $HOST_DIR/open-webui
 chown -R 1000:2234 $HOST_DIR/open-webui
+
+# Ghost
+mkdir -p $HOST_DIR/ghost/app
+mkdir -p $HOST_DIR/ghost/db
+chrown -R 1000:2234 $HOST_DIR/ghost

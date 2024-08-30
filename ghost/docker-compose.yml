@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  ghost:
+    image: ghost:5.90.2-alpine
+    container_name: ghost
+    restart: unless-stopped
+    ports:
+      - ${GHOST_PORT}:2368
+    environment:
+      database__client: mysql
+      database__connection__host: mysql
+      database__connection__user: ${GHOST_DB_USER}
+      database__connection__password: ${GHOST_DB_PASSWORD}
+      database__connection__database: ${GHOST_DB_NAME}
+      url: ${PUBLIC_URL}
+    volumes:
+      - ${GHOST_MOUNT_DIR}:/var/lib/ghost/content
+    depends_on:
+      - mysql
+
+  
+  mysql:
+    image: mysql:8.4.2
+    container_name: ghost_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${GHOST_DB_NAME}
+      MYSQL_USER: ${GHOST_DB_USER}
+      MYSQL_PASSWORD: ${GHOST_DB_PASSWORD}
+    volumes:
+      - ${MYSQL_MOUNT_DIR}:/var/lib/mysql
