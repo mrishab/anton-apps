@@ -14,6 +14,8 @@ services:
       database__connection__password: ${GHOST_DB_PASSWORD}
       database__connection__database: ${GHOST_DB_NAME}
       url: ${PUBLIC_URL}
+      server__admin__url: ${ADMIN_URL}
+      server__admin__redirect: "false" 
     volumes:
       - ${GHOST_MOUNT_DIR}:/var/lib/ghost/content
     depends_on:
