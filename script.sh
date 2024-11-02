@@ -110,3 +110,10 @@ chown -R 1000:2234 $HOST_DIR/open-webui
 mkdir -p $HOST_DIR/ghost/app
 mkdir -p $HOST_DIR/ghost/db
 chrown -R 1000:2234 $HOST_DIR/ghost
+
+# Postiz
+mkdir -p $HOST_DIR/postiz/app/config
+mkdir -p $HOST_DIR/postiz/app/uploads
+mkdir -p $HOST_DIR/postiz/db
+mkdir -p $HOST_DIR/postiz/redis
+chown -R 1000:1000 $HOST_DIR/postiz
