@@ -117,3 +117,8 @@ mkdir -p $HOST_DIR/postiz/app/uploads
 mkdir -p $HOST_DIR/postiz/db
 mkdir -p $HOST_DIR/postiz/redis
 chown -R 1000:1000 $HOST_DIR/postiz
+
+# Immich
+mkdir -p $HOST_DIR/immich/app
+mkdir -p $HOST_DIR/immich/db
+mkdir -p $HOST_DIR/immich/ml-cache
