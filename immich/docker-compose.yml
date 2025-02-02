@@ -10,6 +10,7 @@ services:
     volumes:
       # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
+      - ${EXTERNAL_LIBRARY_NEXTCLOUD_PATH}:/usr/src/app/nextcloud
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
