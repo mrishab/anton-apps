@@ -122,3 +122,8 @@ chown -R 1000:1000 $HOST_DIR/postiz
 mkdir -p $HOST_DIR/immich/app
 mkdir -p $HOST_DIR/immich/db
 mkdir -p $HOST_DIR/immich/ml-cache
+
+# Affine
+mkdir -p $HOST_DIR/affine/db
+mkdir -p $HOST_DIR/affine/app/uploads
+mkdir -p $HOST_DIR/affine/app/config
