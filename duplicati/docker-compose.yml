@@ -11,9 +11,9 @@ services:
       PUID: ${APP_PUID}
       PGID: ${APP_PGID}
       TZ: ${HOST_TZ}
+      SETTINGS_ENCRYPTION_KEY: ${DUPLICATI_SETTINGS_ENCRYPTION_KEY}
     volumes:
       - ${DUPLICATI_CONFIG_MOUNT_DIR}:/config
-      - ${DUPLICATI_BACKUPS_MOUNT_DIR}:/backups
+      - ${DUPLICATI_PRIMARY_BACKUPS_MOUNT_DIR}:/primary_backups
+      - ${DUPLICATI_SECONDARY_BACKUPS_MOUNT_DIR}:/secondary_backups
       - ${DUPLICATI_SOURCE_MOUNT_DIR}:/source
-      - ${DUPLICATI_PRIMARY_RESTORE_MOUNT_DIR}:/primary_restore
-      - ${DUPLICATI_SECONDARY_RESTORE_MOUNT_DIR}:/secondary_restore
