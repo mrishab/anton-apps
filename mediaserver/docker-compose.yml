@@ -2,7 +2,7 @@ version: '3'
 
 services:
   sonarr:
-    image: ghcr.io/linuxserver/sonarr:3.0.9
+    image: ghcr.io/linuxserver/sonarr:4.0.15
     container_name: sonarr
     restart: unless-stopped
     environment:
@@ -15,9 +15,14 @@ services:
       - ${DOWNLOADS_MOUNT_DIR}:/downloads
     ports:
       - ${SONARR_WEB_UI_PORT}:8989
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
 
   radarr:
-    image: ghcr.io/linuxserver/radarr:4.1.0
+    image: ghcr.io/linuxserver/radarr:5.27.2-nightly
     container_name: radarr
     restart: unless-stopped
     environment:
@@ -32,7 +37,7 @@ services:
       - ${RADARR_WEB_UI_PORT}:7878
 
   lidarr:
-    image: ghcr.io/linuxserver/lidarr:1.0.2
+    image: ghcr.io/linuxserver/lidarr:2.12.4
     container_name: lidarr
     restart: unless-stopped
     environment:
@@ -47,7 +52,7 @@ services:
       - ${LIDARR_WEB_UI_PORT}:8686
 
   bazarr:
-    image: ghcr.io/linuxserver/bazarr:1.1.1
+    image: ghcr.io/linuxserver/bazarr:1.5.2
     container_name: bazarr
     restart: unless-stopped
     environment:
