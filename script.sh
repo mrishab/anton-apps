@@ -127,3 +127,7 @@ mkdir -p $HOST_DIR/immich/ml-cache
 mkdir -p $HOST_DIR/affine/db
 mkdir -p $HOST_DIR/affine/app/uploads
 mkdir -p $HOST_DIR/affine/app/config
+
+# N8N
+mkdir -p $HOST_DIR/n8n/app
+mkdir -p $HOST_DIR/n8n/db

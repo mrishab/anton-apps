@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:1.107.2
+    container_name: n8n
+    restart: unless-stopped
+    environment:
+      N8N_EDITOR_BASE_URL: "${N8N_EDITOR_BASE_URL}"
+      DB_TYPE: "postgresdb"
+      DB_POSTGRESDB_DATABASE: "${N8N_DATABASE}"
+      DB_POSTGRESDB_HOST: "postgres"
+      DB_POSTGRESDB_PORT: "5432"
+      DB_POSTGRESDB_USER: "${N8N_USERNAME}"
+      DB_POSTGRESDB_SCHEMA: "${N8N_SCHEMA}"
+      DB_POSTGRESDB_PASSWORD: "${N8N_PASSWORD}"
+      GENERIC_TIMEZONE: "${GENERIC_TIMEZONE}"
+      TZ: "${TZ}"
+    ports:
+      - "${N8N_UI_PORT}:5678"
+    volumes:
+      - ${N8N_MOUNT_DIR}:/home/node/.n8n
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13.22-alpine3.22
+    container_name: n8n_postgres
+    restart: unless-stopped
+    environment:
+      # PG Super User
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+      # PG: N8N
+      N8N_DB: ${N8N_DATABASE}
+      N8N_USER: ${N8N_USERNAME}
+      N8N_PASSWORD: ${N8N_PASSWORD}
+    volumes:
+      - ${PG_MOUNT_DIR}:/var/lib/postgresql/data
+      - ./db-init-scripts:/docker-entrypoint-initdb.d
