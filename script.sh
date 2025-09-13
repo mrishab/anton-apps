@@ -131,3 +131,7 @@ mkdir -p $HOST_DIR/affine/app/config
 # N8N
 mkdir -p $HOST_DIR/n8n/app
 mkdir -p $HOST_DIR/n8n/db
+
+# OVVP
+mkdir -p $HOST_DIR/dockovpn
+chown -R 1000:2234 $HOST_DIR/dockovpn
