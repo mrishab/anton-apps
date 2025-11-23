@@ -2,7 +2,7 @@ version: '3'
 
 services:
   sonarr:
-    image: ghcr.io/linuxserver/sonarr:4.0.15
+    image: ghcr.io/linuxserver/sonarr:4.0.16
     container_name: sonarr
     restart: unless-stopped
     environment:
@@ -22,7 +22,7 @@ services:
           cpus: '0.5'
 
   radarr:
-    image: ghcr.io/linuxserver/radarr:5.27.2-nightly
+    image: ghcr.io/linuxserver/radarr:6.0.4
     container_name: radarr
     restart: unless-stopped
     environment:
@@ -37,7 +37,7 @@ services:
       - ${RADARR_WEB_UI_PORT}:7878
 
   lidarr:
-    image: ghcr.io/linuxserver/lidarr:2.12.4
+    image: ghcr.io/linuxserver/lidarr:3.1.1-nightly
     container_name: lidarr
     restart: unless-stopped
     environment:
@@ -52,7 +52,7 @@ services:
       - ${LIDARR_WEB_UI_PORT}:8686
 
   bazarr:
-    image: ghcr.io/linuxserver/bazarr:1.5.2
+    image: ghcr.io/linuxserver/bazarr:1.5.3
     container_name: bazarr
     restart: unless-stopped
     environment:
