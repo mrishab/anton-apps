@@ -1,3 +1,10 @@
+
+# TODO:
+sudo apt install acl -y
+# Due to following command, we can remove adding 2234 duplicati permissions to all the files and folders
+sudo setfacl -R -m g:2234:rx /mnt/external_hdd
+
+
 export HOST_DIR=/mnt/external_hdd
 export HOST_USER=mrishab
 
