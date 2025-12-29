@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  threadfin:
+    image: fyb3roptik/threadfin:1.2.37-nvidia
+    container_name: threadfin
+    restart: unless-stopped
+    environment:
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${THREADFIN_CONFIG_MOUNT_DIR}:/home/threadfin/conf
+      - ${THREADFIN_TEMP_MOUNT_DIR}:/tmp/threadfin:rw
+    ports:
+      - ${THREADFIN_WEB_UI_PORT}:34400

@@ -63,6 +63,10 @@ rm -rf $HOST_DIR/mediaserver/plex/transcode/*
 mkdir -p $HOST_DIR/mediaserver/ebooks
 mkdir -p $HOST_DIR/mediaserver/audiobooks
 
+## Threadfin
+mkdir -p $HOST_DIR/mediaserver/threadfin/config
+mkdir -p $HOST_DIR/mediaserver/threadfin/temp
+
 chown -R 201:201 $HOST_DIR/mediaserver/
 
 # Duplicati
