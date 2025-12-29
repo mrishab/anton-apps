@@ -14,3 +14,11 @@ services:
       - ${THREADFIN_TEMP_MOUNT_DIR}:/tmp/threadfin:rw
     ports:
       - ${THREADFIN_WEB_UI_PORT}:34400
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
