@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  epg:
+    image: ghcr.io/iptv-org/epg:master
+    container_name: epg
+    restart: unless-stopped
+    environment:
+      TZ: ${HOST_TZ}
+      CRON_SCHEDULE: ${EPG_CRON_SCHEDULE}
+      MAX_CONNECTIONS: ${EPG_MAX_CONNECTIONS}
+      GZIP: ${EPG_GZIP}
+      CURL: ${EPG_CURL}
+      DAYS: ${EPG_DAYS}
+      TIMEOUT: ${EPG_TIMEOUT}
+      DELAY: ${EPG_DELAY}
+      RUN_AT_STARTUP: ${EPG_RUN_AT_STARTUP}
+    volumes:
+      - ${EPG_CHANNELS_FILE}:/epg/channels.xml:ro
+      - ${EPG_PUBLIC_MOUNT_DIR}:/epg/public
+    ports:
+      - ${EPG_WEB_UI_PORT}:3000

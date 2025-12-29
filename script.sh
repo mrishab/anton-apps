@@ -74,6 +74,9 @@ mkdir -p $HOST_DIR/mediaserver/audiobooks
 mkdir -p $HOST_DIR/mediaserver/threadfin/config
 mkdir -p $HOST_DIR/mediaserver/threadfin/temp
 
+## EPG
+mkdir -p $HOST_DIR/mediaserver/epg/public
+
 chown -R 201:201 $HOST_DIR/mediaserver/
 
 # Duplicati
