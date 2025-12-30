@@ -149,3 +149,7 @@ mkdir -p $HOST_DIR/n8n/db
 # OVVP
 mkdir -p $HOST_DIR/dockovpn
 chown -R 1000:2234 $HOST_DIR/dockovpn
+
+# UpSnap
+mkdir -p $HOST_DIR/upsnap/data
+chown -R 1000:1000 $HOST_DIR/upsnap

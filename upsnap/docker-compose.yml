@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  upsnap:
+    image: ghcr.io/seriousm4x/upsnap:5
+    container_name: upsnap
+    network_mode: host
+    restart: unless-stopped
+    user: "1000:1000"
+    entrypoint: /bin/sh -c "./upsnap serve --http 0.0.0.0:${UPSNAP_WEB_UI_PORT}"
+    healthcheck:
+      test: curl -fs "http://localhost:${UPSNAP_WEB_UI_PORT}/api/health" || exit 1
+      interval: 10s
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    environment:
+      TZ: ${HOST_TZ}
+      UPSNAP_INTERVAL: ${UPSNAP_INTERVAL}
+      UPSNAP_SCAN_RANGE: ${UPSNAP_SCAN_RANGE}
+      UPSNAP_SCAN_TIMEOUT: ${UPSNAP_SCAN_TIMEOUT}
+      UPSNAP_PING_PRIVILEGED: ${UPSNAP_PING_PRIVILEGED}
+    volumes:
+      - ${UPSNAP_DATA_MOUNT_DIR}:/app/pb_data
