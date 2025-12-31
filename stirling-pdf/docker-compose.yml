@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  stirling-pdf:
+    image: stirlingtools/stirling-pdf:2.1.5
+    container_name: stirling-pdf
+    restart: unless-stopped
+    environment:
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
+      SECURITY_ENABLELOGIN: "true"
+      DISABLE_ADDITIONAL_FEATURES: "false"
+      LANGS: en_GB
+      SYSTEM_ENABLEANALYTICS: "false"
+      DISABLE_PIXEL: "true"
+    volumes:
+      - ${STIRLING_PDF_TESSDATA_MOUNT_DIR}:/usr/share/tessdata
+      - ${STIRLING_PDF_CONFIG_MOUNT_DIR}:/configs
+      - ${STIRLING_PDF_LOGS_MOUNT_DIR}:/logs
+      - ${STIRLING_PDF_PIPELINE_MOUNT_DIR}:/pipeline
+    ports:
+      - ${STIRLING_PDF_WEB_UI_PORT}:8080

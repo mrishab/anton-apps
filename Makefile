@@ -2,7 +2,7 @@ TARGET:=./dist
 HOST_APP_DIR:=/var/server/anton
 HOST=anton
 
-APPS:=affine airflow bentopdf calibre codeserver deluge dockovpn duplicati epg freshrss ghost immich jellyfin jenkins jupyter lazylibrarian mediaserver n8n nextcloud nexus nzbget ollama ombi open-webui pgadmin plex postiz prowlarr registry sftpgo sonarqube tautulli upsnap wikijs
+APPS:=affine airflow bentopdf calibre codeserver deluge dockovpn duplicati epg freshrss ghost immich jellyfin jenkins jupyter lazylibrarian mediaserver n8n nextcloud nexus nzbget ollama ombi open-webui pgadmin plex postiz prowlarr registry sftpgo sonarqube stirling-pdf tautulli upsnap wikijs
 
 start:
 	for app in $(APPS) ; do \

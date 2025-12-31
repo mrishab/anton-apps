@@ -162,3 +162,10 @@ chown -R 1000:1000 $HOST_DIR/upsnap
 mkdir -p $HOST_DIR/bentopdf/config
 mkdir -p $HOST_DIR/bentopdf/data
 chown -R 1000:1000 $HOST_DIR/bentopdf
+
+# Stirling-PDF
+mkdir -p $HOST_DIR/stirling-pdf/configs
+mkdir -p $HOST_DIR/stirling-pdf/logs
+mkdir -p $HOST_DIR/stirling-pdf/tessdata
+mkdir -p $HOST_DIR/stirling-pdf/pipeline
+chown -R 1000:1000 $HOST_DIR/stirling-pdf
