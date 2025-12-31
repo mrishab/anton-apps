@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:10.10.6
+    container_name: jellyfin
+    restart: unless-stopped
+    tmpfs:
+      - /transcode-ram:size=2G,mode=1777
+    environment:
+      JELLYFIN_PublishedServerUrl: ${JELLYFIN_PUBLISHED_SERVER_URL}
+    volumes:
+      - ${JELLYFIN_CONFIG_MOUNT_DIR}:/config
+      - ${JELLYFIN_CACHE_MOUNT_DIR}:/cache
+      - ${MEDIA_MUSIC_MOUNT_DIR}:/music
+      - ${MEDIA_MOVIES_MOUNT_DIR}:/movies
+      - ${MEDIA_TV_MOUNT_DIR}:/tv
+      - ${MEDIA_COURSES_MOUNT_DIR}:/courses
+    ports:
+      - ${JELLYFIN_WEB_UI_PORT}:8096
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

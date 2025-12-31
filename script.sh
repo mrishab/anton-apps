@@ -66,6 +66,11 @@ rm -rf $HOST_DIR/mediaserver/plex/config/*
 mkdir -p $HOST_DIR/mediaserver/plex/transcode
 rm -rf $HOST_DIR/mediaserver/plex/transcode/*
 
+## Jellyfin
+mkdir -p $HOST_DIR/mediaserver/jellyfin/config
+mkdir -p $HOST_DIR/mediaserver/jellyfin/cache
+chown -R 1000:1000 $HOST_DIR/mediaserver/jellyfin
+
 ## Lazy Librarian
 mkdir -p $HOST_DIR/mediaserver/ebooks
 mkdir -p $HOST_DIR/mediaserver/audiobooks

@@ -8,7 +8,7 @@ This workflow guides you through adding a new application to the anton-apps proj
 
 ## Prerequisites
 - Application name (e.g., `threadfin`)
-- Docker image name and version
+- Docker image name and explicit version (NEVER use 'latest')
 - Reference application for patterns (e.g., `plex` for media apps)
 - Required ports and volumes
 
@@ -36,7 +36,7 @@ version: '3'
 
 services:
   <app-name>:
-    image: <image>:<version>
+    image: <image>:<explicit-version> # NEVER use 'latest'
     container_name: <app-name>
     restart: unless-stopped
     environment:
@@ -61,7 +61,8 @@ services:
 ```
 
 ### Key Patterns:
-1. **Environment variables**: Use `${VARIABLE}` format, never hardcode values
+1. **Explicit versions**: ALWAYS use an explicit version tag for the image (e.g., `10.10.6`). NEVER use `latest` to ensure stability and reproducibility.
+2. **Environment variables**: Use `${VARIABLE}` format, never hardcode values
 2. **Naming conventions**: 
    - Use `${APP_PUID}` and `${APP_PGID}` for user/group IDs
    - Use `${HOST_TZ}` for timezone
