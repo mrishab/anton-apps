@@ -1,5 +1,6 @@
 TARGET:=./dist
 HOST_APP_DIR:=/var/server/anton
+HOST=anton
 
 APPS:=affine airflow calibre codeserver deluge dockovpn duplicati epg freshrss ghost immich jellyfin jenkins jupyter lazylibrarian mediaserver n8n nextcloud nexus nzbget ollama ombi open-webui pgadmin plex postiz prowlarr registry sftpgo sonarqube tautulli upsnap wikijs
 
@@ -33,11 +34,11 @@ pack:
 
 deploy:
 	# Asserting that .env file is present.
-	ssh $(USERNAME)@$(HOST) "cd $(HOST_APP_DIR) && make restart APPS='$(APPS)'"
+	ssh $(HOST) "cd $(HOST_APP_DIR) && make restart APPS='$(APPS)'"
 
 upload:
-	ssh $(USERNAME)@$(HOST) "mkdir -p ${HOST_APP_DIR}"
-	rsync --progress -avz $(TARGET)/ $(USERNAME)@$(HOST):$(HOST_APP_DIR)
+	ssh $(HOST) "mkdir -p ${HOST_APP_DIR}"
+	rsync --progress -avz $(TARGET)/ $(HOST):$(HOST_APP_DIR)
 
 check-nvidia:
 	nvidia-smi
