@@ -158,3 +158,7 @@ chown -R 1000:2234 $HOST_DIR/dockovpn
 # UpSnap
 mkdir -p $HOST_DIR/upsnap/data
 chown -R 1000:1000 $HOST_DIR/upsnap
+# BentoPDF
+mkdir -p $HOST_DIR/bentopdf/config
+mkdir -p $HOST_DIR/bentopdf/data
+chown -R 1000:1000 $HOST_DIR/bentopdf

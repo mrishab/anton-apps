@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  bentopdf:
+    image: bentopdf/bentopdf:1.7.3
+    container_name: bentopdf
+    restart: unless-stopped
+    environment:
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${BENTOPDF_CONFIG_MOUNT_DIR}:/config
+      - ${BENTOPDF_DATA_MOUNT_DIR}:/data
+    ports:
+      - ${BENTOPDF_WEB_UI_PORT}:8080
