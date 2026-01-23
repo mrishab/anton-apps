@@ -2,7 +2,7 @@ version: '3'
 
 services:
   ghost:
-    image: ghost:5.94.1-alpine
+    image: ghost:alpine3.23
     container_name: ghost
     restart: unless-stopped
     ports:

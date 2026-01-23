@@ -3,7 +3,7 @@ version: '3'
 services:
   dockovpn:
     container_name: dockovpn
-    image: alekslitvinenk/openvpn:v1.13.0
+    image: alekslitvinenk/openvpn:v1.14.0
     restart: unless-stopped
     ports:
       - ${VPN_PORT}:1194/udp

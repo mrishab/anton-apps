@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   open-webui:
-    image: ghcr.io/open-webui/open-webui:git-594f2f2-ollama
+    image: ghcr.io/open-webui/open-webui:0.7.2
     container_name: open-webui
     restart: unless-stopped
     environment:

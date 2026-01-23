@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nzbget:
-    image: ghcr.io/linuxserver/nzbget:version-v21.1
+    image: ghcr.io/linuxserver/nzbget:latest
     container_name: nzbget
     restart: unless-stopped
     environment:

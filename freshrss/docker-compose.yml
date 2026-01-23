@@ -2,7 +2,7 @@ version: '3'
 
 services:
   freshrss:
-    image: ghcr.io/linuxserver/freshrss:version-1.18.1
+    image: ghcr.io/linuxserver/freshrss:version-1.28.0
     container_name: freshrss
     restart: unless-stopped
     environment:

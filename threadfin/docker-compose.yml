@@ -2,7 +2,7 @@ version: '3'
 
 services:
   threadfin:
-    image: fyb3roptik/threadfin:1.2.37-nvidia
+    image: fyb3roptik/threadfin:latest
     container_name: threadfin
     restart: unless-stopped
     environment:

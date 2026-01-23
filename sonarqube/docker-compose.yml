@@ -2,7 +2,7 @@ version: '3'
 
 services:
   sonarqube:
-    image: sonarqube:9.6-community
+    image: sonarqube:community
     container_name: sonarqube
     restart: unless-stopped
     ports:
