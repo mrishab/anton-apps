@@ -7,6 +7,7 @@ services:
     restart: unless-stopped
     environment:
       JUPYTER_ENABLE_LAB: ${JUPYTER_ENABLE_LAB}
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN}
     volumes:
       - ${USER_HOME_MOUNT_DIR}:/home/jovyan/work
     ports:
