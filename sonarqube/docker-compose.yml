@@ -2,7 +2,7 @@ version: '3'
 
 services:
   sonarqube:
-    image: sonarqube:community
+    image: sonarqube:26.1.0.118079-community
     container_name: sonarqube
     restart: unless-stopped
     ports:
@@ -19,7 +19,7 @@ services:
       - postgres
 
   postgres:
-    image: postgres:9.6.22-alpine3.14
+    image: postgres:17-alpine
     container_name: sonarqube_postgres
     restart: unless-stopped
     environment:
