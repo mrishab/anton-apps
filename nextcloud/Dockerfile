@@ -1,7 +1,7 @@
 #
 # Use a temporary image to compile and test the libraries
 #
-FROM nextcloud:32.0-apache as builder
+FROM nextcloud:32.0-apache AS builder
 # Build and install dlib on builder
 #
 RUN apt-get update ; \
@@ -62,9 +62,11 @@ RUN apt-get update ; \
 
 COPY --from=builder /usr/local/lib/libdlib.so* /usr/local/lib/
 
-# If is necesary take the php extention folder (/usr/local/lib/php/extensions/no-debug-non-zts-20180731) uncommenting the next line
-# RUN php -i | grep extension_dir
-COPY --from=builder /usr/local/lib/php/extensions/no-debug-non-zts-20220829/pdlib.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/
+# Copy pdlib.so from builder's PHP extension directory to final image's PHP extension directory
+# This handles version mismatches by copying to the correct location dynamically
+COPY --from=builder /usr/local/lib/php/extensions/*/pdlib.so /tmp/pdlib.so
+RUN EXT_DIR=$(php -r 'echo ini_get("extension_dir");') && \
+    mv /tmp/pdlib.so "$EXT_DIR/pdlib.so"
 
 # Enable PDlib on final image
 RUN echo "extension=pdlib.so" > /usr/local/etc/php/conf.d/pdlib.ini
