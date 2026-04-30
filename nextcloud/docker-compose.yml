@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: nextcloud-mrishab:29.0.0-apache
+    image: nextcloud-mrishab:32.0-apache
     container_name: nextcloud
     restart: unless-stopped
     ports:

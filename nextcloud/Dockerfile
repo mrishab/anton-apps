@@ -51,12 +51,12 @@ RUN git clone https://github.com/matiasdelellis/pdlib-min-test-suite.git \
 #
 # If pass the tests, we are able to create the final image.
 #
-FROM nextcloud:29.0.0-apache
+FROM nextcloud:32.0-apache
 
 # Install dependencies to image
 
 RUN apt-get update ; \
-    apt-get install -y libopenblas-dev
+    apt-get install -y libopenblas-dev libstdc++6
 
 # Install dlib and PDlib to image
 
