@@ -4,3 +4,4 @@ dist/
 *.auth
 *.key
 launch.json
+.vagrant/
