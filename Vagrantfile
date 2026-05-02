@@ -41,4 +41,23 @@ Vagrant.configure("2") do |config|
     mkdir -p /mnt/external_hdd
     chmod 755 /mnt/external_hdd
   SHELL
+  
+  # Ansible provisioning
+  config.vm.provision "ansible" do |ansible|
+    ansible.compatibility_mode = "2.0"
+    ansible.playbook = "ansible/playbook.yml"
+    ansible.inventory_path = "ansible/inventory"
+    ansible.limit = "all"
+    ansible.verbose = "v"
+    ansible.extra_vars = {
+      ansible_python_interpreter: "/usr/bin/python3",
+      # Override for dev environment
+      host_user: "vagrant",
+      host_dir: "/mnt/external_hdd",
+      # Architecture-specific overrides for QEMU (arm64 box)
+      docker_repo_arch: "arm64",
+      docker_compose_arch: "aarch64",
+      node_exporter_arch: "arm64"
+    }
+  end
 end
