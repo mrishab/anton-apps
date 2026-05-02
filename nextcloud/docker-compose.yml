@@ -11,21 +11,22 @@ services:
     ports:
       - ${NC_PORT}:80
     environment:
-      # DB Config
-      # POSTGRES_DB: ${NC_DATABASE}
-      # POSTGRES_USER: ${NC_USERNAME}
-      # POSTGRES_PASSWORD: ${NC_PASSWORD}
-      # POSTGRES_HOST: postgres
       # App Config
       NEXTCLOUD_ADMIN_USER: ${NC_ADMIN_USERNAME}
       NEXTCLOUD_ADMIN_PASSWORD: ${NC_ADMIN_PASSWORD}
       NEXTCLOUD_TRUSTED_DOMAINS: ${NC_TRUSTED_DOMAINS}
+      NEXTCLOUD_DEFAULT_PHONE_REGION: ${NC_DEFAULT_PHONE_REGION}
       # Reverse Proxy Config
       OVERWRITEPROTOCOL: https
+      # Redis Config
+      REDIS_HOST: redis
+      REDIS_HOST_PORT: 6379
+      REDIS_HOST_PASSWORD: ${REDIS_PASSWORD}
     volumes:
       - ${NC_MOUNT_DIR}:/var/www/html
     depends_on:
       - postgres
+      - redis
 
   postgres:
     image: postgres:9.6.22-alpine3.14
@@ -43,3 +44,16 @@ services:
     volumes:
       - ${PG_MOUNT_DIR}:/var/lib/postgresql/data
       - ./db-init-scripts:/docker-entrypoint-initdb.d
+
+  redis:
+    image: redis:7-alpine
+    container_name: nextcloud_redis
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - ${REDIS_MOUNT_DIR}:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
