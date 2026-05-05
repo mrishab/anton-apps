@@ -1,0 +1,26 @@
+default_apps:
+  - affine
+  - bentopdf
+  - codeserver
+  - deluge
+  - dockovpn
+  - duplicati
+  - ghost
+  - immich
+  - jenkins
+  - jupyter
+  - nextcloud
+  - ollama
+  - ombi
+  - open-webui
+  - plex
+  - prowlarr
+  - sftpgo
+  - sonarqube
+  - stirling-pdf
+  - tautulli
+  - upsnap
+
+helper_script_name: anton-up
+helper_apps: "affine bentopdf codeserver deluge duplicati dockovpn ghost immich jenkins nextcloud ombi plex prowlarr sonarqube stirling-pdf upsnap "
+has_ops_apps: true

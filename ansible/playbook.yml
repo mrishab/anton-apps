@@ -1,0 +1,133 @@
+---
+- name: Deploy Apps
+  hosts: all
+  become: true
+  vars_files:
+    - vars/app_configs.yml
+
+  vars:
+    # Use 'apps' extra var if provided (split string into list), otherwise use default_apps from group_vars
+    target_apps: "{{ apps.split(',') if apps is defined else default_apps }}"
+
+  tasks:
+    - name: Ensure app groups exist
+      group:
+        name: "{{ item.name }}"
+        gid: "{{ item.uid }}"
+        system: "{{ item.system | default(false) }}"
+        state: present
+      loop: "{{ system_users }}"
+
+    - name: Ensure app users exist
+      user:
+        name: "{{ item.name }}"
+        uid: "{{ item.uid }}"
+        group: "{{ item.name }}"
+        system: "{{ item.system | default(false) }}"
+        shell: /usr/sbin/nologin
+        create_home: no
+        state: present
+      loop: "{{ system_users }}"
+
+    - name: Install dependencies
+      apt:
+        name:
+          - acl
+          - rsync
+          - ufw
+        state: present
+        update_cache: yes
+
+    - name: Allow app ports in UFW
+      community.general.ufw:
+        rule: allow
+        port: "{{ app_configs[item].port | string }}"
+        proto: tcp
+      loop: "{{ target_apps }}"
+      when:
+        - item in app_configs
+        - app_configs[item].port is defined
+
+    - name: Set sysctl for SonarQube
+      sysctl:
+        name: vm.max_map_count
+        value: "262144"
+        state: present
+        reload: yes
+      when: "'sonarqube' in target_apps"
+
+    - name: Set ACL for duplicati group on external hdd
+      ansible.posix.acl:
+        path: /mnt/external_hdd
+        entity: 2234
+        etype: group
+        permissions: rx
+        recursive: yes
+        state: present
+
+    - name: Create base host app directory
+      file:
+        path: "{{ host_app_dir }}"
+        state: directory
+        owner: "{{ host_user }}"
+        group: "{{ host_user }}"
+        mode: "0755"
+      check_mode: no
+
+    - name: Setup host data directories and permissions
+      file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ item.owner | default(omit) }}"
+        group: "{{ item.group | default(omit) }}"
+        mode: "{{ item.mode | default('0755') }}"
+      loop: "{{ target_apps | select('in', app_configs) | map('extract', app_configs)
+        | map(attribute='dirs', default=[]) | flatten }}"
+      check_mode: no
+
+    - name: Synchronize app files to host
+      synchronize:
+        src: "../{{ item }}/"
+        dest: "{{ host_app_dir }}/{{ item }}/"
+        recursive: yes
+        delete: no # NEVER delete files on the remote that aren't in the local repo (like secrets/logs)
+        rsync_opts:
+          - "--exclude=template.env"
+          - "--exclude=.env"
+          - "--exclude=.git"
+          - "--exclude=*.log"
+      loop: "{{ target_apps }}"
+      become: false
+      check_mode: no
+
+    - name: Ensure .env exists from template.env
+      copy:
+        src: "../{{ item }}/template.env"
+        dest: "{{ host_app_dir }}/{{ item }}/.env"
+        force: no # Only copy if .env doesn't exist
+      loop: "{{ target_apps }}"
+      ignore_errors: no # In case template.env doesn't exist for an app
+      become: false
+      check_mode: no
+
+
+    - name: Manage enabled apps using Docker Compose
+      community.docker.docker_compose_v2:
+        project_src: "{{ host_app_dir }}/{{ item }}"
+        state: "{{ app_state | default('present') }}"
+      loop: "{{ target_apps }}"
+
+    - name: Deploy helper script
+      template:
+        src: templates/helpers.sh.j2
+        dest: "/home/{{ host_user }}/.helpers.sh"
+        owner: "{{ host_user }}"
+        group: "{{ host_user }}"
+        mode: "0755"
+
+    - name: Source helper script in .bashrc
+      lineinfile:
+        path: "/home/{{ host_user }}/.bashrc"
+        line: "source ~/.helpers.sh"
+        create: yes
+        state: present

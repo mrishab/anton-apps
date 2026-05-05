@@ -1,53 +1,38 @@
-TARGET:=./dist
-HOST_APP_DIR:=/var/server/anton
-HOST=anton
+.PHONY: deploy setup restart stop start ping check-nvidia dry-run system-setup
 
-APPS:=affine airflow bentopdf calibre codeserver deluge dockovpn duplicati epg freshrss ghost immich jellyfin jenkins jupyter lazylibrarian mediaserver n8n nextcloud nexus nzbget ollama ombi open-webui pgadmin plex postiz prowlarr registry sftpgo sonarqube stirling-pdf tautulli upsnap wikijs
+# Target environment (defaults to anton)
+TARGET ?= anton
+INVENTORY := ansible/inventories/$(TARGET).ini
+PLAYBOOK := ansible/playbook.yml
+ANSIBLE := ansible-playbook -i $(INVENTORY) $(PLAYBOOK)
 
-start:
-	for app in $(APPS) ; do \
-		cd $$app ; docker-compose up -d ; cd .. ; \
-	done
+# Add -K to prompt for sudo password
+ANSIBLE_FLAGS := --ask-become-pass
 
-stop:
-	for app in $(APPS) ; do \
-		cd ./$$app ; docker-compose down ; cd .. ; \
-	done
+# Default apps and limits
+ANSIBLE_VARS := $(if $(APPS),-e "apps=$(APPS)",)
 
-remove:
-	for app in $(APPS) ; do \
-		cd ./$$app ; docker-compose rm ; cd .. ; \
-	done
-
-logs:
-	for app in $(APPS) ; do \
-		cd ./$$app ; docker-compose logs ; cd .. ; \
-	done
-
-pack:
-	rm -r $(TARGET) ; true
-	mkdir -p $(TARGET)
-	rsync Makefile $(TARGET)
-	for app in $(APPS) ; do \
-		rsync -r --exclude template.env ./$$app $(TARGET) ; \
-	done
 
 deploy:
-	# Asserting that .env file is present.
-	ssh $(HOST) "cd $(HOST_APP_DIR) && make restart APPS='$(APPS)'"
+	$(ANSIBLE) $(ANSIBLE_FLAGS) $(ANSIBLE_VARS)
 
-upload:
-	ssh $(HOST) "mkdir -p ${HOST_APP_DIR}"
-	rsync --progress -avz $(TARGET)/ $(HOST):$(HOST_APP_DIR)
+system-setup:
+	$(ANSIBLE) $(ANSIBLE_FLAGS) $(ANSIBLE_VARS)
+
+dry-run:
+	$(ANSIBLE) $(ANSIBLE_FLAGS) $(ANSIBLE_VARS) --check --diff
+
+restart:
+	$(ANSIBLE) $(ANSIBLE_FLAGS) $(ANSIBLE_VARS) -e "app_state=restarted"
+
+stop:
+	$(ANSIBLE) $(ANSIBLE_FLAGS) $(ANSIBLE_VARS) -e "app_state=stopped"
+
+start:
+	$(ANSIBLE) $(ANSIBLE_FLAGS) $(ANSIBLE_VARS) -e "app_state=present"
+
+ping:
+	ansible all -i $(INVENTORY) -m ping
 
 check-nvidia:
-	nvidia-smi
-
-clean: stop remove
-
-restart: stop start
-
-reset: clean start
-
-setup: pack upload deploy
-
+	ansible all -i $(INVENTORY) -a "nvidia-smi" --become

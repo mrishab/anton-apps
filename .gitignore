@@ -4,3 +4,6 @@ dist/
 *.auth
 *.key
 launch.json
+
+.gemini/
+*.skill

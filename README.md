@@ -36,10 +36,9 @@ This repository contains a collection of Dockerized applications, each residing 
 
 ### Prerequisites
 
-- Docker Engine (19.03.0+)
-- Docker Compose (1.27.0+)
-- Git
-- Make (optional, but recommended)
+- Ansible
+- Docker Engine on target host
+- SSH access to target host
 
 ### Installation
 
@@ -49,34 +48,38 @@ This repository contains a collection of Dockerized applications, each residing 
    cd anton-apps
    ```
 
-2. Configure the applications:
-   - For each application you want to use, go to its directory and copy the template.env file:
+2. Configure Ansible:
+   - Edit `ansible/inventories/<TARGET_NAME>.ini` to match your target hosts.
+   - Install required Ansible collections:
      ```sh
-     cd app-name
-     cp template.env .env
+     ansible-galaxy collection install -r ansible/requirements.yml
      ```
-   - Edit the .env file to set your preferred configuration values.
 
-3. Start the applications:
-   - To start a specific application:
+3. Deploy applications:
+   - To deploy all applications:
      ```sh
-     make start app=app-name
+     make deploy
      ```
-   - To start all applications:
+   - To deploy specific applications:
      ```sh
-     make start-all
+     make deploy APPS=nextcloud,plex
      ```
 
 ### Using the Makefile
 
 The repository includes a Makefile to simplify common operations:
 
-- `make start app=app-name` - Start a specific application
-- `make stop app=app-name` - Stop a specific application
-- `make restart app=app-name` - Restart a specific application
-- `make logs app=app-name` - View logs for a specific application
-- `make start-all` - Start all applications
-- `make stop-all` - Stop all applications
+- `make deploy` - Deploy all applications (creates directories, uploads files, manages .env, restarts)
+- `make deploy APPS=name` - Deploy specific applications
+- `make dry-run` - Preview changes without applying (check mode with diff)
+- `make stop APPS=name` - Stop specific applications
+- `make start APPS=name` - Start specific applications
+- `make restart APPS=name` - Restart specific applications
+- `make ping` - Test connectivity to hosts
+- `make check-nvidia` - Check NVIDIA GPU status on hosts
+
+All targets support `LIMIT=hostname` to target specific hosts.
+
 
 ## Contributing
 

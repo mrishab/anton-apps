@@ -1,0 +1,6 @@
+default_apps:
+  - adguardhome
+
+helper_script_name: shenron-up
+helper_apps: "adguardhome"
+has_ops_apps: false

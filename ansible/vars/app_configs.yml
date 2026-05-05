@@ -1,0 +1,228 @@
+system_users:
+  - name: duplicati
+    uid: 2234
+  - name: pgadmin
+    uid: 5050
+  - name: nexus
+    uid: 200
+  - name: codeserver
+    uid: 2311
+  - name: airflow
+    uid: 50000
+  - name: mediaserver
+    uid: 201
+  - name: node_exporter
+    uid: 999
+    system: true
+
+all_apps:
+  - affine
+  - bentopdf
+  - codeserver
+  - deluge
+  - dockovpn
+  - duplicati
+  - epg
+  - freshrss
+  - ghost
+  - immich
+  - jellyfin
+  - jenkins
+  - jupyter
+  - lazylibrarian
+  - mediaserver
+  - n8n
+  - nextcloud
+  - nexus
+  - nzbget
+  - ollama
+  - ombi
+  - open-webui
+  - pgadmin
+  - plex
+  - postiz
+  - prowlarr
+  - registry
+  - sftpgo
+  - sonarqube
+  - stirling-pdf
+  - tautulli
+  - upsnap
+  - wikijs
+
+app_configs:
+  affine:
+    port: 3010
+    dirs:
+      - { path: "{{ host_data_dir }}/affine/db", mode: "0700" }
+      - { path: "{{ host_data_dir }}/affine/app/uploads" }
+      - { path: "{{ host_data_dir }}/affine/app/config" }
+  bentopdf:
+    port: 8085
+    dirs:
+      - { path: "{{ host_data_dir }}/bentopdf/config", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/bentopdf/data", owner: "1000", group: "1000" }
+  deluge:
+    port: 8112
+  dockovpn:
+    port: 8386
+    dirs:
+      - { path: "{{ host_data_dir }}/dockovpn", owner: "1000", group: "2234" }
+  duplicati:
+    port: 8200
+    dirs:
+      - { path: "{{ host_data_dir }}/duplicati/config", owner: "1000", group: "2234", mode: "0700" }
+      - { path: "/mnt/wd_1000/backups", owner: "2234", group: "2234" }
+      - { path: "/mnt/external_hdd/restore", owner: "2234", group: "2234" }
+  ghost:
+    port: 2368
+    dirs:
+      - { path: "{{ host_data_dir }}/ghost/app", owner: "1000", group: "2234" }
+      - { path: "{{ host_data_dir }}/ghost/db", owner: "999", group: "2234" }
+  immich:
+    port: 2283
+    dirs:
+      - { path: "{{ host_data_dir }}/immich/app" }
+      - { path: "{{ host_data_dir }}/immich/db" }
+      - { path: "{{ host_data_dir }}/immich/ml-cache" }
+  jellyfin:
+    port: 8096
+    dirs:
+      - { path: "{{ host_data_dir }}/jellyfin/config" }
+      - { path: "{{ host_data_dir }}/jellyfin/cache" }
+  jenkins:
+    port: 8888
+    dirs:
+      - { path: "{{ host_data_dir }}/jenkins", owner: "1000", group: "2234" }
+  jupyter:
+    port: 2705
+  nextcloud:
+    port: 8765
+    dirs:
+      - { path: "{{ host_data_dir }}/nextcloud/db", owner: "70", group: "2234", mode: "0700" }
+      - { path: "{{ host_data_dir }}/nextcloud/html", owner: "www-data", group: "www-data" }
+      - { path: "{{ host_data_dir }}/nextcloud/redis", owner: "999", group: "1000" }
+  ombi:
+    port: 3579
+  plex:
+    port: 32400
+  prowlarr:
+    port: 9696
+  sftpgo:
+    port: 9393
+    dirs:
+      - { path: "{{ host_data_dir }}/sftpgo/srv/sftpgo", owner: "1000", group: "2234" }
+      - { path: "{{ host_data_dir }}/sftpgo/var/lib/sftpgo", owner: "1000", group: "2234" }
+  sonarqube:
+    port: 3124
+    dirs:
+      - { path: "{{ host_data_dir }}/sonarqube/db", owner: "70", group: "2234", mode: "0700" }
+      - { path: "{{ host_data_dir }}/sonarqube/app/data", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/sonarqube/app/extensions", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/sonarqube/app/logs", owner: "1000", group: "1000" }
+  stirling-pdf:
+    port: 8086
+    dirs:
+      - { path: "{{ host_data_dir }}/stirling-pdf/configs", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/stirling-pdf/logs", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/stirling-pdf/tessdata", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/stirling-pdf/pipeline", owner: "1000", group: "1000" }
+  pgadmin:
+    port: 5050
+    dirs:
+      - { path: "{{ host_data_dir }}/pgadmin", owner: "5050", group: "2234", mode: "0750" }
+  nexus:
+    port: 8081
+    dirs:
+      - { path: "{{ host_data_dir }}/nexus", owner: "200", group: "2234" }
+  codeserver:
+    port: 8443
+    dirs:
+      - { path: "{{ host_data_dir }}/codeserver", owner: "2311", group: "2234" }
+  mediaserver:
+    port: 8989
+    dirs:
+      - { path: "{{ host_data_dir }}/mediaserver/downloads/torrent", owner: "201", group: "2234" }
+      - { path: "{{ host_data_dir }}/mediaserver/downloads/completed/Movies", owner: "201", group: "2234" }
+      - { path: "{{ host_data_dir }}/mediaserver/music", owner: "201", group: "2234" }
+      - { path: "{{ host_data_dir }}/mediaserver/movies", owner: "201", group: "2234" }
+      - { path: "{{ host_data_dir }}/mediaserver/tv", owner: "201", group: "2234" }
+      - { path: "{{ host_data_dir }}/mediaserver/plex/config", owner: "201", group: "2234" }
+      - { path: "{{ host_data_dir }}/mediaserver/plex/transcode", owner: "201", group: "201" }
+      - { path: "{{ host_data_dir }}/mediaserver/jellyfin/config", owner: "0", group: "0" }
+      - { path: "{{ host_data_dir }}/mediaserver/jellyfin/cache", owner: "0", group: "0" }
+      - { path: "{{ host_data_dir }}/mediaserver/ebooks", owner: "201", group: "2234" }
+      - { path: "{{ host_data_dir }}/mediaserver/audiobooks", owner: "201", group: "2234" }
+      - { path: "{{ host_data_dir }}/mediaserver/threadfin/config", owner: "0", group: "0" }
+      - { path: "{{ host_data_dir }}/mediaserver/threadfin/temp", owner: "0", group: "0" }
+      - { path: "{{ host_data_dir }}/mediaserver/epg/public", owner: "1000", group: "1000" }
+  postiz:
+    port: 5000
+    dirs:
+      - { path: "{{ host_data_dir }}/postiz/app/config", owner: "1000", group: "2234" }
+      - { path: "{{ host_data_dir }}/postiz/app/uploads", owner: "1000", group: "2234" }
+      - { path: "{{ host_data_dir }}/postiz/db", owner: "1000", group: "2234" }
+      - { path: "{{ host_data_dir }}/postiz/redis", owner: "1000", group: "2234" }
+  n8n:
+    port: 5678
+    dirs:
+      - { path: "{{ host_data_dir }}/n8n/app" }
+      - { path: "{{ host_data_dir }}/n8n/db", mode: "0700" }
+  upsnap:
+    port: 8090
+    dirs:
+      - { path: "{{ host_data_dir }}/upsnap/data", owner: "1000", group: "1000" }
+  wikijs:
+    port: 3000
+    dirs:
+      - { path: "{{ host_data_dir }}/wikijs/db", mode: "0700" }
+  epg:
+    port: 3000
+    dirs:
+      - { path: "{{ host_data_dir }}/epg/public" }
+  freshrss:
+    port: 8080
+    dirs:
+      - { path: "{{ host_data_dir }}/freshrss/app" }
+      - { path: "{{ host_data_dir }}/freshrss/db", mode: "0700" }
+  lazylibrarian:
+    port: 5299
+    dirs:
+      - { path: "{{ host_data_dir }}/lazylibrarian/config" }
+  nzbget:
+    port: 6789
+    dirs:
+      - { path: "{{ host_data_dir }}/nzbget/config" }
+  registry:
+    port: 5000
+    dirs:
+      - { path: "{{ host_data_dir }}/registry/data" }
+  ollama:
+    port: 11434
+    dirs:
+      - { path: "{{ host_data_dir }}/ollama/data" }
+  open-webui:
+    port: 8080
+    dirs:
+      - { path: "{{ host_data_dir }}/open-webui/data" }
+  tautulli:
+    port: 8181
+    dirs:
+      - { path: "{{ host_data_dir }}/tautulli/config" }
+  adguardhome:
+    port: 3000
+    dirs:
+      - { path: "{{ host_data_dir }}/adguardhome/work" }
+      - { path: "{{ host_data_dir }}/adguardhome/conf" }
+  airflow:
+    port: 8080
+    dirs:
+      - { path: "{{ host_data_dir }}/airflow/plugins", owner: "50000" }
+      - { path: "{{ host_data_dir }}/airflow/dags", owner: "50000" }
+      - { path: "{{ host_data_dir }}/airflow/logs", owner: "50000" }
+      - { path: "{{ host_data_dir }}/airflow/db", owner: "50000", mode: "0700" }
+  threadfin:
+    port: 34400
+    dirs:
+      - { path: "{{ host_data_dir }}/threadfin/config" }
+      - { path: "{{ host_data_dir }}/threadfin/temp" }
