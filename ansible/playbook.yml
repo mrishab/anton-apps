@@ -10,25 +10,6 @@
     target_apps: "{{ apps.split(',') if apps is defined else default_apps }}"
 
   tasks:
-    - name: Ensure app groups exist
-      group:
-        name: "{{ item.name }}"
-        gid: "{{ item.uid }}"
-        system: "{{ item.system | default(false) }}"
-        state: present
-      loop: "{{ system_users }}"
-
-    - name: Ensure app users exist
-      user:
-        name: "{{ item.name }}"
-        uid: "{{ item.uid }}"
-        group: "{{ item.name }}"
-        system: "{{ item.system | default(false) }}"
-        shell: /usr/sbin/nologin
-        create_home: no
-        state: present
-      loop: "{{ system_users }}"
-
     - name: Install dependencies
       apt:
         name:
@@ -59,7 +40,7 @@
     - name: Set ACL for duplicati group on external hdd
       ansible.posix.acl:
         path: /mnt/external_hdd
-        entity: 2234
+        entity: 1000
         etype: group
         permissions: rx
         recursive: yes
