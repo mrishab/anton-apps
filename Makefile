@@ -1,7 +1,7 @@
 .PHONY: deploy setup restart stop start ping check-nvidia dry-run system-setup
 
-# Target environment (defaults to anton)
-TARGET ?= anton
+# Target environment (defaults to anton-dev)
+TARGET ?= anton-dev
 INVENTORY := ansible/inventories/$(TARGET).ini
 PLAYBOOK := ansible/playbook.yml
 ANSIBLE := ansible-playbook -i $(INVENTORY) $(PLAYBOOK)
