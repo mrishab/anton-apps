@@ -24,12 +24,8 @@ Create the folder and its essential files:
 You MUST update the following files to include the new app:
 
 #### `ansible/vars/app_configs.yml`
-Add the app to both the `all_apps` list and the `app_configs` dictionary:
+Add the app to the `app_configs` dictionary:
 ```yaml
-all_apps:
-  - ...
-  - new-app-name
-
 app_configs:
   ...
   new-app-name:
