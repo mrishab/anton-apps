@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# {{ inventory_hostname | capitalize }} Helper Functions and Aliases
+
+function apps-up() {
+    cd /var/server/anton && \
+    make start APPS="{{ enabled_apps | join(' ') }}"
+}
+
+function apps-reset() {
+    cd /var/server/anton && \
+    make reset APPS="{{ enabled_apps | join(' ') }}"
+}
+
+function apps-down() {
+    CONTAINER_IDS=$(docker ps -q --all)
+    if [ -n "$CONTAINER_IDS" ]; then
+        docker stop $CONTAINER_IDS
+        docker rm $CONTAINER_IDS
+    fi
+}
+
+function apps-prune() {
+    docker system prune -f
+}
+
+function apps-prune-volume() {
+    docker volume prune -f
+}
+
+alias speedtest="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
+alias ollama="docker exec -ti ollama ollama"

@@ -1,0 +1,22 @@
+enabled_apps:
+  - affine
+  - bentopdf
+  - codeserver
+  - deluge
+  - dockovpn
+  - duplicati
+  - ghost
+  - immich
+  - jenkins
+  - jupyter
+  - nextcloud
+  - ollama
+  - ombi
+  - open-webui
+  - plex
+  - prowlarr
+  - sftpgo
+  - sonarqube
+  - stirling-pdf
+  - tautulli
+  - upsnap

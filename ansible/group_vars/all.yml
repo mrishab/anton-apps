@@ -1,26 +1,4 @@
-default_apps:
-  - affine
-  - bentopdf
-  - codeserver
-  - deluge
-  - dockovpn
-  - duplicati
-  - ghost
-  - immich
-  - jenkins
-  - jupyter
-  - nextcloud
-  - ollama
-  - ombi
-  - open-webui
-  - plex
-  - prowlarr
-  - sftpgo
-  - sonarqube
-  - stirling-pdf
-  - tautulli
-  - upsnap
+# Global variables for all hosts
+# Specific app enabling is handled in host-specific group_vars (anton.yml, orion.yml, shenron.yml)
 
-helper_script_name: anton-up
-helper_apps: "affine bentopdf codeserver deluge duplicati dockovpn ghost immich jenkins nextcloud ombi plex prowlarr sonarqube stirling-pdf upsnap "
-has_ops_apps: true
+null

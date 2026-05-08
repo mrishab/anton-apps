@@ -7,7 +7,7 @@
 
   vars:
     # Use 'apps' extra var if provided (split string into list), otherwise use default_apps from group_vars
-    target_apps: "{{ apps.split(',') if apps is defined else default_apps }}"
+    target_apps: "{{ apps.split(',') if apps is defined else enabled_apps }}"
 
   tasks:
     - name: Install dependencies
@@ -16,18 +16,28 @@
           - acl
           - rsync
           - ufw
+          - bat
         state: present
         update_cache: yes
+
+    - name: Create symlink for batcat to bat
+      file:
+        src: /usr/bin/batcat
+        dest: /usr/bin/bat
+        state: link
+        force: yes
+      ignore_errors: yes # In case it's already named bat or not installed as batcat
 
     - name: Allow app ports in UFW
       community.general.ufw:
         rule: allow
-        port: "{{ app_configs[item].port | string }}"
+        port: "{{ port_item | string }}"
         proto: tcp
-      loop: "{{ target_apps }}"
-      when:
-        - item in app_configs
-        - app_configs[item].port is defined
+      loop: "{{ target_apps | select('in', app_configs) | map('extract', app_configs)
+        | map(attribute='port', default=[]) | flatten }}"
+      loop_control:
+        loop_var: port_item
+      when: port_item is defined
 
     - name: Set sysctl for SonarQube
       sysctl:
@@ -37,14 +47,14 @@
         reload: yes
       when: "'sonarqube' in target_apps"
 
-    - name: Set ACL for duplicati group on external hdd
-      ansible.posix.acl:
-        path: /mnt/external_hdd
-        entity: 1000
-        etype: group
-        permissions: rx
-        recursive: yes
-        state: present
+    # - name: Set ACL for duplicati group on external hdd
+    #   ansible.posix.acl:
+    #     path: /mnt/external_hdd
+    #     entity: 1000
+    #     etype: group
+    #     permissions: rx
+    #     recursive: yes
+    #     state: present
 
     - name: Create base host app directory
       file:
@@ -71,26 +81,23 @@
         src: "../{{ item }}/"
         dest: "{{ host_app_dir }}/{{ item }}/"
         recursive: yes
-        delete: no # NEVER delete files on the remote that aren't in the local repo (like secrets/logs)
+        delete: yes # Match contents exactly
         rsync_opts:
-          - "--exclude=template.env"
-          - "--exclude=.env"
           - "--exclude=.git"
           - "--exclude=*.log"
+          - "--exclude=template.env"
+          - "--exclude=README.md"
       loop: "{{ target_apps }}"
       become: false
       check_mode: no
 
-    - name: Ensure .env exists from template.env
-      copy:
-        src: "../{{ item }}/template.env"
-        dest: "{{ host_app_dir }}/{{ item }}/.env"
-        force: no # Only copy if .env doesn't exist
-      loop: "{{ target_apps }}"
-      ignore_errors: no # In case template.env doesn't exist for an app
-      become: false
-      check_mode: no
-
+    - name: Deploy Makefile
+      template:
+        src: templates/Makefile.j2
+        dest: "{{ host_app_dir }}/Makefile"
+        owner: "{{ host_user }}"
+        group: "{{ host_user }}"
+        mode: "0644"
 
     - name: Manage enabled apps using Docker Compose
       community.docker.docker_compose_v2:
@@ -98,17 +105,26 @@
         state: "{{ app_state | default('present') }}"
       loop: "{{ target_apps }}"
 
-    - name: Deploy helper script
+    - name: Ensure scripts directory exists
+      file:
+        path: "/home/{{ host_user }}/scripts"
+        state: directory
+        owner: "{{ host_user }}"
+        group: "{{ host_user }}"
+        mode: "0775"
+
+    - name: Deploy maintenance script
       template:
-        src: templates/helpers.sh.j2
-        dest: "/home/{{ host_user }}/.helpers.sh"
+        src: templates/maintenance.sh.j2
+        dest: "/home/{{ host_user }}/scripts/.maintenance.sh"
         owner: "{{ host_user }}"
         group: "{{ host_user }}"
         mode: "0755"
 
-    - name: Source helper script in .bashrc
+    - name: Source maintenance script in .bashrc
       lineinfile:
         path: "/home/{{ host_user }}/.bashrc"
-        line: "source ~/.helpers.sh"
+        line: "source ~/scripts/.maintenance.sh"
+        insertafter: EOF
         create: yes
         state: present

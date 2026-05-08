@@ -1,6 +1,0 @@
-default_apps:
-  - sftpgo
-
-helper_script_name: orion-up
-helper_apps: "sftpgo"
-has_ops_apps: false
