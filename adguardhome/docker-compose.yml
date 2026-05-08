@@ -5,7 +5,6 @@ services:
     image: adguard/adguardhome:v0.107.71
     container_name: adguard
     restart: unless-stopped
-    ports:
     volumes:
       - ${ADGUARD_WORK_MOUNT_DIR}:/opt/adguardhome/work
       - ${ADGUARD_CONF_MOUNT_DIR}:/opt/adguardhome/conf
