@@ -1,3 +1,5 @@
+.PHONY: start stop remove logs clean restart reset
+
 APPS:={{ enabled_apps | join(' ') }}
 
 start:
@@ -19,3 +21,9 @@ logs:
 	for app in $(APPS) ; do \
 		cd ./$$app ; docker-compose logs ; cd .. ; \
 	done
+
+clean: stop remove
+
+restart: stop start
+
+reset: clean start

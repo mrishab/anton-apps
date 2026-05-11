@@ -1,3 +1,5 @@
+primary_owner: mrishab
+
 app_configs:
   adguardhome:
     port: [ 10007, 53 ]
@@ -13,15 +15,15 @@ app_configs:
   airflow:
     port: 2364
     dirs:
-      - { path: "{{ host_data_dir }}/airflow/app/plugins", owner: "1000" }
-      - { path: "{{ host_data_dir }}/airflow/app/dags", owner: "1000" }
-      - { path: "{{ host_data_dir }}/airflow/app/logs", owner: "1000" }
-      - { path: "{{ host_data_dir }}/airflow/db", owner: "1000", mode: "0700" }
+      - { path: "{{ host_data_dir }}/airflow/app/plugins", owner: "{{ primary_owner }}" }
+      - { path: "{{ host_data_dir }}/airflow/app/dags", owner: "{{ primary_owner }}" }
+      - { path: "{{ host_data_dir }}/airflow/app/logs", owner: "{{ primary_owner }}" }
+      - { path: "{{ host_data_dir }}/airflow/db", owner: "{{ primary_owner }}", mode: "0700" }
   bentopdf:
     port: 8085
     dirs:
-      - { path: "{{ host_data_dir }}/bentopdf/config", owner: "1000", group: "1000" }
-      - { path: "{{ host_data_dir }}/bentopdf/data", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/bentopdf/config", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
+      - { path: "{{ host_data_dir }}/bentopdf/data", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
   calibre:
     port: [ 8080, 8081, 8083 ]
     dirs:
@@ -40,33 +42,33 @@ app_configs:
     dirs:
       - {
           path: "{{ host_data_dir }}/codeserver/codeserver_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
   deluge:
     port: 10004
     dirs:
       - {
           path: "{{ host_data_dir }}/deluge/downloads_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/deluge/deluge_config_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
   dockovpn:
     port: 8386
     dirs:
-      - { path: "{{ host_data_dir }}/dockovpn", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/dockovpn", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
   duplicati:
     port: 8200
     dirs:
       - {
           path: "{{ host_data_dir }}/duplicati/config",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
           mode: "0700",
         }
   epg:
@@ -81,8 +83,8 @@ app_configs:
   ghost:
     port: 2368
     dirs:
-      - { path: "{{ host_data_dir }}/ghost/app", owner: "1000", group: "1000" }
-      - { path: "{{ host_data_dir }}/ghost/db", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/ghost/app", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
+      - { path: "{{ host_data_dir }}/ghost/db", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
   immich:
     port: 2283
     dirs:
@@ -99,16 +101,16 @@ app_configs:
     dirs:
       - {
           path: "{{ host_data_dir }}/jenkins/jenkins_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
   jupyter:
     port: 2705
     dirs:
       - {
           path: "{{ host_data_dir }}/jupyter/home/jovyan",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
   lazylibrarian:
     port: 5299
@@ -119,44 +121,44 @@ app_configs:
     dirs:
       - {
           path: "{{ host_data_dir }}/mediaserver/downloads",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/music",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/movies",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
-      - { path: "{{ host_data_dir }}/mediaserver/tv", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/mediaserver/tv", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
       - {
           path: "{{ host_data_dir }}/mediaserver/courses",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/sonarr/config",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/radarr/config",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/lidarr/config",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/bazarr/config",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
   n8n:
     port: 5678
@@ -168,8 +170,8 @@ app_configs:
     dirs:
       - {
           path: "{{ host_data_dir }}/nextcloud/db",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
           mode: "0700",
         }
       - {
@@ -177,11 +179,11 @@ app_configs:
           owner: "www-data",
           group: "www-data",
         }
-      - { path: "{{ host_data_dir }}/nextcloud/redis", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/nextcloud/redis", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
   nexus:
     port: 4634
     dirs:
-      - { path: "{{ host_data_dir }}/nexus/nexus", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/nexus/nexus", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
   nzbget:
     port: 6789
     dirs:
@@ -203,62 +205,62 @@ app_configs:
     dirs:
       - {
           path: "{{ host_data_dir }}/pgadmin",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
           mode: "0750",
         }
-      - { path: "{{ host_data_dir }}/postgresdb", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/postgresdb", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
   plex:
     port: 10018
     dirs:
       - {
           path: "{{ host_data_dir }}/plex/plex_config_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/plex/plex_transcode_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/plex/media_music_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/plex/media_movies_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/plex/media_tv_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/plex/media_courses_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
   postiz:
     port: 5000
     dirs:
       - {
           path: "{{ host_data_dir }}/postiz/app/config",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/postiz/app/uploads",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
-      - { path: "{{ host_data_dir }}/postiz/db/data", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/postiz/db/data", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
       - {
           path: "{{ host_data_dir }}/postiz/redis/data",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
   prowlarr:
     port: 10002
@@ -273,60 +275,60 @@ app_configs:
     dirs:
       - {
           path: "{{ host_data_dir }}/sftpgo/srv/sftpgo",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/sftpgo/var/lib/sftpgo",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
   sonarqube:
     port: 10026
     dirs:
       - {
           path: "{{ host_data_dir }}/sonarqube/pg_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
           mode: "0700",
         }
       - {
           path: "{{ host_data_dir }}/sonarqube/sonarqube_data_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/sonarqube/sonarqube_extensions_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/sonarqube/sonarqube_logs_mount_dir",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
   stirling-pdf:
     port: 8086
     dirs:
       - {
           path: "{{ host_data_dir }}/stirling-pdf/configs",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/stirling-pdf/logs",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/stirling-pdf/tessdata",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/stirling-pdf/pipeline",
-          owner: "1000",
-          group: "1000",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
   tautulli:
     port: 10019
@@ -340,7 +342,7 @@ app_configs:
   upsnap:
     port: 8090
     dirs:
-      - { path: "{{ host_data_dir }}/upsnap/data", owner: "1000", group: "1000" }
+      - { path: "{{ host_data_dir }}/upsnap/data", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
   wikijs:
     port: 3123
     dirs:

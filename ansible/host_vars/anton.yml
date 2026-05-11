@@ -1,3 +1,6 @@
+host_user: mrishab
+host_app_dir: /var/server/anton
+host_data_dir: /mnt/external_hdd
 enabled_apps:
   - affine
   - bentopdf
