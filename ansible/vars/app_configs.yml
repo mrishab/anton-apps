@@ -4,8 +4,8 @@ app_configs:
   adguardhome:
     port: [ 10007, 53 ]
     dirs:
-      - { path: "{{ host_data_dir }}/adguardhome/adguard_work_mount_dir" }
-      - { path: "{{ host_data_dir }}/adguardhome/adguard_conf_mount_dir" }
+      - { path: "{{ host_data_dir }}/adguard/work" }
+      - { path: "{{ host_data_dir }}/adguard/conf" }
   affine:
     port: 3010
     dirs:
@@ -41,7 +41,7 @@ app_configs:
     port: 10011
     dirs:
       - {
-          path: "{{ host_data_dir }}/codeserver/codeserver_mount_dir",
+          path: "{{ host_data_dir }}/codeserver/config",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
@@ -49,12 +49,12 @@ app_configs:
     port: 10004
     dirs:
       - {
-          path: "{{ host_data_dir }}/deluge/downloads_mount_dir",
+          path: "{{ host_data_dir }}/mediaserver/downloads",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
       - {
-          path: "{{ host_data_dir }}/deluge/deluge_config_mount_dir",
+          path: "{{ host_data_dir }}/mediaserver/deluge/config",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
@@ -100,7 +100,7 @@ app_configs:
     port: [ 10021, 10022, 10023 ]
     dirs:
       - {
-          path: "{{ host_data_dir }}/jenkins/jenkins_mount_dir",
+          path: "{{ host_data_dir }}/jenkins",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
@@ -195,7 +195,7 @@ app_configs:
   ombi:
     port: 10005
     dirs:
-      - { path: "{{ host_data_dir }}/ombi/ombi_config_mount_dir" }
+      - { path: "{{ host_data_dir }}/ombi/config" }
   open-webui:
     port: 11435
     dirs:
@@ -214,32 +214,32 @@ app_configs:
     port: 10018
     dirs:
       - {
-          path: "{{ host_data_dir }}/plex/plex_config_mount_dir",
+          path: "{{ host_data_dir }}/mediaserver/plex/config",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
       - {
-          path: "{{ host_data_dir }}/plex/plex_transcode_mount_dir",
+          path: "{{ host_data_dir }}/mediaserver/plex/transcode",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
       - {
-          path: "{{ host_data_dir }}/plex/media_music_mount_dir",
+          path: "{{ host_data_dir }}/mediaserver/music",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
       - {
-          path: "{{ host_data_dir }}/plex/media_movies_mount_dir",
+          path: "{{ host_data_dir }}/mediaserver/movies",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
       - {
-          path: "{{ host_data_dir }}/plex/media_tv_mount_dir",
+          path: "{{ host_data_dir }}/mediaserver/tv",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
       - {
-          path: "{{ host_data_dir }}/plex/media_courses_mount_dir",
+          path: "{{ host_data_dir }}/mediaserver/courses",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
@@ -265,7 +265,7 @@ app_configs:
   prowlarr:
     port: 10002
     dirs:
-      - { path: "{{ host_data_dir }}/prowlarr/prowlarr_config_mount_dir" }
+      - { path: "{{ host_data_dir }}/mediaserver/prowlarr/config" }
   registry:
     port: 5000
     dirs:
@@ -287,23 +287,23 @@ app_configs:
     port: 10026
     dirs:
       - {
-          path: "{{ host_data_dir }}/sonarqube/pg_mount_dir",
+          path: "{{ host_data_dir }}/sonarqube/db",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
           mode: "0700",
         }
       - {
-          path: "{{ host_data_dir }}/sonarqube/sonarqube_data_mount_dir",
+          path: "{{ host_data_dir }}/sonarqube/app/data",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
       - {
-          path: "{{ host_data_dir }}/sonarqube/sonarqube_extensions_mount_dir",
+          path: "{{ host_data_dir }}/sonarqube/app/extensions",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
       - {
-          path: "{{ host_data_dir }}/sonarqube/sonarqube_logs_mount_dir",
+          path: "{{ host_data_dir }}/sonarqube/app/logs",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
@@ -333,7 +333,7 @@ app_configs:
   tautulli:
     port: 10019
     dirs:
-      - { path: "{{ host_data_dir }}/tautulli/tautulli_config_mount_dir" }
+      - { path: "{{ host_data_dir }}/tautulli/config" }
   threadfin:
     port: 34400
     dirs:
