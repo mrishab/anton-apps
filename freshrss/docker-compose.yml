@@ -1,34 +1,32 @@
-version: '3'
-
 services:
   freshrss:
     image: ghcr.io/linuxserver/freshrss:version-1.28.0
     container_name: freshrss
     restart: unless-stopped
     environment:
-        PUID: ${APP_PUID}
-        PGID: ${APP_PGID}
-        TZ: ${HOST_TZ}
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
     ports:
       - ${FRESHRSS_WEB_PORT}:80
     volumes:
       - ${FRESHRSS_MOUNT_DIR}:/config
     depends_on:
-        - postgres
+      - postgres
 
   postgres:
     image: postgres:9.6.22-alpine3.14
     container_name: freshrss_postgres
     restart: unless-stopped
     environment:
-        # PG Super User
-        POSTGRES_USER: ${PG_USERNAME}
-        POSTGRES_PASSWORD: ${PG_PASSWORD}
-        POSTGRES_DB: ${PG_DATABASE}
-        # PG: FreshRSS
-        FRESHRSS_DB_NAME: ${FRESHRSS_DB_NAME}
-        FRESHRSS_DB_USER: ${FRESHRSS_DB_USER}
-        FRESHRSS_DB_PASS: ${FRESHRSS_DB_PASS}
+      # PG Super User
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+      # PG: FreshRSS
+      FRESHRSS_DB_NAME: ${FRESHRSS_DB_NAME}
+      FRESHRSS_DB_USER: ${FRESHRSS_DB_USER}
+      FRESHRSS_DB_PASS: ${FRESHRSS_DB_PASS}
     volumes:
-        - ${PG_MOUNT_DIR}:/var/lib/postgresql/data
-        - ./db-init-scripts:/docker-entrypoint-initdb.d
+      - ${PG_MOUNT_DIR}:/var/lib/postgresql/data
+      - ./db-init-scripts:/docker-entrypoint-initdb.d

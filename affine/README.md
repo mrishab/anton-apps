@@ -66,7 +66,7 @@ sudo chown -R 1000:1000 /mnt/external_hdd/affine
 
 ```sh
 # From the affine directory
-docker-compose up -d
+docker compose up -d
 
 # Or from the parent directory
 make start APPS="affine"
@@ -127,7 +127,7 @@ To update to the latest version:
 1. Update the AFFINE_REVISION in your .env file
 2. Restart the containers:
    ```sh
-   docker-compose down && docker-compose up -d
+   docker compose down && docker compose up -d
    ```
 
 ## Troubleshooting

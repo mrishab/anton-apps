@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   epg:
     image: ghcr.io/iptv-org/epg:master

@@ -14,7 +14,7 @@ Plex Media Server is a client-server media player system and software suite. Thi
 1. Configure your environment variables in the `.env` file
 2. Run the application:
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Environment Variables

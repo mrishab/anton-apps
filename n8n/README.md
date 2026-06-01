@@ -56,5 +56,5 @@ graph TD
 2. Configure credentials, database names, and host path mounts in `.env`.
 3. Start the stack:
    ```sh
-   docker-compose up -d
+   docker compose up -d
    ```

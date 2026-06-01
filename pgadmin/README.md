@@ -13,7 +13,7 @@ pgAdmin is a management tool for PostgreSQL and derivative relational databases.
 1. Configure your environment variables in the `.env` file
 2. Run the application:
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Environment Variables

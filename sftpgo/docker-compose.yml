@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   sftpgo:
     image: drakkan/sftpgo:v2.7.1-slim

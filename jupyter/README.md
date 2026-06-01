@@ -11,7 +11,7 @@ JupyterLab is the next-generation interface for Jupyter Notebooks. This Docker s
 1. Configure your environment variables in the `.env` file
 2. Run the application:
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Environment Variables

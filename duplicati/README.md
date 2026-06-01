@@ -42,7 +42,7 @@ DUPLICATI_SETTINGS_ENCRYPTION_KEY=your-encryption-key               # Key used t
 ### Starting the Application
 
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Accessing the Web UI

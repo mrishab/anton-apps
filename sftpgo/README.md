@@ -13,7 +13,7 @@ SFTPGo is a fully featured and highly configurable SFTP server with optional FTP
 1. Configure your environment variables in the `.env` file
 2. Run the application:
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Environment Variables
@@ -31,7 +31,7 @@ docker-compose up -d
 ## Troubleshooting
 - For permission issues, check the ownership and permissions of mounted directories
 - Connection problems may be related to firewall rules or SSH key configurations
-- Review logs with `docker-compose logs sftpgo` for detailed error information
+- Review logs with `docker compose logs sftpgo` for detailed error information
 
 ## Further Resources
 - [Official SFTPGo Documentation](https://github.com/drakkan/sftpgo/blob/main/docs/README.md)

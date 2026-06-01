@@ -1,15 +1,13 @@
-version: '3'
-
 services:
     elasticsearch:
         image: elasticsearch:${ELK_VERSION}
         container_name: elasticsearch
         restart: unless-stopped
-        environment: 
+        environment:
             discovery.type: single-node
         ports:
             - ${ELASTICSEARCH_NODE_PORT}:9300
-        volumes: 
+        volumes:
             - ${ELASTICSEARCH_DATA_MOUNT_DIR}:/usr/share/elasticsearch/data
 
     kibana:
@@ -35,8 +33,8 @@ services:
         volumes:
             - ${LOGSTASH_DATA_MOUNT_DIR}:/usr/share/logstash/data
         depends_on:
-        - elasticsearch
-        - kibana
+            - elasticsearch
+            - kibana
 
     logspout:
         image: gliderlabs/logspout:v3.2.13

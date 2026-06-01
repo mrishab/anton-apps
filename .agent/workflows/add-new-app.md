@@ -32,8 +32,6 @@ Follow these patterns from reference applications (e.g., plex):
 
 ### Required Structure:
 ```yaml
-version: '3'
-
 services:
   <app-name>:
     image: <image>:<explicit-version> # NEVER use 'latest'
@@ -56,7 +54,7 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              count: 1
+              count: all
               capabilities: [gpu]
 ```
 
@@ -226,12 +224,12 @@ If the new application needs to be exposed securely to the internet under your p
 Run these commands to verify everything is configured correctly:
 
 ```bash
-# Check docker-compose syntax
+# Check docker compose syntax
 cd <app-name>
-docker-compose config
+docker compose config
 
 # Verify environment variables are loaded
-docker-compose config | grep -i <app-name>
+docker compose config | grep -i <app-name>
 ```
 
 ---
@@ -245,7 +243,7 @@ docker-compose config | grep -i <app-name>
 - [ ] Updated `script.sh` (or `ansible/vars/app_configs.yml` for directory/port registry)
 - [ ] Updated `Makefile` or `enabled_apps` in host variables
 - [ ] (Optional) Configured reverse proxy subdomain blocks and certificate requests
-- [ ] Verified docker-compose configuration
+- [ ] Verified docker compose configuration
 
 ## Common Patterns Reference
 

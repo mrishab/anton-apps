@@ -54,7 +54,7 @@ DB_DATABASE_NAME=immich                                # Database name
 
 ```sh
 # From the immich directory
-docker-compose up -d
+docker compose up -d
 
 # Or from the parent directory
 make start APPS="immich"
@@ -104,8 +104,8 @@ To update to the latest version:
 1. Edit the .env file to set `IMMICH_VERSION=release` (or a specific version)
 2. Pull and restart:
    ```sh
-   docker-compose pull
-   docker-compose up -d
+   docker compose pull
+   docker compose up -d
    ```
 
 ## Troubleshooting

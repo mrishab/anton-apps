@@ -1,5 +1,3 @@
-version: '3'
-
 services:
     cadvisor:
         image: gcr.io/cadvisor/cadvisor:v0.52.0
@@ -13,5 +11,5 @@ services:
             - /sys:/sys:ro
             - /var/lib/docker/:/var/lib/docker:ro
             - /dev/disk/:/dev/disk:ro
-        devices: 
+        devices:
             - /dev/kmsg:/dev/kmsg

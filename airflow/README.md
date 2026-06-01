@@ -60,7 +60,7 @@ AIRFLOW_ADMIN_PASS=admin                    # Admin password
 
 ```sh
 # From the airflow directory
-docker-compose up -d
+docker compose up -d
 
 # Or from the parent directory
 make start APPS="airflow"

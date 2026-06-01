@@ -25,8 +25,8 @@ cp template.env .env
 2. Start the application:
 ```sh
 make ghost-up
-# or using docker-compose directly
-docker-compose up -d
+# or using docker compose directly
+docker compose up -d
 ```
 
 3. Access Ghost at `http://localhost:2368` (or your configured domain)

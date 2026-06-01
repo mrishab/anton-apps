@@ -4,22 +4,22 @@ APPS:={{ enabled_apps | join(' ') }}
 
 start:
 	for app in $(APPS) ; do \
-		cd $$app ; docker-compose up -d ; cd .. ; \
+		cd $$app ; docker compose up -d ; cd .. ; \
 	done
 
 stop:
 	for app in $(APPS) ; do \
-		cd ./$$app ; docker-compose down ; cd .. ; \
+		cd ./$$app ; docker compose down ; cd .. ; \
 	done
 
 remove:
 	for app in $(APPS) ; do \
-		cd ./$$app ; docker-compose rm ; cd .. ; \
+		cd ./$$app ; docker compose rm ; cd .. ; \
 	done
 
 logs:
 	for app in $(APPS) ; do \
-		cd ./$$app ; docker-compose logs ; cd .. ; \
+		cd ./$$app ; docker compose logs ; cd .. ; \
 	done
 
 clean: stop remove

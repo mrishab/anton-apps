@@ -51,7 +51,7 @@ sudo chown -R 1000:1000 /mnt/data/tautulli
 
 ```sh
 # From the tautulli directory
-docker-compose up -d
+docker compose up -d
 
 # Or from the parent directory
 make start APPS="tautulli"
@@ -107,8 +107,8 @@ Configure notifications for:
 ### Updates
 
 ```sh
-docker-compose pull
-docker-compose up -d
+docker compose pull
+docker compose up -d
 ```
 
 ## Troubleshooting

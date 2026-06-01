@@ -50,7 +50,7 @@ sudo chown -R 1000:1000 /path/to/downloads
 
 ```sh
 # From the prowlarr directory
-docker-compose up -d
+docker compose up -d
 
 # Or from the parent directory
 make start APPS="prowlarr"

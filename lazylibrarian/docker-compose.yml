@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   lazylibrarian:
     image: ghcr.io/linuxserver/lazylibrarian:version-68b1819c

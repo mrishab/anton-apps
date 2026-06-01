@@ -49,7 +49,7 @@ make check-nvidia
 
 ```sh
 # From the ollama directory
-docker-compose up -d
+docker compose up -d
 
 # Or from the parent directory
 make start APPS="ollama"

@@ -55,7 +55,7 @@ graph TD
    ```
 2. Run the stack:
    ```sh
-   docker-compose up -d
+   docker compose up -d
    ```
 
 ## Further Resources

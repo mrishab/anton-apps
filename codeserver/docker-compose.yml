@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   codeserver:
     image: codercom/code-server:4.118.0-39

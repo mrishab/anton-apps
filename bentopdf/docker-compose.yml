@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   bentopdf:
     image: bentopdf/bentopdf:v1.15.3

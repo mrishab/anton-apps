@@ -34,7 +34,7 @@ CODESERVER_MOUNT_DIR=/mnt/external_hdd/codeserver/config  # Mounted to /home/cod
 
 ```sh
 # From the codeserver directory
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Accessing the Interface
@@ -57,8 +57,8 @@ Or via reverse proxy at `https://code.cloudville.me`.
 ### Updates
 
 ```sh
-docker-compose pull
-docker-compose up -d
+docker compose pull
+docker compose up -d
 ```
 
 ### Backups

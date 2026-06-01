@@ -62,7 +62,7 @@ sudo chown -R www-data:www-data /path/to/data
 
 ```sh
 # From the nextcloud directory
-docker-compose up -d
+docker compose up -d
 
 # Or from the parent directory
 make start APPS="nextcloud"
@@ -113,8 +113,8 @@ To back up your Nextcloud installation:
 1. Update the image version in the Dockerfile
 2. Rebuild and restart:
    ```sh
-   docker-compose build
-   docker-compose up -d
+   docker compose build
+   docker compose up -d
    ```
 
 ## Troubleshooting

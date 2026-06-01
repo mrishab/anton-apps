@@ -39,7 +39,7 @@ OLLAMA_BASE_URL=http://172.17.0.1:11434              # URL to Ollama instance (u
 
 ```sh
 # From the open-webui directory
-docker-compose up -d
+docker compose up -d
 
 # Or from the parent directory
 make start APPS="open-webui"
@@ -73,8 +73,8 @@ http://your-server-ip:OPEN_WEBUI_WEB_PORT
 Keep the container up to date for new features and security updates:
 
 ```sh
-docker-compose pull
-docker-compose up -d
+docker compose pull
+docker compose up -d
 ```
 
 ## Troubleshooting

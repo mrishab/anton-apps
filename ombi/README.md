@@ -13,7 +13,7 @@ Ombi is a self-hosted web application that allows users to request movies and TV
 1. Configure your environment variables in the `.env` file
 2. Run the application:
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Environment Variables
@@ -31,7 +31,7 @@ docker-compose up -d
 ## Troubleshooting
 - If Ombi cannot connect to your media server, check network connectivity and credentials
 - For permission issues, make sure the PUID and PGID are set correctly
-- Database errors may require checking the Ombi logs with `docker-compose logs ombi`
+- Database errors may require checking the Ombi logs with `docker compose logs ombi`
 
 ## Further Resources
 - [Official Ombi Documentation](https://docs.ombi.app/)

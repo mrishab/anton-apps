@@ -41,7 +41,7 @@ OVPN_MOUNT_DIR=/mnt/external_hdd/dockovpn # Persistent storage for OpenVPN serve
 
 ```sh
 # From the dockovpn directory
-docker-compose up -d
+docker compose up -d
 
 # Or from the parent directory
 make start APPS="dockovpn"

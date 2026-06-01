@@ -102,7 +102,7 @@ Contributions to this collection are welcome! Here's how you can contribute:
    cd new-app-name
    cp template.env .env
    # Edit .env with appropriate values
-   docker-compose up -d
+   docker compose up -d
    ```
 
 4. Submit a pull request with your changes.

@@ -1,5 +1,3 @@
-version: '3'
-
 services:
     prometheus:
         image: prom/prometheus:v3.4.1
@@ -25,5 +23,5 @@ services:
             - ./alertmanager-data:/alertmanager
             - ${ALERTMANAGER_MOUNT_DIR}:/prometheus
         command:
-            - '--config.file=/etc/alertmanager/alertmanager.yml'
-            - '--storage.path=/alertmanager'
+            - "--config.file=/etc/alertmanager/alertmanager.yml"
+            - "--storage.path=/alertmanager"

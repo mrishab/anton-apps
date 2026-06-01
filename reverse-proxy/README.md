@@ -61,7 +61,7 @@ This SSHes into the Anton server and runs `init-certs.sh`, which:
 Deploy or update the reverse proxy by SSHing into the server and running Docker Compose directly:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Usage
@@ -109,7 +109,7 @@ To add a new service to the reverse proxy:
 2. Add the port mapping to `docker-compose.yml`
 3. Add a server block to the appropriate domain template
 4. Add the subdomain to the certificate initialization script
-5. Restart the reverse proxy with `docker-compose up -d`
+5. Restart the reverse proxy with `docker compose up -d`
 
 ## Security Considerations
 

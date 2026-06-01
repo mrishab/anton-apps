@@ -13,7 +13,7 @@ Wiki.js is a modern, lightweight and powerful wiki app built on Node.js. This Do
 1. Configure your environment variables in the `.env` file
 2. Run the application:
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Environment Variables
@@ -31,7 +31,7 @@ docker-compose up -d
 
 ## Troubleshooting
 - For database connection issues, verify your database credentials and ensure the database is running
-- Check logs with `docker-compose logs wikijs` for more detailed error information
+- Check logs with `docker compose logs wikijs` for more detailed error information
 
 ## Further Resources
 - [Official Wiki.js Documentation](https://docs.requarks.io/)

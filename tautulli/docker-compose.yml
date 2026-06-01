@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   tautulli:
     image: ghcr.io/linuxserver/tautulli:2.16.0
@@ -10,6 +8,6 @@ services:
       PGID: ${APP_PGID}
       TZ: ${HOST_TZ}
     volumes:
-    - ${TAUTULLI_CONFIG_MOUNT_DIR}:/config
+      - ${TAUTULLI_CONFIG_MOUNT_DIR}:/config
     ports:
-    - ${TAUTULLI_WEB_PORT}:8181
+      - ${TAUTULLI_WEB_PORT}:8181

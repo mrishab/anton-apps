@@ -1,37 +1,35 @@
-version: '3'
-
 services:
-  ddclient_cloudville:
-    image: ghcr.io/linuxserver/ddclient:4.0.0
-    container_name: ddclient_cloudville
-    restart: unless-stopped
-    environment:
-        PUID: ${DDNS_PUID}
-        PGID: ${DDNS_PGID}
-        TZ: ${HOST_TZ}
-    volumes:
-        - ./static/config/cloudville.me.conf:/config/ddclient.conf
+    ddclient_cloudville:
+        image: ghcr.io/linuxserver/ddclient:4.0.0
+        container_name: ddclient_cloudville
+        restart: unless-stopped
+        environment:
+            PUID: ${DDNS_PUID}
+            PGID: ${DDNS_PGID}
+            TZ: ${HOST_TZ}
+        volumes:
+            - ./static/config/cloudville.me.conf:/config/ddclient.conf
 
-  ddclient_mrishab:
-    image: ghcr.io/linuxserver/ddclient:4.0.0
-    container_name: ddclient_mrishab
-    restart: unless-stopped
-    environment:
-        PUID: ${DDNS_PUID}
-        PGID: ${DDNS_PGID}
-        TZ: ${HOST_TZ}
-    volumes:
-        - ./static/config/mrishab.io.conf:/config/ddclient.conf
-    profiles:
-        - disabled # Disabled because the domain is expired
+    ddclient_mrishab:
+        image: ghcr.io/linuxserver/ddclient:4.0.0
+        container_name: ddclient_mrishab
+        restart: unless-stopped
+        environment:
+            PUID: ${DDNS_PUID}
+            PGID: ${DDNS_PGID}
+            TZ: ${HOST_TZ}
+        volumes:
+            - ./static/config/mrishab.io.conf:/config/ddclient.conf
+        profiles:
+            - disabled # Disabled because the domain is expired
 
-  ddclient_rishabmanocha:
-    image: ghcr.io/linuxserver/ddclient:4.0.0
-    container_name: ddclient_rishabmanocha
-    restart: unless-stopped
-    environment:
-        PUID: ${DDNS_PUID}
-        PGID: ${DDNS_PGID}
-        TZ: ${HOST_TZ}
-    volumes:
-        - ./static/config/rishabmanocha.com.conf:/config/ddclient.conf
+    ddclient_rishabmanocha:
+        image: ghcr.io/linuxserver/ddclient:4.0.0
+        container_name: ddclient_rishabmanocha
+        restart: unless-stopped
+        environment:
+            PUID: ${DDNS_PUID}
+            PGID: ${DDNS_PGID}
+            TZ: ${HOST_TZ}
+        volumes:
+            - ./static/config/rishabmanocha.com.conf:/config/ddclient.conf

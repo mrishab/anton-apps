@@ -40,7 +40,7 @@ ADGUARD_DNS_PORT=53                                     # DNS server port
 
 ```sh
 # From the adguardhome directory
-docker-compose up -d
+docker compose up -d
 
 # Or from the parent directory
 make start APPS="adguardhome"

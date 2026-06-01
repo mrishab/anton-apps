@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   threadfin:
     image: fyb3roptik/threadfin:1.2.37
@@ -19,6 +17,5 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              count: 1
+              count: all
               capabilities: [gpu]
-

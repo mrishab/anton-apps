@@ -12,7 +12,7 @@ LazyLibrarian is an automated e-book and audiobook manager. It tracks authors, f
 1. Configure your environment variables in the `.env` file
 2. Run the application:
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Environment Variables

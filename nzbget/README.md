@@ -14,7 +14,7 @@ NZBGet is a binary downloader specifically designed for Usenet. This Docker setu
 1. Configure your environment variables in the `.env` file
 2. Run the application:
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Environment Variables

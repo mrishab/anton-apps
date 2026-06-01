@@ -46,7 +46,7 @@ SOCAT_HOST_PORT=10023             # TCP port socat listens on to forward Docker 
 ### Starting the Application
 
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Accessing the Interface
