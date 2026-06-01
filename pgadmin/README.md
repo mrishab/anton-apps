@@ -17,10 +17,16 @@ docker-compose up -d
 ```
 
 ### Environment Variables
-- `PGADMIN_PORT`: External port for accessing the pgAdmin web interface (default: 5050)
-- `PGADMIN_DEFAULT_EMAIL`: Default administrator email
-- `PGADMIN_DEFAULT_PASSWORD`: Default administrator password
-- `PGADMIN_DATA`: Path to store pgAdmin data
+**pgAdmin:**
+- `PGADMIN_WEB_PORT`: Host port for the pgAdmin web interface (default: `3487`)
+- `PGADMIN_DEFAULT_EMAIL`: Administrator login email
+- `PGADMIN_DEFAULT_PASSWORD`: Administrator login password
+- `PGADMIN_MOUNT_DIR`: Persistent pgAdmin data directory
+
+**Bundled PostgreSQL instance:**
+- `PG_USERNAME` / `PG_PASSWORD` / `PG_DATABASE`: Superuser credentials
+- `PG_MOUNT_DIR`: PostgreSQL data directory
+- `PERSONAL_DB_USER` / `PERSONAL_DB_PASS` / `PERSONAL_DB_NAME`: Personal application database credentials
 
 ## Usage
 - Access the web interface at `http://your-server-ip:PGADMIN_PORT`

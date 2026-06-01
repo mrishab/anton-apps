@@ -23,8 +23,8 @@ Edit the .env file with your configuration:
 
 ```
 OPEN_WEBUI_MOUNT_DIR=/mnt/external_hdd/open-webui    # Persistent data directory
-OPEN_WEBUI_WEB_PORT=3000                             # Web interface port
-OLLAMA_BASE_URL=http://ollama:11434                  # URL to Ollama instance
+OPEN_WEBUI_WEB_PORT=11435                            # Web interface port
+OLLAMA_BASE_URL=http://172.17.0.1:11434              # URL to Ollama instance (using Docker host IP)
 ```
 
 ### Prerequisites

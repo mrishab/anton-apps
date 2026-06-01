@@ -18,12 +18,11 @@ docker-compose up -d
 ```
 
 ### Environment Variables
-- `NZBGET_PORT`: External port for accessing the NZBGet web interface (default: 6789)
-- `NZBGET_DATA`: Path to store NZBGet configuration
-- `DOWNLOADS_DIR`: Path to store downloaded files
-- `PUID`: User ID for permissions
-- `PGID`: Group ID for permissions
-- `TZ`: Timezone setting
+- `NZBGET_WEB_UI_PORT`: Host port for the NZBGet web interface (default: `6789`)
+- `NZBGET_CONFIG_MOUNT_DIR`: Path to store NZBGet configuration (mounted to `/config`)
+- `DOWNLOADS_MOUNT_DIR`: Shared download directory (mounted to `/downloads`)
+- `APP_PUID` / `APP_PGID`: Run-as user/group identity
+- `HOST_TZ`: Timezone setting
 
 ## Usage
 - Access the web interface at `http://your-server-ip:NZBGET_PORT`

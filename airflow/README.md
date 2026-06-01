@@ -41,8 +41,8 @@ AIRFLOW_DB_SCHEME=postgresql+psycopg2 # Database connection scheme
 AIRFLOW_MOUNT_DIR_PLUGINS=/path/to/plugins  # Plugins directory
 AIRFLOW_MOUNT_DIR_DAGS=/path/to/dags       # DAGs directory
 AIRFLOW_MOUNT_DIR_LOGS=/path/to/logs       # Logs directory
-AIRFLOW_PUBLIC_URL=http://localhost:8080    # Public URL
-AIRFLOW_WEB_PORT=8080                      # Web interface port
+AIRFLOW_PUBLIC_URL=http://localhost    # Public URL
+AIRFLOW_WEB_PORT=2364                      # Web interface port
 AIRFLOW_CORE_EXECUTOR=LocalExecutor         # Executor type
 
 # Airflow Admin User

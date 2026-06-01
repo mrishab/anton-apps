@@ -25,21 +25,26 @@ Edit the .env file with your configuration:
 # POSTGRES Configuration
 PG_USERNAME=postgres          # PostgreSQL superuser username
 PG_PASSWORD=your_secure_pass  # PostgreSQL superuser password
-PG_PORT=5432                  # PostgreSQL port
+PG_PORT=9543                  # PostgreSQL port (not exposed externally; internal use only)
 PG_DATABASE=postgres          # PostgreSQL database name
-PG_MOUNT_DIR=/path/to/pg/data # PostgreSQL data directory
+PG_MOUNT_DIR=/mnt/external_hdd/nextcloud/db  # PostgreSQL data directory
 
-# Nextcloud Configuration
+# Nextcloud DB Configuration
 NC_USERNAME=nextcloud         # Nextcloud database user
 NC_PASSWORD=secure_password   # Nextcloud database password
 NC_DATABASE=nextcloud         # Nextcloud database name
 
 # Nextcloud App Configuration
-NC_PORT=8080                  # Web port for Nextcloud
+NC_PORT=8765                  # Host port for Nextcloud web interface
 NC_ADMIN_USERNAME=admin       # Nextcloud admin username
 NC_ADMIN_PASSWORD=admin_pass  # Nextcloud admin password
-NC_MOUNT_DIR=/path/to/data    # Data directory for Nextcloud
-NC_TRUSTED_DOMAINS=nextcloud.local,192.168.1.10  # Comma-separated trusted domains
+NC_MOUNT_DIR=/mnt/external_hdd/nextcloud/html  # Nextcloud data/html directory
+NC_TRUSTED_DOMAINS=nextcloud.cloudville.me     # Trusted hostname for Nextcloud access
+NC_DEFAULT_PHONE_REGION=CA   # Default phone region for contact apps
+
+# Redis Configuration (memcache.locking)
+REDIS_PASSWORD=your_redis_pass  # Redis authentication password
+REDIS_MOUNT_DIR=/mnt/external_hdd/nextcloud/redis  # Redis persistence directory
 ```
 
 ### Data Directories

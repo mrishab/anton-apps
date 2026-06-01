@@ -18,11 +18,13 @@ docker-compose up -d
 ```
 
 ### Environment Variables
-- `PLEX_PORT`: External port for accessing Plex (default: 32400)
-- `PLEX_CLAIM`: Claim token from plex.tv/claim
-- `PLEX_DATA`: Path to store Plex configuration and metadata
-- `MEDIA_LIBRARY`: Path to your media library
-- `ADVERTISE_IP`: IP address to advertise for the server (for remote access)
+- `PLEX_WEB_UI_PORT`: Host port for accessing Plex (default: `32400`)
+- `PLEX_CONFIG_MOUNT_DIR`: Path to store Plex configuration and metadata
+- `PLEX_TRANSCODE_MOUNT_DIR`: Path to store temporary transcode files
+- `PLEX_ALLOWED_NETWORKS`: Local networks allowed without authentication (e.g. `192.168.1.0/24`)
+- `MEDIA_MOVIES_MOUNT_DIR` / `MEDIA_TV_MOUNT_DIR` / `MEDIA_MUSIC_MOUNT_DIR` / `MEDIA_COURSES_MOUNT_DIR`: Paths to your media libraries
+- `APP_PUID` / `APP_PGID`: Run-as user/group identity
+- `HOST_TZ`: Timezone setting
 
 ## Usage
 - Access Plex at `http://your-server-ip:PLEX_PORT/web`

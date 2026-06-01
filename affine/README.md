@@ -39,11 +39,11 @@ CONFIG_LOCATION=/mnt/external_hdd/affine/app/config   # Configuration files
 
 # Email Settings (for notifications)
 MAILER_HOST=smtp.gmail.com                         # SMTP server
-MAILER_PORT=587                                    # SMTP port
+MAILER_PORT=465                                    # SMTP port (465 for SMTPS)
 MAILER_USER=your_email@gmail.com                   # Email address
 MAILER_PASSWORD=your_app_password                  # App password
 MAILER_SENDER=your_email@gmail.com                 # Sender email
-MAILER_SECURE=false                                # TLS setting
+MAILER_SECURE=true                                 # TLS enabled (required for port 465)
 
 # Database Credentials
 DB_USERNAME=affine                                 # Database username

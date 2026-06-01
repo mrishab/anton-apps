@@ -22,10 +22,11 @@ cp template.env .env
 Edit the .env file with your configuration:
 
 ```
-VPN_PORT=1194                              # VPN server port
-WEB_PORT=8080                              # Web UI port for config download
-HOST_ADDR=vpn.example.com                  # Your server's domain or IP address
-HOST_CONF_PORT=8080                        # Port for config file distribution
+VPN_PORT=1194                              # VPN server port (UDP)
+WEB_PORT=8386                              # Web UI port for config download
+HOST_ADDR=ovpn.cloudville.me              # Your server's public domain or IP address
+HOST_CONF_PORT=443                         # Port advertised in the generated client config (e.g. your reverse proxy HTTPS port)
+OVPN_MOUNT_DIR=/mnt/external_hdd/dockovpn # Persistent storage for OpenVPN server data
 ```
 
 ### Network Configuration

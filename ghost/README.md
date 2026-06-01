@@ -35,11 +35,22 @@ docker-compose up -d
 
 Key environment variables in `.env`:
 
-- `GHOST_URL`: Your blog's URL (e.g., http://localhost:2368)
+- `GHOST_PORT`: Host port (default `2368`; Ghost always listens on `2368` internally)
+- `PUBLIC_URL`: Your blog's public URL (e.g., `https://rishabmanocha.com`)
+- `ADMIN_URL`: Ghost admin panel URL (e.g., `https://ghost.rishabmanocha.com`)
+- `GHOST_MOUNT_DIR`: Persistent volume for Ghost content (themes, images, etc.)
 - `MYSQL_ROOT_PASSWORD`: Root password for MySQL
-- `MYSQL_DATABASE`: Database name for Ghost
-- `MYSQL_USER`: MySQL user for Ghost
-- `MYSQL_PASSWORD`: MySQL password for Ghost
+- `MYSQL_MOUNT_DIR`: Persistent MySQL data directory
+- `GHOST_DB_NAME`: Database name for Ghost
+- `GHOST_DB_USER`: MySQL user for Ghost
+- `GHOST_DB_PASSWORD`: MySQL password for Ghost
+
+**SMTP (Mailgun):**
+- `MAIL_SERVICE`: Mail service provider (e.g., `Mailgun`)
+- `MAIL_HOST`: SMTP server (e.g., `smtp.mailgun.org`)
+- `MAIL_PORT`: SMTP port (default `465` for SMTPS)
+- `MAIL_AUTH_USER` / `MAIL_AUTH_PASS`: Mailgun SMTP credentials
+- `MAIL_SECURE_CONNECTION`: Set to `true` for TLS
 
 ## Data Persistence
 

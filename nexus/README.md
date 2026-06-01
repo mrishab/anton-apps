@@ -18,10 +18,8 @@ docker-compose up -d
 ```
 
 ### Environment Variables
-- `NEXUS_PORT`: External port for accessing the Nexus web interface (default: 8081)
-- `NEXUS_DATA`: Path to store Nexus data and packages
-- `NEXUS_DOCKER_PORT`: Port for Docker repository (default: 8082)
-- `MEMORY_LIMIT`: JVM memory limit (e.g., "2G")
+- `NEXUS_WEB_PORT`: Host port for the Nexus web interface (default: `4634`)
+- `NEXUS_MOUNT_DIR`: Path to store Nexus data and packages (mounted to `/nexus-data`)
 
 ## Usage
 - Access the web interface at `http://your-server-ip:NEXUS_PORT`

@@ -1,13 +1,11 @@
-# Jupyter Notebook
+# Jupyter (JupyterLab)
 
-## Overview
-Jupyter Notebook is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations, and narrative text. This Docker setup provides a Jupyter environment for data science, machine learning, and scientific computing.
+JupyterLab is the next-generation interface for Jupyter Notebooks. This Docker setup provides a JupyterLab environment for data science, machine learning, and scientific computing.
 
 ## Setup Instructions
 
 ### Prerequisites
 - Docker and Docker Compose installed on your system
-- Basic understanding of Python and Jupyter
 
 ### Quick Start
 1. Configure your environment variables in the `.env` file
@@ -17,22 +15,22 @@ docker-compose up -d
 ```
 
 ### Environment Variables
-- `JUPYTER_PORT`: External port for accessing the Jupyter interface (default: 8888)
-- `JUPYTER_DATA`: Path to store Jupyter notebooks and data
-- `JUPYTER_TOKEN`: Authentication token for accessing Jupyter (set to a secure value)
-- `JUPYTER_PASSWORD`: Optional password instead of token
+- `JUPYTER_ENABLE_LAB`: Set to `yes` to enable JupyterLab interface (vs classic Notebook UI)
+- `JUPYTER_WEB_UI_PORT`: Host port for accessing the interface (default: `2705`; container port is `8888`)
+- `USER_HOME_MOUNT_DIR`: Persistent home directory path on the host (mounted to `/home/jovyan`)
+- `JUPYTER_TOKEN`: Authentication token for secure access
 
 ## Usage
-- Access Jupyter at `http://your-server-ip:JUPYTER_PORT`
-- Enter the token or password when prompted
-- Create new notebooks or open existing ones
-- Install additional Python packages as needed using conda or pip
+- Access JupyterLab at `http://your-server-ip:JUPYTER_WEB_UI_PORT`
+- Enter the `JUPYTER_TOKEN` when prompted
+- Create new notebooks or open existing ones from the persistent volume
+- Install additional Python packages as needed using `conda` or `pip` within a notebook
 
 ## Troubleshooting
 - Memory issues might require adjusting Docker resource limits
-- Package installation problems could be related to permission issues
+- Package installation problems could be related to permission issues with the mounted volume
 - For kernel connection problems, try restarting the notebook server
 
 ## Further Resources
-- [Official Jupyter Documentation](https://jupyter.org/documentation)
+- [Official JupyterLab Documentation](https://jupyterlab.readthedocs.io/)
 - [Return to Main Documentation](../README.md)

@@ -17,11 +17,10 @@ docker-compose up -d
 ```
 
 ### Environment Variables
-- `OMBI_PORT`: External port for accessing the Ombi web interface (default: 3579)
-- `OMBI_DATA`: Path to store Ombi configuration data
-- `PUID`: User ID for permissions
-- `PGID`: Group ID for permissions
-- `TZ`: Timezone setting
+- `OMBI_WEB_PORT`: Host port for the Ombi web interface (default: `3579`)
+- `OMBI_CONFIG_MOUNT_DIR`: Persistent config directory (mounted to `/config`)
+- `APP_PUID` / `APP_PGID`: Run-as user/group identity
+- `HOST_TZ`: Timezone setting
 
 ## Usage
 - Access the web interface at `http://your-server-ip:OMBI_PORT`
