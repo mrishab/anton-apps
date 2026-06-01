@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+    elasticsearch:
+        image: elasticsearch:${ELK_VERSION}
+        container_name: elasticsearch
+        restart: unless-stopped
+        environment: 
+            discovery.type: single-node
+        ports:
+            - ${ELASTICSEARCH_NODE_PORT}:9300
+        volumes: 
+            - ${ELASTICSEARCH_DATA_MOUNT_DIR}:/usr/share/elasticsearch/data
+
+    kibana:
+        image: kibana:${ELK_VERSION}
+        container_name: kibana
+        restart: unless-stopped
+        environment:
+            ELASTICSEARCH_URL: http://elasticsearch:${ELASTICSEARCH_REST_PORT}
+        ports:
+            - ${KIBANA_WEB_PORT}:5601
+        volumes:
+            - ${KIBANA_DATA_MOUNT_DIR}:/usr/share/kibana/data
+        depends_on:
+            - elasticsearch
+
+    logstash:
+        image: logstash:${ELK_VERSION}
+        container_name: logstash
+        restart: unless-stopped
+        command: logstash -e "input { udp { port => ${LOGSTASH_UDP_PORT} } } output { elasticsearch { hosts => elasticsearch } }"
+        environment:
+            STDOUT: "true"
+        volumes:
+            - ${LOGSTASH_DATA_MOUNT_DIR}:/usr/share/logstash/data
+        depends_on:
+        - elasticsearch
+        - kibana
+
+    logspout:
+        image: gliderlabs/logspout:v3.2.13
+        container_name: logspout
+        restart: unless-stopped
+        command: udp://logstash:${LOGSTASH_UDP_PORT}
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock
+        depends_on:
+            - elasticsearch
+            - logstash
+            - kibana
