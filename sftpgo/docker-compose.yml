@@ -2,7 +2,7 @@ version: '3'
 
 services:
   sftpgo:
-    image: drakkan/sftpgo:v2.5.4
+    image: drakkan/sftpgo:v2.7.1-slim
     container_name: sftpgo
     restart: unless-stopped
     environment:

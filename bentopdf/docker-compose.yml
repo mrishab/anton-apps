@@ -2,7 +2,7 @@ version: '3'
 
 services:
   bentopdf:
-    image: bentopdf/bentopdf:1.7.3
+    image: bentopdf/bentopdf:v1.15.3
     container_name: bentopdf
     restart: unless-stopped
     environment:

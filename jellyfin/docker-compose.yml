@@ -2,7 +2,7 @@ version: '3'
 
 services:
   jellyfin:
-    image: jellyfin/jellyfin:10.11.6
+    image: jellyfin/jellyfin:10.11.8
     container_name: jellyfin
     restart: unless-stopped
     tmpfs:

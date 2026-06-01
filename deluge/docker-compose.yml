@@ -2,7 +2,7 @@ version: '3'
 
 services:
   vpn:
-    image: dperson/openvpn-client:latest
+    image: ghcr.io/utkuozdemir/dperson-openvpn-client:alpine-3.23.4-openvpn-2.6.16
     container_name: deluge_vpn
     restart: unless-stopped
     command: "-d -a ${REMOTE_USERNAME};${REMOTE_PASSWORD}"

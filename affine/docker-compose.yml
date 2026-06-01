@@ -54,7 +54,7 @@ services:
         condition: service_healthy
 
   redis:
-    image: redis
+    image: redis:7.4
     container_name: affine_redis
     healthcheck:
       test: ['CMD', 'redis-cli', '--raw', 'incr', 'ping']

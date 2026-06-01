@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   n8n:
-    image: n8nio/n8n:2.4.5
+    image: n8nio/n8n:2.21.3-dcb6c17
     container_name: n8n
     restart: unless-stopped
     environment:
@@ -23,7 +23,7 @@ services:
       - postgres
 
   postgres:
-    image: postgres:13.22-alpine3.22
+    image: postgres:18.4-alpine3.22
     container_name: n8n_postgres
     restart: unless-stopped
     environment:

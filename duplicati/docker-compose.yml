@@ -3,7 +3,7 @@ version: '3'
 services:
   duplicati:
     container_name: duplicati
-    image: linuxserver/duplicati:2.2.0
+    image: linuxserver/duplicati:2.3.0
     restart: unless-stopped
     ports:
       - ${DUPLICATI_WEB_UI_PORT}:8200

@@ -1,8 +1,8 @@
-version: '3'
+version: "3"
 
 services:
   sonarqube:
-    image: sonarqube:26.1.0.118079-community
+    image: sonarqube:2026.3.0-community
     container_name: sonarqube
     restart: unless-stopped
     ports:

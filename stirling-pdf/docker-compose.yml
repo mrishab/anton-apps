@@ -1,8 +1,8 @@
-version: '3'
+version: "3"
 
 services:
   stirling-pdf:
-    image: stirlingtools/stirling-pdf:2.3.0
+    image: stirlingtools/stirling-pdf:2.10.1
     container_name: stirling-pdf
     restart: unless-stopped
     environment:
