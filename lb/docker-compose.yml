@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:stable-alpine-perl
+    container_name: anton_lb
+    restart: unless-stopped
+    environment:
+      LB_HTTP_PORT: ${LB_HTTP_PORT}
+      LB_HTTPS_PORT: ${LB_HTTPS_PORT}
+      ANTON_HOST_IP: ${ANTON_HOST_IP}
+      ANTON_HTTP_PORT: ${ANTON_HTTP_PORT}
+      ANTON_HTTPS_PORT: ${ANTON_HTTPS_PORT}
+    ports:
+      - 80:${LB_HTTP_PORT}
+      - 443:${LB_HTTPS_PORT}
+    volumes:
+      - ./static/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./static/etc/nginx/templates:/etc/nginx/templates

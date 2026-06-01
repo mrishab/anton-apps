@@ -1,0 +1,10 @@
+stream {
+    upstream anton_https {
+        server ${ANTON_HOST_IP}:${ANTON_HTTPS_PORT};
+    }
+
+    server {
+        listen ${LB_HTTPS_PORT};
+        proxy_pass anton_https;
+    }
+}
