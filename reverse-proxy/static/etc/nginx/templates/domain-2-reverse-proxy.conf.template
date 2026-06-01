@@ -1,0 +1,38 @@
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+
+  server_name ${DOMAIN_2};
+
+  ssl_certificate /etc/nginx/ssl/live/${DOMAIN_2}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/${DOMAIN_2}/privkey.pem;
+
+  include snippets/ssl-params.conf;
+
+  add_header Content-Security-Policy "frame-ancestors 'self' https://*.${DOMAIN_2}";
+
+  location / {
+    proxy_pass http://${HOST_IP}:${GHOST_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+
+  location /ghost/# {
+    deny all;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name ghost.${DOMAIN_2};
+
+  ssl_certificate /etc/nginx/ssl/live/ghost.${DOMAIN_2}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/ghost.${DOMAIN_2}/privkey.pem;
+
+  location /ghost {
+    proxy_pass http://${HOST_IP}:${GHOST_PORT}/ghost;
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}

@@ -1,0 +1,673 @@
+map $http_upgrade $connection_upgrade {
+  default upgrade;
+  '' close;
+}
+
+server {
+  listen 443 default_server ssl;
+  listen [::]:443 default_server ssl;
+
+  server_name ${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/${DOMAIN_1}/privkey.pem;
+
+  include snippets/ssl-params.conf;
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name brewcraft.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/brewcraft.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/brewcraft.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${BREWCRAFT_UI_PORT};
+    include snippets/header-params.conf;
+  }
+
+  location /api {
+    proxy_pass http://${HOST_IP}:${BREWCRAFT_API_PORT};
+    include snippets/header-params.conf;
+  }
+
+  location /swagger {
+    proxy_pass http://${HOST_IP}:${BREWCRAFT_API_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name jenkins.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/jenkins.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/jenkins.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${JENKINS_WEB_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen ${JENKINS_SLAVE_PORT} ssl;
+  listen [::]:${JENKINS_SLAVE_PORT} ssl;
+  server_name jenkins.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/jenkins.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/jenkins.${DOMAIN_1}/privkey.pem;
+
+  include snippets/ssl-params.conf;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${JENKINS_SLAVE_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name nextcloud.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/nextcloud.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/nextcloud.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${NEXTCLOUD_WEB_PORT};
+    include snippets/header-params.conf;
+    include snippets/timeout-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name nexus.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/nexus.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/nexus.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${NEXUS_WEB_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name pgadmin.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/pgadmin.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/pgadmin.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${PGADMIN_WEB_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name registry.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/registry.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/registry.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${REGISTRY_WEB_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name adguardhome.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/adguardhome.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/adguardhome.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${ADGUARDHOME_WEB_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name wikijs.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/wikijs.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/wikijs.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${WIKIJS_WEB_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name vscode.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/vscode.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/vscode.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${CODESERVER_WEB_UI_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name airflow.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/airflow.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/airflow.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${AIRFLOW_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name deluge.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/deluge.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/deluge.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${DELUGE_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name nzbget.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/nzbget.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/nzbget.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${NZGBET_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name prowlarr.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/prowlarr.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/prowlarr.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${PROWLARR_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name sonarr.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/sonarr.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/sonarr.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${SONARR_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name lidarr.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/lidarr.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/lidarr.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${LIDARR_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name radarr.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/radarr.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/radarr.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${RADARR_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name bazarr.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/bazarr.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/bazarr.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${BAZARR_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name plex.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/plex.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/plex.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${PLEX_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name duplicati.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/duplicati.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/duplicati.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${DUPLICATI_WEB_UI_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name lazylibrarian.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/lazylibrarian.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/lazylibrarian.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${LAZYLIBRARIAN_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name kibana.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/kibana.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/kibana.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${KIBANA_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name rss.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/rss.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/rss.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${FRESHRSS_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name grafana.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/grafana.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/grafana.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${GRAFANA_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name tautulli.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/tautulli.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/tautulli.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${TAUTULLI_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name ombi.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/ombi.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/ombi.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${OMBI_WEB_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name jupyter.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/jupyter.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/jupyter.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${JUPYTER_WEB_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name brewcraftdev.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/brewcraftdev.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/brewcraftdev.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${BREWCRAFTDEV_WEB_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name sonarqube.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/sonarqube.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/sonarqube.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${SONARQUBE_WEB_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name calibre.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/calibre.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/calibre.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${CALIBRE_GUI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name calibre-web.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/calibre-web.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/calibre-web.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${CALIBRE_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name sftpgo.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/sftpgo.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/sftpgo.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${SFTPGO_WEB_UI_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name ovpn.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/ovpn.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/ovpn.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${DOCKOVPN_WEB_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name ollama.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/ollama.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/ollama.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${OLLAMA_WEB_PORT};
+    include snippets/header-params.conf;
+    include snippets/timeout-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name open-webui.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/open-webui.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/open-webui.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${OPEN_WEBUI_WEB_PORT};
+    include snippets/header-params.conf;
+    include snippets/timeout-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name postiz.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/postiz.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/postiz.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${POSTIZ_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name immich.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/immich.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/immich.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${IMMICH_PORT};
+    include snippets/header-params.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name affine.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/affine.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/affine.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${AFFINE_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name n8n.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/n8n.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/n8n.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${N8N_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name threadfin.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/threadfin.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/threadfin.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${THREADFIN_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name epg.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/epg.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/epg.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${EPG_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name upsnap.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/upsnap.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/upsnap.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${UPSNAP_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name jellyfin.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/jellyfin.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/jellyfin.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${JELLYFIN_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name bentopdf.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/bentopdf.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/bentopdf.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${BENTOPDF_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name stirlingpdf.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/stirlingpdf.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/stirlingpdf.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${STIRLINGPDF_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}

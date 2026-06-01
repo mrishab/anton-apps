@@ -1,0 +1,41 @@
+groups:
+  - name: node_alerts
+    rules:
+      - alert: AntonDown
+        expr: up{job="node_anton"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Anton is down"
+          description: "Anton has been down for more than 1 minute."
+
+      - alert: HighCPUUsage
+        expr: node_load1 > 15
+        for: 5m
+        labels:
+          severity: warning
+          slack_channel: 'server-health'
+        annotations:
+          summary: "High CPU usage on node"
+          description: "The 1-minute load average has been above 15 for more than 5 minutes."
+
+      - alert: MemoryUsageHigh
+        expr: (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100 > 90
+        for: 5m
+        labels:
+          severity: warning
+          slack_channel: 'server-health'
+        annotations:
+          summary: "High memory usage on node"
+          description: "Memory usage has been above 90% for more than 5 minutes."
+
+      - alert: DiskUsageHigh
+        expr: (1 - node_filesystem_avail_bytes{fstype!~"(tmpfs|overlay)"} / node_filesystem_size_bytes{fstype!~"(tmpfs|overlay)"}) * 100 > 90
+        for: 5m
+        labels:
+          severity: warning
+          slack_channel: 'server-health'
+        annotations:
+          summary: "Disk usage is high"
+          description: "Disk usage has been above 90% for more than 5 minutes."

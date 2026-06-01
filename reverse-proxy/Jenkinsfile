@@ -1,0 +1,36 @@
+pipeline {
+    agent {
+        label 'docker'
+    }
+
+    parameters {
+        string(name: 'HOST_URL', defaultValue: '172.17.0.1')
+    }
+
+    triggers {
+        cron('H H */15 * *')
+    }
+
+    environment {
+        SSH_CREDS = credentials('jaas_user')
+    }
+
+    stages {
+        stage ('Setup SSH') {
+            steps {
+                sh """
+                    mkdir -p ~/.ssh/
+                    ssh-keyscan -H ${env.HOST_URL} > ~/.ssh/known_hosts
+                """
+            }
+        }
+
+        stage ('Renew') {
+            steps {
+                sh """
+                    ssh -i '${SSH_CREDS}' ${SSH_CREDS_USR}@${params.HOST_URL} "cd /var/server/anton/reverse-proxy && make cert-renew"
+                """
+            }
+        }
+    }
+}

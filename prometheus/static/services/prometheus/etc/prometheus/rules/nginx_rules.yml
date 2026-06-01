@@ -1,0 +1,22 @@
+groups:
+  - name: nginx_alerts
+    rules:
+      - alert: NginxDown
+        expr: nginx_up == 0
+        for: 5m
+        labels:
+          severity: critical
+          slack_channel: 'server-health'
+        annotations:
+          summary: "Nginx reverse proxy is down"
+          description: "Nginx is down on {{ $labels.instance }}."
+
+      - alert: NginxHigh5xxRate
+        expr: (sum(rate(nginx_http_requests_total{status=~"5.."}[5m])) by (instance) / sum(rate(nginx_http_requests_total[5m])) by (instance)) * 100 > 3
+        for: 5m
+        labels:
+          severity: warning
+          slack_channel: 'server-health'
+        annotations:
+          summary: "High 5xx rate on Nginx ({{ $labels.instance }})"
+          description: "Nginx 5xx error rate is above 3% (currently {{ $value | printf \"%.2f\" }}%)."

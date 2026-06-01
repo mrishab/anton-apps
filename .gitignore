@@ -8,3 +8,4 @@ launch.json
 .gemini/
 *.skill
 ddns/**/*.conf
+slack_webhook.txt

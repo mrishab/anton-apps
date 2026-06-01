@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+    prometheus:
+        image: prom/prometheus:v3.4.1
+        container_name: prometheus
+        restart: unless-stopped
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        ports:
+            - ${PROMETHEUS_UI_PORT}:9090
+        command: ["--config.file=/etc/prometheus/prometheus.yml"]
+        volumes:
+            - ./static/services/prometheus/etc/prometheus:/etc/prometheus
+            - ${PROMETHEUS_MOUNT_DIR}:/prometheus
+
+    alertmanager:
+        image: prom/alertmanager:v0.26.0
+        container_name: alertmanager
+        restart: unless-stopped
+        ports:
+            - ${ALERTMANAGER_PORT}:9093
+        volumes:
+            - ./static/services/prometheus/etc/alertmanager:/etc/alertmanager
+            - ./alertmanager-data:/alertmanager
+            - ${ALERTMANAGER_MOUNT_DIR}:/prometheus
+        command:
+            - '--config.file=/etc/alertmanager/alertmanager.yml'
+            - '--storage.path=/alertmanager'

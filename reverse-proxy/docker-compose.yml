@@ -1,0 +1,86 @@
+version: '3'
+
+services:
+  certbot:
+    image: certbot/certbot:v1.29.0
+    container_name: certbot
+    volumes:
+      - ${CERTBOT_MOUNT_DIR}:/var/www/certbot/:rw
+      - ${CERTIFICATES_MOUNT_DIR}:/etc/letsencrypt/:rw
+
+  nginx:
+    image: nginx:stable-alpine-perl
+    container_name: reverse-proxy
+    restart: unless-stopped
+    environment:
+      DOMAIN_1: ${DOMAIN_1}
+      DOMAIN_2: ${DOMAIN_2}
+      HOST_IP: ${HOST_IP}
+      GLOBAL_MAX_BODY_SIZE: ${GLOBAL_MAX_BODY_SIZE}
+      BREWCRAFT_API_PORT: ${BREWCRAFT_API_PORT}
+      BREWCRAFT_UI_PORT: ${BREWCRAFT_UI_PORT}
+      JENKINS_WEB_PORT: ${JENKINS_WEB_PORT}
+      JENKINS_SLAVE_PORT: ${JENKINS_SLAVE_PORT}
+      NEXTCLOUD_WEB_PORT: ${NEXTCLOUD_WEB_PORT}
+      NEXUS_WEB_PORT: ${NEXUS_WEB_PORT}
+      PGADMIN_WEB_PORT: ${PGADMIN_WEB_PORT}
+      REGISTRY_WEB_PORT: ${REGISTRY_WEB_PORT}
+      ADGUARDHOME_WEB_PORT: ${ADGUARDHOME_WEB_PORT}
+      WIKIJS_WEB_PORT: ${WIKIJS_WEB_PORT}
+      CODESERVER_WEB_UI_PORT: ${CODESERVER_WEB_UI_PORT}
+      AIRFLOW_WEB_UI_PORT: ${AIRFLOW_WEB_UI_PORT}
+      DELUGE_WEB_UI_PORT: ${DELUGE_WEB_UI_PORT}
+      NZGBET_WEB_UI_PORT: ${NZGBET_WEB_UI_PORT}
+      PROWLARR_WEB_UI_PORT: ${PROWLARR_WEB_UI_PORT}
+      SONARR_WEB_UI_PORT: ${SONARR_WEB_UI_PORT}
+      RADARR_WEB_UI_PORT: ${RADARR_WEB_UI_PORT}
+      LIDARR_WEB_UI_PORT: ${LIDARR_WEB_UI_PORT}
+      BAZARR_WEB_UI_PORT: ${BAZARR_WEB_UI_PORT}
+      PLEX_WEB_UI_PORT: ${PLEX_WEB_UI_PORT}
+      DUPLICATI_WEB_UI_PORT: ${DUPLICATI_WEB_UI_PORT}
+      LAZYLIBRARIAN_WEB_UI_PORT: ${LAZYLIBRARIAN_WEB_UI_PORT}
+      KIBANA_WEB_UI_PORT: ${KIBANA_WEB_UI_PORT}
+      FRESHRSS_WEB_UI_PORT: ${FRESHRSS_WEB_UI_PORT}
+      GRAFANA_UI_PORT: ${GRAFANA_UI_PORT}
+      TAUTULLI_UI_PORT: ${TAUTULLI_UI_PORT}
+      OMBI_WEB_PORT: ${OMBI_WEB_PORT}
+      JUPYTER_WEB_PORT: ${JUPYTER_WEB_PORT}
+      BREWCRAFTDEV_WEB_PORT: ${BREWCRAFTDEV_WEB_PORT}
+      SONARQUBE_WEB_PORT: ${SONARQUBE_WEB_PORT}
+      CALIBRE_GUI_PORT: ${CALIBRE_GUI_PORT}
+      CALIBRE_WEB_UI_PORT: ${CALIBRE_WEB_UI_PORT}
+      SFTPGO_WEB_UI_PORT: ${SFTPGO_WEB_UI_PORT}
+      DOCKOVPN_WEB_PORT: ${DOCKOVPN_WEB_PORT}
+      OLLAMA_WEB_PORT: ${OLLAMA_WEB_PORT}
+      OPEN_WEBUI_WEB_PORT: ${OPEN_WEBUI_WEB_PORT}
+      GHOST_PORT: ${GHOST_PORT}
+      POSTIZ_PORT: ${POSTIZ_PORT}
+      IMMICH_PORT: ${IMMICH_PORT}
+      AFFINE_PORT: ${AFFINE_PORT}
+      N8N_PORT: ${N8N_PORT}
+      THREADFIN_PORT: ${THREADFIN_PORT}
+      EPG_PORT: ${EPG_PORT}
+      UPSNAP_PORT: ${UPSNAP_PORT}
+      JELLYFIN_PORT: ${JELLYFIN_PORT}
+      BENTOPDF_PORT: ${BENTOPDF_PORT}
+      STIRLINGPDF_PORT: ${STIRLINGPDF_PORT}
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./static/etc/nginx/templates:/etc/nginx/templates
+      - ./static/etc/nginx/snippets:/etc/nginx/snippets
+      - ./static/etc/ssl/certs/dhparam.pem:/etc/ssl/certs/dhparam.pem
+      - ${CERTBOT_MOUNT_DIR}:/var/www/certbot/:ro
+      - ${CERTIFICATES_MOUNT_DIR}:/etc/nginx/ssl/:ro
+
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:1.1.0
+    container_name: nginx-exporter
+    restart: unless-stopped
+    command:
+      - --nginx.scrape-uri=http://reverse-proxy:8080/stub_status
+    ports:
+      - 9113:9113
+    depends_on:
+      - nginx
