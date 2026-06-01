@@ -168,7 +168,60 @@ APPS:=affine airflow ... <app-name> ... wikijs
 2. Use lowercase, hyphenated names
 3. Space-separated list on a single line
 
-## Step 7: Verify the Setup
+## Step 7: Expose Subdomain via Reverse Proxy (Optional)
+
+If the new application needs to be exposed securely to the internet under your primary domain (Domain-1), follow these steps to update the `reverse-proxy` configuration:
+
+### 1. Update `reverse-proxy/docker-compose.yml`
+- Add the new port environment variable to the `nginx` service's `environment` section:
+  ```yaml
+  {SUBDOMAIN_NAME_UPPERCASE}_PORT: ${{{SUBDOMAIN_NAME_UPPERCASE}_PORT}}
+  ```
+- Place it alphabetically or at the end of the existing service ports.
+
+### 2. Update `reverse-proxy/init-certs.sh`
+- Add a certificate setup command for the new subdomain in the chain:
+  ```bash
+  make subdomain-1-cert-setup SUBDOMAIN={subdomain_name} &&\
+  ```
+- Insert it in alphabetical order among the existing `subdomain-1-cert-setup` commands. Ensure the line ends with ` &&\` to maintain the execution chain.
+
+### 3. Update `reverse-proxy/static/etc/nginx/templates/domain-1-reverse-proxy.conf.template`
+- Append a new server block at the end of the file:
+  ```nginx
+  server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name {subdomain_name}.${DOMAIN_1};
+
+    ssl_certificate /etc/nginx/ssl/live/{subdomain_name}.${DOMAIN_1}/fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/live/{subdomain_name}.${DOMAIN_1}/privkey.pem;
+
+    location / {
+      proxy_pass http://${HOST_IP}:${{{SUBDOMAIN_NAME_UPPERCASE}_PORT}};
+      include snippets/header-params.conf;
+      include snippets/websocket.conf;
+    }
+  }
+  ```
+
+### 4. Update `reverse-proxy/template.env`
+- Document the port environment variable at the end of the file:
+  ```env
+  {SUBDOMAIN_NAME_UPPERCASE}_PORT=<PUT-{SUBDOMAIN_NAME_UPPERCASE}-PORT-HERE>
+  ```
+
+### 5. Update `reverse-proxy/.env`
+- Add the actual port definition:
+  ```env
+  {SUBDOMAIN_NAME_UPPERCASE}_PORT={port_number}
+  ```
+
+*Note: Replace `{subdomain_name}` with the lowercase name (e.g. `threadfin`), `{SUBDOMAIN_NAME_UPPERCASE}` with the uppercase name (e.g. `THREADFIN`), and `{port_number}` with the service's internal port.*
+
+---
+
+## Step 8: Verify the Setup
 
 Run these commands to verify everything is configured correctly:
 
@@ -179,10 +232,9 @@ docker-compose config
 
 # Verify environment variables are loaded
 docker-compose config | grep -i <app-name>
-
-# Test folder creation (on target system)
-# Run the relevant section from script.sh
 ```
+
+---
 
 ## Summary Checklist
 
@@ -190,10 +242,10 @@ docker-compose config | grep -i <app-name>
 - [ ] Created `docker-compose.yml` following patterns
 - [ ] Created `template.env` with all variables documented
 - [ ] Created `.env` with actual values
-- [ ] Updated `script.sh` with folder creation commands
-- [ ] Updated `Makefile` APPS list
+- [ ] Updated `script.sh` (or `ansible/vars/app_configs.yml` for directory/port registry)
+- [ ] Updated `Makefile` or `enabled_apps` in host variables
+- [ ] (Optional) Configured reverse proxy subdomain blocks and certificate requests
 - [ ] Verified docker-compose configuration
-- [ ] Tested on target system (optional)
 
 ## Common Patterns Reference
 
@@ -218,3 +270,4 @@ docker-compose config | grep -i <app-name>
 - Media server apps: `201:201`
 - Most other apps: `1000:1000` or `1000:2234`
 - Check existing apps for specific requirements
+
