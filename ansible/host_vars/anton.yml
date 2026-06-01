@@ -4,11 +4,14 @@ host_data_dir: /mnt/external_hdd
 enabled_apps:
   - affine
   - bentopdf
+  - cadvisor
   - codeserver
+  - ddns
   - deluge
   - dockovpn
   - duplicati
   - ghost
+  - grafana
   - immich
   - jenkins
   - jupyter
@@ -18,6 +21,7 @@ enabled_apps:
   - open-webui
   - plex
   - prowlarr
+  - reverse-proxy
   - sftpgo
   - sonarqube
   - stirling-pdf

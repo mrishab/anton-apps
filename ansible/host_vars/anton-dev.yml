@@ -6,19 +6,24 @@ enabled_apps:
   - affine
   - airflow
   - bentopdf
+  - cadvisor
   - calibre
   - codeserver
+  - ddns
   - deluge
   - dockovpn
   - duplicati
+  - elk
   - epg
   - freshrss
   - ghost
+  - grafana
   - immich
   - jellyfin
   - jenkins
   - jupyter
   - lazylibrarian
+  - lb
   - mediaserver
   - n8n
   - nextcloud
@@ -30,8 +35,10 @@ enabled_apps:
   - pgadmin
   - plex
   - postiz
+  - prometheus
   - prowlarr
   - registry
+  - reverse-proxy
   - sftpgo
   - sonarqube
   - stirling-pdf

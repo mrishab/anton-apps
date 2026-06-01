@@ -58,6 +58,9 @@ app_configs:
           owner: "201",
           group: "201",
         }
+  cadvisor:
+    port: 8383
+    dirs: []
   codeserver:
     port: 2342
     dirs:
@@ -66,6 +69,8 @@ app_configs:
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
+  ddns:
+    dirs: []
   deluge:
     port: 8112
     dirs:
@@ -96,6 +101,12 @@ app_configs:
           group: "{{ primary_owner }}",
           mode: "0700",
         }
+  elk:
+    port: [9200, 9300, 5601]
+    dirs:
+      - { path: "{{ host_data_dir }}/elk/elasticsearch/data" }
+      - { path: "{{ host_data_dir }}/elk/kibana/data" }
+      - { path: "{{ host_data_dir }}/elk/logstash/data" }
   epg:
     port: 30000
     dirs:
@@ -118,6 +129,10 @@ app_configs:
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
+  grafana:
+    port: 3000
+    dirs:
+      - { path: "{{ host_data_dir }}/grafana", owner: "472", group: "472" }
   immich:
     port: 2283
     dirs:
@@ -149,6 +164,8 @@ app_configs:
     port: 5299
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/lazylibrarian/config" }
+  lb:
+    dirs: []
   mediaserver:
     port: [8989, 7878, 8686, 6767]
     dirs:
@@ -315,6 +332,11 @@ app_configs:
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
+  prometheus:
+    port: [9090, 9093]
+    dirs:
+      - { path: "{{ host_data_dir }}/prometheus" }
+      - { path: "{{ host_data_dir }}/alertmanager" }
   prowlarr:
     port: 9696
     dirs:
@@ -323,6 +345,11 @@ app_configs:
     port: 5000
     dirs:
       - { path: "{{ host_data_dir }}/registry" }
+  reverse-proxy:
+    port: [80, 443, 9113]
+    dirs:
+      - { path: "{{ host_data_dir }}/reverse-proxy/certbot" }
+      - { path: "{{ host_data_dir }}/reverse-proxy/certificates" }
   sftpgo:
     port: [9393, 2022, 2121]
     dirs:
