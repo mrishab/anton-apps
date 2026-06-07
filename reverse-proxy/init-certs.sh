@@ -48,6 +48,7 @@ make subdomain-1-cert-setup SUBDOMAIN=upsnap &&\
 make subdomain-1-cert-setup SUBDOMAIN=jellyfin &&\
 make subdomain-1-cert-setup SUBDOMAIN=bentopdf &&\
 make subdomain-1-cert-setup SUBDOMAIN=stirlingpdf &&\
+make subdomain-1-cert-setup SUBDOMAIN=homarr &&\
 
 make domain-2-cert-setup &&\
 make subdomain-2-cert-setup SUBDOMAIN=ghost &&\

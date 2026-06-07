@@ -12,6 +12,7 @@ enabled_apps:
   - duplicati
   - ghost
   - grafana
+  - homarr
   - immich
   - jenkins
   - jupyter

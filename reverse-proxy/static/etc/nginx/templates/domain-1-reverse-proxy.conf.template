@@ -671,3 +671,18 @@ server {
     include snippets/websocket.conf;
   }
 }
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name homarr.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/homarr.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/homarr.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${HOMARR_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}

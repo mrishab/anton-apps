@@ -62,6 +62,7 @@ services:
       JELLYFIN_PORT: ${JELLYFIN_PORT}
       BENTOPDF_PORT: ${BENTOPDF_PORT}
       STIRLINGPDF_PORT: ${STIRLINGPDF_PORT}
+      HOMARR_PORT: ${HOMARR_PORT}
     ports:
       - 80:80
       - 443:443

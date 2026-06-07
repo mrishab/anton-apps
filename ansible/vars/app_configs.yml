@@ -133,6 +133,10 @@ app_configs:
     port: 3000
     dirs:
       - { path: "{{ host_data_dir }}/grafana", owner: "472", group: "472" }
+  homarr:
+    port: 7575
+    dirs:
+      - { path: "{{ host_data_dir }}/homarr/appdata", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
   immich:
     port: 2283
     dirs:
