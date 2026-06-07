@@ -6,8 +6,8 @@ INVENTORY := ansible/inventories/$(TARGET).ini
 PLAYBOOK := ansible/playbook.yml
 ANSIBLE := ansible-playbook -i $(INVENTORY) $(PLAYBOOK)
 
-# Add -K to prompt for sudo password
-ANSIBLE_FLAGS := --ask-become-pass
+FLAGS ?= --skip-tags "setup_acl,apps,docker"
+ANSIBLE_FLAGS := --ask-become-pass $(if $(FLAGS),$(if $(filter --%,$(FLAGS)),$(FLAGS),--tags $(FLAGS)))
 
 # Default apps and limits
 ANSIBLE_VARS := $(if $(APPS),-e "apps=$(APPS)",)
