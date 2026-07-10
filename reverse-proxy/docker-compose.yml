@@ -13,6 +13,7 @@ services:
     environment:
       DOMAIN_1: ${DOMAIN_1}
       DOMAIN_2: ${DOMAIN_2}
+      DOMAIN_3: ${DOMAIN_3}
       HOST_IP: ${HOST_IP}
       GLOBAL_MAX_BODY_SIZE: ${GLOBAL_MAX_BODY_SIZE}
       BREWCRAFT_API_PORT: ${BREWCRAFT_API_PORT}

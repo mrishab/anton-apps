@@ -19,6 +19,10 @@ domain-1-cert-setup:
 domain-2-cert-setup:
 	docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d rishabmanocha.com
 
+domain-3-cert-setup:
+	docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d wezeon.com
+
+
 subdmain-1-delete-cert:
 	docker compose run --rm certbot delete --cert-name ${SUBDOMAIN}.cloudville.me
 

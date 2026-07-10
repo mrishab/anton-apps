@@ -33,3 +33,15 @@ services:
             TZ: ${HOST_TZ}
         volumes:
             - ./static/config/rishabmanocha.com.conf:/config/ddclient.conf
+
+    ddclient_wezeon:
+        image: ghcr.io/linuxserver/ddclient:4.0.0
+        container_name: ddclient_wezeon
+        restart: unless-stopped
+        environment:
+            PUID: ${DDNS_PUID}
+            PGID: ${DDNS_PGID}
+            TZ: ${HOST_TZ}
+        volumes:
+            - ./static/config/wezeon.com.conf:/config/ddclient.conf
+
