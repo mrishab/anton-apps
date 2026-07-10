@@ -122,12 +122,12 @@
         state: directory
         owner: "{{ host_user }}"
         group: "{{ host_user }}"
-        mode: "0775"
+        mode: "0755"
 
     - name: Deploy maintenance script
       template:
         src: templates/maintenance.sh.j2
-        dest: "/home/{{ host_user }}/scripts/.maintenance.sh"
+        dest: "/home/{{ host_user }}/scripts/maintenance.sh"
         owner: "{{ host_user }}"
         group: "{{ host_user }}"
         mode: "0755"
@@ -135,7 +135,7 @@
     - name: Source maintenance script in .bashrc
       lineinfile:
         path: "/home/{{ host_user }}/.bashrc"
-        line: "source ~/scripts/.maintenance.sh"
+        line: "source ~/scripts/maintenance.sh"
         insertafter: EOF
         create: yes
         state: present
