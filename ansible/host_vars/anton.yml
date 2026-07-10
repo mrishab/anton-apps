@@ -16,6 +16,7 @@ enabled_apps:
   - immich
   - jenkins
   - jupyter
+  - mediaserver
   - nextcloud
   - ollama
   - ombi
