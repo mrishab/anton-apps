@@ -92,6 +92,9 @@
           - "--exclude=*.log"
           - "--exclude=template.env"
           - "--exclude=README.md"
+          - "--no-perms"
+          - "--no-owner"
+          - "--no-group"
       loop: "{{ target_apps }}"
       become: false
       check_mode: no
