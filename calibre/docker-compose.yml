@@ -1,0 +1,31 @@
+services:
+  calibre:
+    image: lscr.io/linuxserver/calibre:latest
+    container_name: calibre
+    environment:
+      - PUID=${APP_PUID}
+      - PGID=${APP_PGID}
+      - TZ=${HOST_TZ}
+    volumes:
+      - ${CALIBRE_LIBRARY_MOUNT_DIR}:/config
+    ports:
+      - ${CALIBRE_DESKTOP_GUI_PORT}:8080
+      - ${CALIBRE_WEB_GUI_PORT}:8081
+    restart: unless-stopped
+
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=${APP_PUID}
+      - PGID=${APP_PGID}
+      - TZ=${HOST_TZ}
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+    volumes:
+      - ${CALIBRE_WEB_CONFIG_MOUNT_DIR}:/config
+      - ${CALIBRE_LIBRARY_MOUNT_DIR}:/books
+    ports:
+      - ${CALIBRE_WEB_UI_PORT}:8083
+    restart: unless-stopped
+    depends_on:
+      - calibre
