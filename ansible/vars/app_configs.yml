@@ -130,13 +130,17 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   grafana:
-    port: 3000
+    port: 3003
     dirs:
       - { path: "{{ host_data_dir }}/grafana", owner: "472", group: "472" }
   homarr:
     port: 7575
     dirs:
-      - { path: "{{ host_data_dir }}/homarr/appdata", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
+      - {
+          path: "{{ host_data_dir }}/homarr/appdata",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
+        }
   immich:
     port: 2283
     dirs:
@@ -149,7 +153,7 @@ app_configs:
       - { path: "{{ host_data_dir }}/mediaserver/jellyfin/config" }
       - { path: "{{ host_data_dir }}/mediaserver/jellyfin/cache" }
   jenkins:
-    port: [8888, 50000]
+    port: [8888, 50000, 10023]
     dirs:
       - {
           path: "{{ host_data_dir }}/jenkins",
