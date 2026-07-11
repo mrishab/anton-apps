@@ -32,7 +32,6 @@
       community.general.ufw:
         rule: allow
         port: "{{ port_item | string }}"
-        proto: tcp
       loop:
         "{{ target_apps | select('in', app_configs) | map('extract', app_configs)
         | map(attribute='port', default=[]) | flatten }}"
