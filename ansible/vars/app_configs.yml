@@ -124,11 +124,7 @@ app_configs:
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
-      - {
-          path: "{{ host_data_dir }}/ghost/db",
-          owner: "{{ primary_owner }}",
-          group: "{{ primary_owner }}",
-        }
+      - { path: "{{ host_data_dir }}/ghost/db" }
   grafana:
     port: 3003
     dirs:
@@ -153,7 +149,7 @@ app_configs:
     port: 2283
     dirs:
       - { path: "{{ host_data_dir }}/immich/app/library" }
-      - { path: "{{ host_data_dir }}/immich/db/postgres" }
+      - { path: "{{ host_data_dir }}/immich/db/postgres", mode: "0700" }
       - { path: "{{ host_data_dir }}/immich/ml-cache" }
   jellyfin:
     port: 8096
@@ -212,22 +208,22 @@ app_configs:
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/sonarr/config",
-          owner: "{{ primary_owner }}",
-          group: "{{ primary_owner }}",
+          owner: "201",
+          group: "201",
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/radarr/config",
-          owner: "{{ primary_owner }}",
-          group: "{{ primary_owner }}",
+          owner: "201",
+          group: "201",
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/lidarr/config",
-          owner: "{{ primary_owner }}",
-          group: "{{ primary_owner }}",
+          owner: "201",
+          group: "201",
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/bazarr/config",
-          owner: "{{ primary_owner }}",
+          owner: "70",
           group: "{{ primary_owner }}",
         }
   n8n:
@@ -251,8 +247,8 @@ app_configs:
         }
       - {
           path: "{{ host_data_dir }}/nextcloud/redis",
-          owner: "{{ primary_owner }}",
-          group: "{{ primary_owner }}",
+          owner: "999",
+          group: "999",
         }
   nexus:
     port: 4634
@@ -384,7 +380,7 @@ app_configs:
     dirs:
       - {
           path: "{{ host_data_dir }}/sonarqube/db",
-          owner: "{{ primary_owner }}",
+          owner: "70",
           group: "{{ primary_owner }}",
           mode: "0700",
         }
