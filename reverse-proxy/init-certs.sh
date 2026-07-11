@@ -4,7 +4,6 @@ make restart &&\
 
 make domain-1-cert-setup &&\
 
-make subdomain-1-cert-setup SUBDOMAIN=brewcraft &&\
 make subdomain-1-cert-setup SUBDOMAIN=jenkins &&\
 make subdomain-1-cert-setup SUBDOMAIN=nextcloud &&\
 make subdomain-1-cert-setup SUBDOMAIN=nexus &&\
@@ -30,7 +29,6 @@ make subdomain-1-cert-setup SUBDOMAIN=grafana &&\
 make subdomain-1-cert-setup SUBDOMAIN=tautulli &&\
 make subdomain-1-cert-setup SUBDOMAIN=ombi &&\
 make subdomain-1-cert-setup SUBDOMAIN=jupyter &&\
-make subdomain-1-cert-setup SUBDOMAIN=brewcraftdev &&\
 make subdomain-1-cert-setup SUBDOMAIN=sonarqube &&\
 make subdomain-1-cert-setup SUBDOMAIN=calibre &&\
 make subdomain-1-cert-setup SUBDOMAIN=calibre-web &&\

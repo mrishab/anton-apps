@@ -18,30 +18,6 @@ server {
 server {
   listen 443 ssl;
   listen [::]:443 ssl;
-  server_name brewcraft.${DOMAIN_1};
-
-  ssl_certificate /etc/nginx/ssl/live/brewcraft.${DOMAIN_1}/fullchain.pem;
-  ssl_certificate_key /etc/nginx/ssl/live/brewcraft.${DOMAIN_1}/privkey.pem;
-
-  location / {
-    proxy_pass http://${HOST_IP}:${BREWCRAFT_UI_PORT};
-    include snippets/header-params.conf;
-  }
-
-  location /api {
-    proxy_pass http://${HOST_IP}:${BREWCRAFT_API_PORT};
-    include snippets/header-params.conf;
-  }
-
-  location /swagger {
-    proxy_pass http://${HOST_IP}:${BREWCRAFT_API_PORT};
-    include snippets/header-params.conf;
-  }
-}
-
-server {
-  listen 443 ssl;
-  listen [::]:443 ssl;
   server_name jenkins.${DOMAIN_1};
 
   ssl_certificate /etc/nginx/ssl/live/jenkins.${DOMAIN_1}/fullchain.pem;
@@ -407,20 +383,6 @@ server {
     proxy_pass http://${HOST_IP}:${JUPYTER_WEB_PORT};
     include snippets/header-params.conf;
     include snippets/websocket.conf;
-  }
-}
-
-server {
-  listen 443 ssl;
-  listen [::]:443 ssl;
-  server_name brewcraftdev.${DOMAIN_1};
-
-  ssl_certificate /etc/nginx/ssl/live/brewcraftdev.${DOMAIN_1}/fullchain.pem;
-  ssl_certificate_key /etc/nginx/ssl/live/brewcraftdev.${DOMAIN_1}/privkey.pem;
-
-  location / {
-    proxy_pass http://${HOST_IP}:${BREWCRAFTDEV_WEB_PORT};
-    include snippets/header-params.conf;
   }
 }
 
