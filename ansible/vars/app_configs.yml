@@ -133,6 +133,14 @@ app_configs:
     port: 3003
     dirs:
       - { path: "{{ host_data_dir }}/grafana", owner: "472", group: "472" }
+  hermes:
+    port: [8642, 9119]
+    dirs:
+      - {
+          path: "{{ host_data_dir }}/hermes",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
+        }
   homarr:
     port: 7575
     dirs:

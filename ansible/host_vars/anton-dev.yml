@@ -19,6 +19,7 @@ enabled_apps:
   - freshrss
   - ghost
   - grafana
+  - hermes
   - homarr
   - immich
   - jellyfin
