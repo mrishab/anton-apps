@@ -79,6 +79,17 @@
         | map(attribute='dirs', default=[]) | flatten }}"
       check_mode: no
 
+    - name: Ensure app directory exists
+      file:
+        path: "{{ host_app_dir }}/{{ item }}"
+        state: directory
+        owner: "{{ host_user }}"
+        group: "{{ host_user }}"
+        mode: "0755"
+      loop: "{{ target_apps }}"
+      become: false
+      check_mode: no
+
     - name: Synchronize app files to host
       synchronize:
         src: "../{{ item }}/"
