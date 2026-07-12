@@ -26,7 +26,7 @@
         dest: /usr/bin/bat
         state: link
         force: yes
-      ignore_errors: yes # In case it's already named bat or not installed as batcat
+      ignore_errors: true # In case it's already named bat or not installed as batcat
 
     - name: Allow app ports in UFW
       community.general.ufw:
@@ -108,6 +108,8 @@
       loop: "{{ target_apps }}"
       become: false
       check_mode: no
+      register: sync_results
+      notify: Restart app
 
     - name: Deploy Makefile
       template:
@@ -116,15 +118,6 @@
         owner: "{{ host_user }}"
         group: "{{ host_user }}"
         mode: "0644"
-
-    - name: Manage enabled apps using Docker Compose
-      community.docker.docker_compose_v2:
-        project_src: "{{ host_app_dir }}/{{ item }}"
-        state: "{{ app_state | default('present') }}"
-      loop: "{{ target_apps }}"
-      tags:
-        - apps
-        - docker
 
     - name: Ensure scripts directory exists
       file:
@@ -149,3 +142,12 @@
         insertafter: EOF
         create: yes
         state: present
+
+  handlers:
+    - name: Restart app
+      command: "make reset APPS={{ item.item }}"
+      args:
+        chdir: "{{ host_app_dir }}"
+      loop: "{{ sync_results.results }}"
+      when: item.changed
+      become: false
