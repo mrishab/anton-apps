@@ -52,8 +52,6 @@ make subdomain-1-cert-setup SUBDOMAIN=hermes &&\
 make domain-2-cert-setup &&\
 make subdomain-2-cert-setup SUBDOMAIN=ghost &&\
 
-make domain-3-cert-setup &&\
-
 
 mv static/etc/nginx/templates/reverse-proxy.conf.template.bak static/etc/nginx/templates/reverse-proxy.conf.template &&\
 make restart
