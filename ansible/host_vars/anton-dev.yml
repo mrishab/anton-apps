@@ -9,6 +9,7 @@ enabled_apps:
   - bentopdf
   - cadvisor
   - calibre
+  - cloudflared
   - codeserver
   - ddns
   - deluge

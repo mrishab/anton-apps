@@ -5,6 +5,7 @@ enabled_apps:
   - affine
   - bentopdf
   - cadvisor
+  - cloudflared
   - codeserver
   - ddns
   - deluge

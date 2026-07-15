@@ -61,6 +61,8 @@ app_configs:
   cadvisor:
     port: 8383
     dirs: []
+  cloudflared:
+    dirs: []
   codeserver:
     port: 2342
     dirs:
