@@ -6,3 +6,6 @@ enabled_apps:
   - cloudflared
   - prometheus
   - sftpgo
+
+blocked_env_sync_apps:
+  - cloudflared

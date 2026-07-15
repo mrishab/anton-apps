@@ -50,3 +50,6 @@ enabled_apps:
   - threadfin
   - upsnap
   - wikijs
+
+blocked_env_sync_apps:
+  - cloudflared

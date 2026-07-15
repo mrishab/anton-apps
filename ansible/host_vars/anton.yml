@@ -31,3 +31,6 @@ enabled_apps:
   - stirling-pdf
   - tautulli
   - upsnap
+
+blocked_env_sync_apps:
+  - cloudflared

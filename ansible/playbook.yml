@@ -102,6 +102,7 @@
           - "--exclude=*.log"
           - "--exclude=template.env"
           - "--exclude=README.md"
+          - "--exclude=.env"
           - "--no-perms"
           - "--no-owner"
           - "--no-group"
@@ -110,6 +111,23 @@
       check_mode: no
       register: sync_results
       notify: Restart app
+
+    - name: Sync app .env files to host
+      synchronize:
+        src: "../{{ item }}/.env"
+        dest: "{{ host_app_dir }}/{{ item }}/.env"
+        recursive: no
+        rsync_path: "{{ rsync_path | default(omit) }}"
+        rsync_opts:
+          - "--ignore-missing-args"
+      loop: "{{ target_apps }}"
+      when: item not in (blocked_env_sync_apps | default([]))
+      become: false
+      check_mode: no
+      register: env_sync_results
+      notify: Restart app on env change
+      tags:
+        - sync_env
 
     - name: Deploy Makefile
       template:
@@ -150,4 +168,12 @@
         chdir: "{{ host_app_dir }}"
       loop: "{{ sync_results.results }}"
       when: item.changed
+      become: false
+
+    - name: Restart app on env change
+      command: "make reset APPS={{ item.item }}"
+      args:
+        chdir: "{{ host_app_dir }}"
+      loop: "{{ env_sync_results.results }}"
+      when: item.changed and env_sync_results is defined and env_sync_results.results is defined
       become: false

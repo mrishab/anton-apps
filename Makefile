@@ -6,7 +6,7 @@ INVENTORY := ansible/inventories/$(TARGET).ini
 PLAYBOOK := ansible/playbook.yml
 ANSIBLE := ansible-playbook -i $(INVENTORY) $(PLAYBOOK)
 
-FLAGS ?= --skip-tags "setup_acl"
+FLAGS ?= --skip-tags "setup_acl,sync_env"
 ANSIBLE_FLAGS := --ask-become-pass $(if $(FLAGS),$(if $(filter --%,$(FLAGS)),$(FLAGS),--tags $(FLAGS)))
 
 # Default apps and limits
