@@ -47,6 +47,17 @@
         reload: yes
       when: "'sonarqube' in target_apps"
 
+    - name: Set sysctl UDP buffer sizes for QUIC (cloudflared)
+      sysctl:
+        name: "{{ item.key }}"
+        value: "{{ item.value }}"
+        state: present
+        reload: yes
+      loop:
+        - { key: "net.core.rmem_max", value: "7500000" }
+        - { key: "net.core.wmem_max", value: "7500000" }
+      when: "'cloudflared' in target_apps"
+
     - name: Set ACL for duplicati group on external hdd
       ansible.posix.acl:
         path: /mnt/external_hdd
