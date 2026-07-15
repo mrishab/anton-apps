@@ -99,8 +99,8 @@ app_configs:
     dirs:
       - {
           path: "{{ host_data_dir }}/duplicati/config",
-          owner: "{{ primary_owner }}",
-          group: "{{ primary_owner }}",
+          owner: "2234",
+          group: "2234",
           mode: "0700",
         }
   elk:
@@ -138,6 +138,7 @@ app_configs:
           path: "{{ host_data_dir }}/hermes",
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
+          mode: "0700",
         }
   homarr:
     port: 7575
@@ -238,7 +239,7 @@ app_configs:
     dirs:
       - {
           path: "{{ host_data_dir }}/nextcloud/db",
-          owner: "{{ primary_owner }}",
+          owner: "70",
           group: "{{ primary_owner }}",
           mode: "0700",
         }
