@@ -48,9 +48,9 @@ make subdomain-1-cert-setup SUBDOMAIN=bentopdf &&\
 make subdomain-1-cert-setup SUBDOMAIN=stirlingpdf &&\
 make subdomain-1-cert-setup SUBDOMAIN=homarr &&\
 make subdomain-1-cert-setup SUBDOMAIN=hermes &&\
+make subdomain-1-cert-setup SUBDOMAIN=ghost &&\
 
 make domain-2-cert-setup &&\
-make subdomain-2-cert-setup SUBDOMAIN=ghost &&\
 
 
 mv static/etc/nginx/templates/reverse-proxy.conf.template.bak static/etc/nginx/templates/reverse-proxy.conf.template &&\

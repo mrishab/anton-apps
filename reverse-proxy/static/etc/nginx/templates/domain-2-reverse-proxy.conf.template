@@ -17,22 +17,8 @@ server {
     include snippets/websocket.conf;
   }
 
-  location /ghost/# {
+  location /ghost {
     deny all;
   }
 }
 
-server {
-  listen 443 ssl;
-  listen [::]:443 ssl;
-  server_name ghost.${DOMAIN_2};
-
-  ssl_certificate /etc/nginx/ssl/live/ghost.${DOMAIN_2}/fullchain.pem;
-  ssl_certificate_key /etc/nginx/ssl/live/ghost.${DOMAIN_2}/privkey.pem;
-
-  location /ghost {
-    proxy_pass http://${HOST_IP}:${GHOST_PORT}/ghost;
-    include snippets/header-params.conf;
-    include snippets/websocket.conf;
-  }
-}
