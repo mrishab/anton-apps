@@ -7,7 +7,6 @@ enabled_apps:
   - cadvisor
   - cloudflared
   - codeserver
-  - ddns
   - deluge
   - dockovpn
   - duplicati
@@ -25,7 +24,6 @@ enabled_apps:
   - open-webui
   - plex
   - prowlarr
-  - reverse-proxy
   - sftpgo
   - sonarqube
   - stirling-pdf

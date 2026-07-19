@@ -11,7 +11,6 @@ enabled_apps:
   - calibre
   - cloudflared
   - codeserver
-  - ddns
   - deluge
   - dockovpn
   - duplicati
@@ -42,7 +41,6 @@ enabled_apps:
   - prometheus
   - prowlarr
   - registry
-  - reverse-proxy
   - sftpgo
   - sonarqube
   - stirling-pdf
