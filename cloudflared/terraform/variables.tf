@@ -59,3 +59,14 @@ variable "rishabmanocha_domain" {
   type        = string
   default     = "rishabmanocha.com"
 }
+
+# ─────────────────────────────────────────────────────────────────────────────
+# WAF
+# ─────────────────────────────────────────────────────────────────────────────
+
+variable "allowed_countries" {
+  description = "List of allowed country codes"
+  type        = list(string)
+  default     = ["US", "CA", "IN"]
+}
+
