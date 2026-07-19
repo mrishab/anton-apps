@@ -1,0 +1,13 @@
+# Required — obtain from Cloudflare dashboard
+cloudflare_account_id = ""
+cloudflare_api_token  = ""
+
+# Zone IDs — find under each domain's Overview page in Cloudflare dashboard
+cloudville_zone_id    = ""
+rishabmanocha_zone_id = ""
+
+# Optional overrides (defaults shown)
+# tunnel_name          = "Anton Apps"
+# origin_ip            = "172.17.0.1"
+# cloudville_domain    = "cloudville.me"
+# rishabmanocha_domain = "rishabmanocha.com"

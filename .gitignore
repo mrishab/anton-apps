@@ -9,3 +9,18 @@ launch.json
 *.skill
 ddns/**/*.conf
 slack_webhook.txt
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+.terraform.lock.hcl
+
+# Variables with secrets
+terraform.tfvars
+*.auto.tfvars
+
+# Crash logs
+crash.log
+crash.*.log
