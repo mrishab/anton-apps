@@ -144,6 +144,10 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "this" {
   tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.this.id
 
   config {
+    warp_routing {
+      enabled = true
+    }
+
     # Application ingress rules — one per subdomain
     dynamic "ingress_rule" {
       for_each = local.ingress_rules
@@ -166,4 +170,11 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "this" {
       service = "http_status:404"
     }
   }
+}
+
+resource "cloudflare_zero_trust_tunnel_route" "home_network" {
+  account_id = var.cloudflare_account_id
+  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.this.id
+  network    = "192.168.1.0/24"
+  comment    = "Private network route for home LAN (replaces DockOVPN)"
 }

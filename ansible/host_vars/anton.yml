@@ -8,7 +8,6 @@ enabled_apps:
   - cloudflared
   - codeserver
   - deluge
-  - dockovpn
   - duplicati
   - ghost
   - grafana

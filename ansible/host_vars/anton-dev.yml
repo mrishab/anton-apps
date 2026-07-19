@@ -12,7 +12,6 @@ enabled_apps:
   - cloudflared
   - codeserver
   - deluge
-  - dockovpn
   - duplicati
   - elk
   - epg
