@@ -114,6 +114,7 @@
           - "--exclude=template.env"
           - "--exclude=README.md"
           - "--exclude=.env"
+          - "--exclude=*.tf*"
           - "--no-perms"
           - "--no-owner"
           - "--no-group"
