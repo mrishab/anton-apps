@@ -113,6 +113,31 @@ Contributions to this collection are welcome! Here's how you can contribute:
 2. Test thoroughly
 3. Submit a pull request with your changes
 
+## Disabled Applications
+
+The following applications have been disabled/moved out of the default active deployment list:
+
+### 1. Dynamic DNS Client (`ddns`)
+- **Reason**: All domain routing and DNS records have migrated to Cloudflare Tunnels (which dynamically handle CNAME mapping directly under Cloudflare's dashboard), rendering a local DDNS A-record updater container unnecessary.
+- **How to enable back**: Add `ddns` back to the `enabled_apps` list in your host variables (e.g., [anton.yml](file:///Users/rishabmanocha/SourceCode/anton-apps/ansible/host_vars/anton.yml)) and run:
+  ```sh
+  make deploy APPS=ddns
+  ```
+
+### 2. Reverse Proxy (`reverse-proxy`)
+- **Reason**: Remote SSL/TLS termination and subdomain routing are now natively managed by the Cloudflare Zero Trust Tunnel. The local Nginx reverse-proxy and automated Certbot certificate setups are no longer required to route incoming traffic.
+- **How to enable back**: Add `reverse-proxy` back to the `enabled_apps` list in your host variables (e.g., [anton.yml](file:///Users/rishabmanocha/SourceCode/anton-apps/ansible/host_vars/anton.yml)) and run:
+  ```sh
+  make deploy APPS=reverse-proxy
+  ```
+
+### 3. OpenVPN (`dockovpn`)
+- **Reason**: Replaced by Cloudflare Zero Trust / WARP private network routing (`192.168.1.0/24`). This provides secure remote access to local resources without exposing open VPN ports (such as UDP `1194` or TCP `8386`) to the public internet.
+- **How to enable back**: Add `dockovpn` back to the `enabled_apps` list in your host variables (e.g., [anton.yml](file:///Users/rishabmanocha/SourceCode/anton-apps/ansible/host_vars/anton.yml)) and run:
+  ```sh
+  make deploy APPS=dockovpn
+  ```
+
 ## License
 
 This collection is licensed under the MIT License - see the LICENSE file for details.
