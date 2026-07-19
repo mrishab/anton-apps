@@ -679,3 +679,18 @@ server {
   }
 }
 
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name wazuh.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/wazuh.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/wazuh.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass https://${HOST_IP}:${WAZUH_PORT};
+    proxy_ssl_verify off;
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}

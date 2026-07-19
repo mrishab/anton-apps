@@ -104,6 +104,7 @@ locals {
     upsnap        = { port = 8090, path = null }
     vscode        = { port = 2342, path = null }
     wikijs        = { port = 3123, path = null }
+    # wazuh         = { port = 5602, path = null }
   }
 
   # Build a flat list of all ingress rules for the tunnel config

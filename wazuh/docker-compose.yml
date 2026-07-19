@@ -1,0 +1,166 @@
+services:
+
+  # ── Init: TLS Certificate Generator ─────────────────────────────────────────
+  # Runs once on first boot; exits immediately on subsequent starts if certs
+  # already exist. All three main services depend on this completing successfully.
+  wazuh-cert-generator:
+    image: alpine:3.20
+    container_name: wazuh-cert-generator
+    restart: "no"
+    volumes:
+      - ${WAZUH_CERTS_MOUNT_DIR}:/certs
+    command: |
+      sh -c "
+        if [ -f /certs/root-ca.pem ]; then
+          echo '[cert-generator] Certificates already exist — skipping.';
+          exit 0;
+        fi;
+
+        echo '[cert-generator] Installing openssl...';
+        apk add --no-cache openssl;
+
+        echo '[cert-generator] Generating Root CA...';
+        openssl req -x509 -new -nodes -newkey rsa:2048 \
+          -keyout /certs/root-ca.key \
+          -out /certs/root-ca.pem \
+          -days 3650 \
+          -subj '/C=US/ST=California/O=Wazuh/CN=root-ca';
+
+        echo '[cert-generator] Generating Indexer certificate...';
+        openssl req -new -nodes -newkey rsa:2048 \
+          -keyout /certs/indexer-key.pem \
+          -out /tmp/indexer.csr \
+          -subj '/C=US/ST=California/O=Wazuh/CN=wazuh-indexer';
+        openssl x509 -req -in /tmp/indexer.csr \
+          -CA /certs/root-ca.pem -CAkey /certs/root-ca.key \
+          -CAcreateserial -out /certs/indexer.pem -days 3650;
+
+        echo '[cert-generator] Generating Manager (filebeat) certificate...';
+        openssl req -new -nodes -newkey rsa:2048 \
+          -keyout /certs/wazuh.manager-key.pem \
+          -out /tmp/manager.csr \
+          -subj '/C=US/ST=California/O=Wazuh/CN=wazuh-manager';
+        openssl x509 -req -in /tmp/manager.csr \
+          -CA /certs/root-ca.pem -CAkey /certs/root-ca.key \
+          -CAcreateserial -out /certs/wazuh.manager.pem -days 3650;
+
+        echo '[cert-generator] Generating Dashboard certificate...';
+        openssl req -new -nodes -newkey rsa:2048 \
+          -keyout /certs/wazuh-dashboard-key.pem \
+          -out /tmp/dashboard.csr \
+          -subj '/C=US/ST=California/O=Wazuh/CN=wazuh-dashboard';
+        openssl x509 -req -in /tmp/dashboard.csr \
+          -CA /certs/root-ca.pem -CAkey /certs/root-ca.key \
+          -CAcreateserial -out /certs/wazuh-dashboard.pem -days 3650;
+
+        echo '[cert-generator] Generating Admin certificate (indexer security init)...';
+        openssl req -new -nodes -newkey rsa:2048 \
+          -keyout /certs/admin-key.pem \
+          -out /tmp/admin.csr \
+          -subj '/C=US/ST=California/O=Wazuh/CN=admin';
+        openssl x509 -req -in /tmp/admin.csr \
+          -CA /certs/root-ca.pem -CAkey /certs/root-ca.key \
+          -CAcreateserial -out /certs/admin.pem -days 3650;
+
+        echo '[cert-generator] Creating root-ca-manager.pem alias...';
+        cp /certs/root-ca.pem /certs/root-ca-manager.pem;
+
+        echo '[cert-generator] Setting permissions...';
+        chmod 640 /certs/*.pem /certs/*.key;
+
+        echo '[cert-generator] Done. All certificates generated.';
+      "
+
+  # ── Wazuh Indexer (OpenSearch) ───────────────────────────────────────────────
+  wazuh-indexer:
+    image: wazuh/wazuh-indexer:4.14.6
+    container_name: wazuh-indexer
+    restart: unless-stopped
+    environment:
+      OPENSEARCH_JAVA_OPTS: ${WAZUH_INDEXER_JAVA_OPTS}
+      bootstrap.memory_lock: "true"
+      node.name: wazuh-indexer
+      discovery.type: single-node
+      plugins.security.ssl.http.pemcert_filepath: /usr/share/wazuh-indexer/certs/indexer.pem
+      plugins.security.ssl.http.pemkey_filepath: /usr/share/wazuh-indexer/certs/indexer-key.pem
+      plugins.security.ssl.http.pemtrustedcas_filepath: /usr/share/wazuh-indexer/certs/root-ca.pem
+      plugins.security.ssl.transport.pemcert_filepath: /usr/share/wazuh-indexer/certs/indexer.pem
+      plugins.security.ssl.transport.pemkey_filepath: /usr/share/wazuh-indexer/certs/indexer-key.pem
+      plugins.security.ssl.transport.pemtrustedcas_filepath: /usr/share/wazuh-indexer/certs/root-ca.pem
+      plugins.security.ssl.http.enabled: "true"
+      plugins.security.ssl.transport.enforce_hostname_verification: "false"
+      OPENSEARCH_INITIAL_ADMIN_PASSWORD: ${WAZUH_INDEXER_PASSWORD}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ${WAZUH_INDEXER_DATA_MOUNT_DIR}:/var/lib/wazuh-indexer
+      - ${WAZUH_CERTS_MOUNT_DIR}:/usr/share/wazuh-indexer/certs
+    depends_on:
+      wazuh-cert-generator:
+        condition: service_completed_successfully
+
+  # ── Wazuh Manager ────────────────────────────────────────────────────────────
+  wazuh-manager:
+    image: wazuh/wazuh-manager:4.14.6
+    container_name: wazuh-manager
+    restart: unless-stopped
+    environment:
+      INDEXER_URL: https://wazuh-indexer:9200
+      INDEXER_USERNAME: ${WAZUH_INDEXER_USERNAME}
+      INDEXER_PASSWORD: ${WAZUH_INDEXER_PASSWORD}
+      FILEBEAT_SSL_VERIFICATION_MODE: full
+      SSL_CERTIFICATE_AUTHORITIES: /etc/ssl/root-ca.pem
+      SSL_CERTIFICATE: /etc/ssl/filebeat.pem
+      SSL_KEY: /etc/ssl/filebeat-key.pem
+      API_USERNAME: ${WAZUH_API_USERNAME}
+      API_PASSWORD: ${WAZUH_API_PASSWORD}
+    ports:
+      - ${WAZUH_AGENT_PORT}:1514/udp
+      - ${WAZUH_ENROLLMENT_PORT}:1515
+      - ${WAZUH_API_PORT}:55000
+    volumes:
+      - ${WAZUH_MANAGER_CONFIG_MOUNT_DIR}:/var/ossec/etc
+      - ${WAZUH_MANAGER_LOGS_MOUNT_DIR}:/var/ossec/logs
+      - ${WAZUH_MANAGER_QUEUE_MOUNT_DIR}:/var/ossec/queue
+      - ${WAZUH_MANAGER_DATA_MOUNT_DIR}:/var/ossec/var
+      - ${WAZUH_CERTS_MOUNT_DIR}/root-ca-manager.pem:/etc/ssl/root-ca.pem
+      - ${WAZUH_CERTS_MOUNT_DIR}/wazuh.manager.pem:/etc/ssl/filebeat.pem
+      - ${WAZUH_CERTS_MOUNT_DIR}/wazuh.manager-key.pem:/etc/ssl/filebeat-key.pem
+    depends_on:
+      wazuh-cert-generator:
+        condition: service_completed_successfully
+      wazuh-indexer:
+        condition: service_started
+
+  # ── Wazuh Dashboard ──────────────────────────────────────────────────────────
+  wazuh-dashboard:
+    image: wazuh/wazuh-dashboard:4.14.6
+    container_name: wazuh-dashboard
+    restart: unless-stopped
+    environment:
+      OPENSEARCH_HOSTS: https://wazuh-indexer:9200
+      WAZUH_API_URL: https://wazuh-manager
+      DASHBOARD_USERNAME: ${WAZUH_DASHBOARD_USERNAME}
+      DASHBOARD_PASSWORD: ${WAZUH_DASHBOARD_PASSWORD}
+      API_USERNAME: ${WAZUH_API_USERNAME}
+      API_PASSWORD: ${WAZUH_API_PASSWORD}
+      SERVER_SSL_ENABLED: "true"
+      SERVER_SSL_CERTIFICATE: /usr/share/wazuh-dashboard/certs/wazuh-dashboard.pem
+      SERVER_SSL_KEY: /usr/share/wazuh-dashboard/certs/wazuh-dashboard-key.pem
+      OPENSEARCH_SSL_VERIFICATIONMODE: none
+    ports:
+      - ${WAZUH_DASHBOARD_PORT}:5601
+    volumes:
+      - ${WAZUH_CERTS_MOUNT_DIR}/wazuh-dashboard.pem:/usr/share/wazuh-dashboard/certs/wazuh-dashboard.pem
+      - ${WAZUH_CERTS_MOUNT_DIR}/wazuh-dashboard-key.pem:/usr/share/wazuh-dashboard/certs/wazuh-dashboard-key.pem
+      - ${WAZUH_CERTS_MOUNT_DIR}/root-ca.pem:/usr/share/wazuh-dashboard/certs/root-ca.pem
+    depends_on:
+      wazuh-cert-generator:
+        condition: service_completed_successfully
+      wazuh-indexer:
+        condition: service_started
+      wazuh-manager:
+        condition: service_started
+

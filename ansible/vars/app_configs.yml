@@ -136,8 +136,8 @@ app_configs:
     dirs:
       - {
           path: "{{ host_data_dir }}/hermes",
-          owner: "{{ primary_owner }}",
-          group: "{{ primary_owner }}",
+          owner: "10000",
+          group: "10000",
           mode: "0700",
         }
   homarr:
@@ -446,3 +446,12 @@ app_configs:
     port: 3123
     dirs:
       - { path: "{{ host_data_dir }}/wikijs/db", mode: "0700" }
+  wazuh:
+    port: [5602, 1514, 1515, 55000]
+    dirs:
+      - { path: "{{ host_data_dir }}/wazuh/certs" }
+      - { path: "{{ host_data_dir }}/wazuh/indexer/data" }
+      - { path: "{{ host_data_dir }}/wazuh/manager/config" }
+      - { path: "{{ host_data_dir }}/wazuh/manager/logs" }
+      - { path: "{{ host_data_dir }}/wazuh/manager/queue" }
+      - { path: "{{ host_data_dir }}/wazuh/manager/data" }

@@ -28,6 +28,7 @@ enabled_apps:
   - stirling-pdf
   - tautulli
   - upsnap
+  - wazuh
 
 blocked_env_sync_apps:
   - cloudflared
