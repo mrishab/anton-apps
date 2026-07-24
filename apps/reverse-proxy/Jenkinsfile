@@ -28,7 +28,7 @@ pipeline {
         stage ('Renew') {
             steps {
                 sh """
-                    ssh -i '${SSH_CREDS}' ${SSH_CREDS_USR}@${params.HOST_URL} "cd /var/server/anton/reverse-proxy && make cert-renew"
+                    ssh -i '${SSH_CREDS}' ${SSH_CREDS_USR}@${params.HOST_URL} "cd /var/server/anton/apps/reverse-proxy && make cert-renew"
                 """
             }
         }

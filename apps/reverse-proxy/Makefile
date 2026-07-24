@@ -1,5 +1,5 @@
 HOST=anton
-HOST_APP_DIR:=/var/server/anton/reverse-proxy
+HOST_APP_DIR:=/var/server/anton/apps/reverse-proxy
 
 setup-subdomain:
 	ssh ${HOST} "cd ${HOST_APP_DIR} && make subdomain-1-cert-setup SUBDOMAIN=${SUBDOMAIN} && make restart"

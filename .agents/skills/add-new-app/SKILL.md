@@ -20,8 +20,8 @@ This workflow guides you through adding a new application to the anton-apps proj
 Create a new directory for the app with the following files:
 
 ```bash
-mkdir -p <app-name>
-cd <app-name>
+mkdir -p apps/<app-name>
+cd apps/<app-name>
 ```
 
 Required files:

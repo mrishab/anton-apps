@@ -1,6 +1,6 @@
 host_user: mrishab
 rsync_path: "sudo rsync"
-host_app_dir: /var/server/anton
+host_app_dir: /var/server/anton/apps
 host_data_dir: /mnt/external_hdd
 enabled_apps:
   - adguardhome

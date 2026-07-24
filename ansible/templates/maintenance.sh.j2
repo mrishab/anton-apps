@@ -3,12 +3,12 @@
 # {{ inventory_hostname | capitalize }} Helper Functions and Aliases
 
 function apps-up() {
-    cd /var/server/anton && \
+    cd /var/server/anton/apps && \
     make start APPS="{{ enabled_apps | join(' ') }}"
 }
 
 function apps-reset() {
-    cd /var/server/anton && \
+    cd /var/server/anton/apps && \
     make reset APPS="{{ enabled_apps | join(' ') }}"
 }
 
