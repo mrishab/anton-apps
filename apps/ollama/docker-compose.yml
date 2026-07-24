@@ -3,6 +3,8 @@ services:
     image: ollama/ollama:0.24.0
     container_name: ollama
     restart: unless-stopped
+    environment:
+      OLLAMA_KEEP_ALIVE: ${OLLAMA_KEEP_ALIVE}
     volumes:
       - ${OLLAMA_MOUNT_DIR}:/root/.ollama
     ports:
