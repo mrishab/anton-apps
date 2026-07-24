@@ -9,28 +9,28 @@ This repository contains a collection of Dockerized applications, each residing 
 ## Table of Contents
 
 - [Media](#media)
-  - [Calibre](./calibre) - Comprehensive e-book manager
-  - [Plex](./plex) - Personal media server
-  - [Jellyfin](./mediaserver) - Open source media server
-  - [Ombi](./ombi) - Media request manager
-  - [LazyLibrarian](./lazylibrarian) - E-book/audiobook manager
-  - [NZBGet](./nzbget) - Usenet downloader
-  - [Deluge](./deluge) - BitTorrent client
+  - [Calibre](./apps/calibre) - Comprehensive e-book manager
+  - [Plex](./apps/plex) - Personal media server
+  - [Jellyfin](./apps/mediaserver) - Open source media server
+  - [Ombi](./apps/ombi) - Media request manager
+  - [LazyLibrarian](./apps/lazylibrarian) - E-book/audiobook manager
+  - [NZBGet](./apps/nzbget) - Usenet downloader
+  - [Deluge](./apps/deluge) - BitTorrent client
 
 - [Development](#development)
-  - [SonarQube](./sonarqube) - Code quality platform
-  - [Nexus](./nexus) - Repository manager
-  - [Docker Registry](./registry) - Private Docker registry
-  - [Jupyter](./jupyter) - Interactive computing environment
+  - [SonarQube](./apps/sonarqube) - Code quality platform
+  - [Nexus](./apps/nexus) - Repository manager
+  - [Docker Registry](./apps/registry) - Private Docker registry
+  - [Jupyter](./apps/jupyter) - Interactive computing environment
 
 - [Databases and Management](#databases-and-management)
-  - [pgAdmin](./pgadmin) - PostgreSQL management
+  - [pgAdmin](./apps/pgadmin) - PostgreSQL management
 
 - [Tools](#tools)
-  - [Wiki.js](./wikijs) - Powerful and extensible wiki platform
-  - [SFTPGo](./sftpgo) - Fully featured SFTP server
-  - [FreshRSS](./freshrss) - RSS feed aggregator
-  - [PostiZ](./postiz) - Content management system
+  - [Wiki.js](./apps/wikijs) - Powerful and extensible wiki platform
+  - [SFTPGo](./apps/sftpgo) - Fully featured SFTP server
+  - [FreshRSS](./apps/freshrss) - RSS feed aggregator
+  - [PostiZ](./apps/postiz) - Content management system
 
 ## Setup Guide
 
@@ -99,44 +99,21 @@ Contributions to this collection are welcome! Here's how you can contribute:
 
 3. Test your application:
    ```sh
-   cd new-app-name
+   cd apps/new-app-name
    cp template.env .env
    # Edit .env with appropriate values
    docker compose up -d
    ```
 
-4. Submit a pull request with your changes.
+4. Follow the [.agents/skills/add-new-app/SKILL.md](file:///Users/rishabmanocha/SourceCode/anton-apps/.agents/skills/add-new-app/SKILL.md) workflow to register the application in Ansible and `apps/reverse-proxy`.
+
+5. Submit a pull request with your changes.
 
 ### Modifying Existing Applications
 
-1. Make your changes to the application
+1. Make your changes to the application in `apps/<app-name>`
 2. Test thoroughly
 3. Submit a pull request with your changes
-
-## Disabled Applications
-
-The following applications have been disabled/moved out of the default active deployment list:
-
-### 1. Dynamic DNS Client (`ddns`)
-- **Reason**: All domain routing and DNS records have migrated to Cloudflare Tunnels (which dynamically handle CNAME mapping directly under Cloudflare's dashboard), rendering a local DDNS A-record updater container unnecessary.
-- **How to enable back**: Add `ddns` back to the `enabled_apps` list in your host variables (e.g., [anton.yml](file:///Users/rishabmanocha/SourceCode/anton-apps/ansible/host_vars/anton.yml)) and run:
-  ```sh
-  make deploy APPS=ddns
-  ```
-
-### 2. Reverse Proxy (`reverse-proxy`)
-- **Reason**: Remote SSL/TLS termination and subdomain routing are now natively managed by the Cloudflare Zero Trust Tunnel. The local Nginx reverse-proxy and automated Certbot certificate setups are no longer required to route incoming traffic.
-- **How to enable back**: Add `reverse-proxy` back to the `enabled_apps` list in your host variables (e.g., [anton.yml](file:///Users/rishabmanocha/SourceCode/anton-apps/ansible/host_vars/anton.yml)) and run:
-  ```sh
-  make deploy APPS=reverse-proxy
-  ```
-
-### 3. OpenVPN (`dockovpn`)
-- **Reason**: Replaced by Cloudflare Zero Trust / WARP private network routing (`192.168.1.0/24`). This provides secure remote access to local resources without exposing open VPN ports (such as UDP `1194` or TCP `8386`) to the public internet.
-- **How to enable back**: Add `dockovpn` back to the `enabled_apps` list in your host variables (e.g., [anton.yml](file:///Users/rishabmanocha/SourceCode/anton-apps/ansible/host_vars/anton.yml)) and run:
-  ```sh
-  make deploy APPS=dockovpn
-  ```
 
 ## License
 

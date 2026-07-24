@@ -17,7 +17,7 @@ This workflow guides you through adding a new application to the anton-apps proj
 
 ## Step 1: Create Application Directory Structure
 
-Create a new directory for the app with the following files:
+Create a new directory for the app under `apps/` with the following files:
 
 ```bash
 mkdir -p apps/<app-name>
@@ -167,19 +167,13 @@ APPS:=affine airflow ... <app-name> ... wikijs
 
 To keep the legacy `reverse-proxy` in sync for fallback/direct routing purposes:
 
-### 1. Update `reverse-proxy/docker-compose.yml`
+### 1. Update `apps/reverse-proxy/docker-compose.yml`
 - Add the new port environment variable to the `nginx` service's `environment` section:
   ```yaml
   {SUBDOMAIN_NAME_UPPERCASE}_PORT: ${{{SUBDOMAIN_NAME_UPPERCASE}_PORT}}
   ```
 
-### 2. Update `reverse-proxy/init-certs.sh`
-- Add a certificate setup command for the new subdomain in the execution chain:
-  ```bash
-  make subdomain-1-cert-setup SUBDOMAIN={subdomain_name} &&\
-  ```
-
-### 3. Update `reverse-proxy/static/etc/nginx/templates/domain-1-reverse-proxy.conf.template`
+### 2. Update `apps/reverse-proxy/static/etc/nginx/templates/domain-1-reverse-proxy.conf.template`
 - Append a new server block at the end of the file:
   ```nginx
   server {
@@ -198,14 +192,8 @@ To keep the legacy `reverse-proxy` in sync for fallback/direct routing purposes:
   }
   ```
 
-### 4. Update `reverse-proxy/template.env`
-- Document the port environment variable at the end of the file:
-  ```env
-  {SUBDOMAIN_NAME_UPPERCASE}_PORT=<PUT-{SUBDOMAIN_NAME_UPPERCASE}-PORT-HERE>
-  ```
-
-### 5. Update `reverse-proxy/.env`
-- Add the actual port definition:
+### 3. Update `apps/reverse-proxy/template.env` & `apps/reverse-proxy/.env`
+- Add the port definition:
   ```env
   {SUBDOMAIN_NAME_UPPERCASE}_PORT={port_number}
   ```
@@ -236,7 +224,7 @@ Run these commands to verify everything is configured correctly:
 
 ```bash
 # Check docker compose syntax
-cd <app-name>
+cd apps/<app-name>
 docker compose config
 
 # Verify environment variables are loaded
@@ -247,12 +235,11 @@ docker compose config | grep -i <app-name>
 
 ## Summary Checklist
 
-- [ ] Created `<app-name>/` directory
+- [ ] Created `apps/<app-name>/` directory
 - [ ] Created `docker-compose.yml` following patterns
 - [ ] Created `template.env` with all variables documented
 - [ ] Created `.env` with actual values
 - [ ] Registered directory/port details in `ansible/vars/app_configs.yml`
 - [ ] Updated `Makefile` or `enabled_apps` in host variables
-- [ ] (Optional) Configured reverse proxy subdomain blocks and certificate requests (to keep reverse-proxy in sync)
-- [ ] Registered app in `cloudflared/terraform/main.tf` and ran `terraform apply`
+- [ ] Configured reverse proxy in `apps/reverse-proxy`
 - [ ] Verified docker compose configuration
