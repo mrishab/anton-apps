@@ -1,0 +1,32 @@
+######################################################################
+## Cloudflare Dynamic DNS Configuration for ddclient
+##
+## Refreshes and updates public IP address on Cloudflare proxied DNS records
+######################################################################
+daemon=300                              # Check every 300 seconds
+syslog=yes                              # Log update messages to syslog
+pid=/var/run/ddclient/ddclient.pid      # Record PID in file
+ssl=yes                                 # Use SSL
+
+# Detect public IP address via Cloudflare checkip service
+use=web, web=checkip.cloudflare.com/
+
+# ─────────────────────────────────────────────────────────────────────
+# cloudville.me (Cloudflare DNS)
+# ─────────────────────────────────────────────────────────────────────
+protocol=cloudflare
+zone=cloudville.me
+ttl=1
+login=token
+password=<redacted>
+*, @
+
+# ─────────────────────────────────────────────────────────────────────
+# rishabmanocha.com (Cloudflare DNS)
+# ─────────────────────────────────────────────────────────────────────
+protocol=cloudflare
+zone=rishabmanocha.com
+ttl=1
+login=token
+password=<redacted>
+*, @
