@@ -18,7 +18,7 @@
 terraform {
   backend "s3" {
     bucket  = "cloudville-state"
-    key     = "anton-apps/cloudlfare.tfstate"
+    key     = "anton-apps/cloudlfared-tunnel.tfstate"
     region  = "ca-central-1"
     profile = "mrishab"
     encrypt = true

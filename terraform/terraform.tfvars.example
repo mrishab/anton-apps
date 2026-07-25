@@ -1,0 +1,7 @@
+cloudflare_account_id = "your_cloudflare_account_id"
+cloudflare_api_token  = "your_cloudflare_api_token"
+cloudville_zone_id    = "your_cloudville_me_zone_id"
+rishabmanocha_zone_id = "your_rishabmanocha_com_zone_id"
+server_public_ip      = "73.0.0.1" # Replace with your server's current public IP address
+ssl_mode              = "strict"  # Full (Strict) mode
+allowed_countries     = ["US", "CA", "IN", "GB"]

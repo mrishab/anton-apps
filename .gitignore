@@ -7,7 +7,7 @@ launch.json
 
 .gemini/
 *.skill
-ddns/**/*.conf
+apps/ddns/**/*.conf
 slack_webhook.txt
 
 # Terraform

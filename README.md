@@ -1,10 +1,33 @@
 # Anton Apps Collection
 
-A curated collection of self-hosted applications using Docker and Docker Compose.
+A curated collection of self-hosted applications using Docker, Docker Compose, and Cloudflare DNS/Reverse Proxy.
 
-## Overview
+## Architecture Overview
 
-This repository contains a collection of Dockerized applications, each residing in its own directory. These applications cover a wide range of use cases, from media management to development tools.
+Traffic flow to home server applications:
+
+```text
+Internet
+   │
+   ▼
+Cloudflare DNS + WAF (Orange Cloud Proxy)
+   │ (HTTPS - Full Strict)
+   ▼
+Public IP (Dynamic DNS updated via apps/ddns)
+   │
+   ▼
+Router (Ports 80 / 443)
+   │
+   ▼
+apps/reverse-proxy (Nginx with Let's Encrypt SSL)
+   │
+   ▼
+Local Docker Applications (apps/*)
+```
+
+- **Infrastructure as Code**: Root [/terraform](file:///Users/rishabmanocha/SourceCode/anton-apps/terraform) manages Cloudflare DNS wildcard records (`*.cloudville.me`, `*.rishabmanocha.com`), SSL settings (Full Strict), and WAF rules.
+- **Dynamic DNS**: [apps/ddns](file:///Users/rishabmanocha/SourceCode/anton-apps/apps/ddns) runs `ddclient` to refresh Cloudflare DNS A-records with the server's public IP.
+- **Reverse Proxy & SSL**: [apps/reverse-proxy](file:///Users/rishabmanocha/SourceCode/anton-apps/apps/reverse-proxy) routes incoming traffic to internal application ports and handles SSL termination.
 
 ## Table of Contents
 
@@ -39,8 +62,9 @@ This repository contains a collection of Dockerized applications, each residing 
 - Ansible
 - Docker Engine on target host
 - SSH access to target host
+- Terraform (for Cloudflare DNS/WAF management)
 
-### Installation
+### Installation & Deployment
 
 1. Clone the repository:
    ```sh
@@ -65,6 +89,18 @@ This repository contains a collection of Dockerized applications, each residing 
      make deploy APPS=nextcloud,plex
      ```
 
+### Infrastructure Management (Terraform)
+
+Cloudflare DNS proxy, wildcard records, and security rules are configured in `/terraform`:
+
+```sh
+cd terraform
+cp terraform.tfvars.example terraform.tfvars
+# Edit terraform.tfvars with Cloudflare API Token, Zone IDs, and Public IP
+terraform init
+terraform apply
+```
+
 ### Using the Makefile
 
 The repository includes a Makefile to simplify common operations:
@@ -80,16 +116,15 @@ The repository includes a Makefile to simplify common operations:
 
 All targets support `LIMIT=hostname` to target specific hosts.
 
-
 ## Contributing
 
 Contributions to this collection are welcome! Here's how you can contribute:
 
 ### Adding a New Application
 
-1. Create a new directory for your application:
+1. Create a new directory for your application under `apps/`:
    ```sh
-   mkdir -p new-app-name
+   mkdir -p apps/new-app-name
    ```
 
 2. Create the necessary files:

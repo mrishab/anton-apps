@@ -1,11 +1,11 @@
 ---
 name: add-new-app
-description: "Workflow for adding a new Dockerized application to the anton-apps collection. Use this skill when a user wants to create a new app directory, configure its Docker Compose and environment templates, register it in the Ansible deployment system, sync the fallback reverse proxy, and update the Cloudflared Tunnel configuration."
+description: "Workflow for adding a new Dockerized application to the anton-apps collection. Use this skill when a user wants to create a new app directory, configure its Docker Compose and environment templates, register it in the Ansible deployment system, and configure the reverse proxy."
 ---
 
 # Adding a New Application to anton-apps
 
-This workflow guides you through adding a new application to the anton-apps project. Follow these steps in order to ensure consistency across Docker configurations, Ansible deployment variables, and Cloudflare Tunnel configs.
+This workflow guides you through adding a new application to the anton-apps project. Follow these steps in order to ensure consistency across Docker configurations, Ansible deployment variables, and reverse proxy configs.
 
 ## Prerequisites
 - Application name (e.g., `threadfin`)
@@ -163,9 +163,9 @@ APPS:=affine airflow ... <app-name> ... wikijs
 
 ---
 
-## Step 7: Expose Subdomain via Reverse Proxy (Legacy/Backwards Compatibility)
+## Step 7: Expose Subdomain via Reverse Proxy
 
-To keep the legacy `reverse-proxy` in sync for fallback/direct routing purposes:
+If the application needs to be exposed under your domain, update `apps/reverse-proxy`:
 
 ### 1. Update `apps/reverse-proxy/docker-compose.yml`
 - Add the new port environment variable to the `nginx` service's `environment` section:
@@ -200,25 +200,7 @@ To keep the legacy `reverse-proxy` in sync for fallback/direct routing purposes:
 
 ---
 
-## Step 8: Register App in Cloudflared Tunnel (Terraform)
-
-To expose the new application securely through the Cloudflare Tunnel:
-
-1. Update `cloudflared/terraform/main.tf` under `locals.cloudville_apps` by adding the subdomain, port, and setting path to null (or a custom path if path-based routing is needed):
-   ```hcl
-   {subdomain_name} = { port = {port_number}, path = null }
-   ```
-
-2. Run Terraform check and apply the configurations:
-   ```bash
-   cd cloudflared/terraform
-   terraform plan
-   terraform apply
-   ```
-
----
-
-## Step 9: Verify the Setup
+## Step 8: Verify the Setup
 
 Run these commands to verify everything is configured correctly:
 

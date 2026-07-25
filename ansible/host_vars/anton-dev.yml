@@ -49,4 +49,3 @@ enabled_apps:
   - wikijs
 
 blocked_env_sync_apps:
-  - cloudflared
