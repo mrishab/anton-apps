@@ -16,14 +16,14 @@ resource "cloudflare_ruleset" "cloudville_geo_blocking" {
     action      = "block"
     description = "Only allow traffic from allowed countries"
     enabled     = true
-    expression  = "not ip.geoip.country in {${join(" ", formatlist("\"%s\"", var.allowed_countries))}}"
+    expression  = "(not ip.geoip.country in {${join(" ", formatlist("\"%s\"", var.allowed_countries))}}) and not (http.request.uri.path contains \"/.well-known/acme-challenge/\")"
   }
 
   rules {
     action      = "block"
     description = "Block indexing, crawling, AI, bots"
     enabled     = true
-    expression  = "(cf.client.bot) or (cf.verified_bot_category in {\"AI Crawler\" \"Search Engine Crawler\" \"Aggregator\"}) or (lower(http.user_agent) contains \"bot\") or (lower(http.user_agent) contains \"crawl\") or (lower(http.user_agent) contains \"spider\") or (lower(http.user_agent) contains \"index\")"
+    expression  = "((cf.client.bot) or (cf.verified_bot_category in {\"AI Crawler\" \"Search Engine Crawler\" \"Aggregator\"}) or (lower(http.user_agent) contains \"bot\") or (lower(http.user_agent) contains \"crawl\") or (lower(http.user_agent) contains \"spider\") or (lower(http.user_agent) contains \"index\")) and not (http.request.uri.path contains \"/.well-known/acme-challenge/\")"
   }
 }
 
@@ -38,13 +38,14 @@ resource "cloudflare_ruleset" "rishabmanocha_geo_blocking" {
     action      = "block"
     description = "Only allow traffic from allowed countries"
     enabled     = true
-    expression  = "not ip.geoip.country in {${join(" ", formatlist("\"%s\"", var.allowed_countries))}}"
+    expression  = "(not ip.geoip.country in {${join(" ", formatlist("\"%s\"", var.allowed_countries))}}) and not (http.request.uri.path contains \"/.well-known/acme-challenge/\")"
   }
 
   rules {
     action      = "block"
     description = "Block indexing, crawling, AI, bots"
     enabled     = true
-    expression  = "(cf.client.bot) or (cf.verified_bot_category in {\"AI Crawler\" \"Search Engine Crawler\" \"Aggregator\"}) or (lower(http.user_agent) contains \"bot\") or (lower(http.user_agent) contains \"crawl\") or (lower(http.user_agent) contains \"spider\") or (lower(http.user_agent) contains \"index\")"
+    expression  = "((cf.client.bot) or (cf.verified_bot_category in {\"AI Crawler\" \"Search Engine Crawler\" \"Aggregator\"}) or (lower(http.user_agent) contains \"bot\") or (lower(http.user_agent) contains \"crawl\") or (lower(http.user_agent) contains \"spider\") or (lower(http.user_agent) contains \"index\")) and not (http.request.uri.path contains \"/.well-known/acme-challenge/\")"
   }
 }
+
