@@ -135,10 +135,12 @@ app_configs:
   ...
   new-app-name:
     port: 1234  # The primary web port
+    restart_on_deploy: true  # Set to false if app should not automatically restart on deploy
     dirs:
       - { path: "{{ host_data_dir }}/new-app-name/config", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
       - { path: "{{ host_data_dir }}/new-app-name/data", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
 ```
+
 
 ### Common UID/GID Values:
 - `201:201` - Media server apps (plex, threadfin, etc.)

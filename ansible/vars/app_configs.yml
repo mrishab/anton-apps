@@ -3,17 +3,20 @@ primary_owner: mrishab
 app_configs:
   adguardhome:
     port: [3000, 53]
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/adguard/work" }
       - { path: "{{ host_data_dir }}/adguard/conf" }
   affine:
     port: 3010
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/affine/db", mode: "0700" }
       - { path: "{{ host_data_dir }}/affine/app/uploads" }
       - { path: "{{ host_data_dir }}/affine/app/config" }
   airflow:
     port: 2364
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/airflow/app/plugins",
@@ -34,6 +37,7 @@ app_configs:
         }
   bentopdf:
     port: 8085
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/bentopdf/config",
@@ -47,6 +51,7 @@ app_configs:
         }
   calibre:
     port: [8080, 8081, 8083]
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/calibre/calibre-db/books",
@@ -60,11 +65,14 @@ app_configs:
         }
   cadvisor:
     port: 8383
+    restart_on_deploy: true
     dirs: []
   cloudflared:
+    restart_on_deploy: true
     dirs: []
   codeserver:
     port: 2342
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/codeserver/config",
@@ -72,9 +80,11 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   ddns:
+    restart_on_deploy: true
     dirs: []
   deluge:
     port: 8112
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/mediaserver/downloads",
@@ -88,6 +98,7 @@ app_configs:
         }
   dockovpn:
     port: 8386
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/dockovpn",
@@ -96,6 +107,7 @@ app_configs:
         }
   duplicati:
     port: 8200
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/duplicati/config",
@@ -105,21 +117,25 @@ app_configs:
         }
   elk:
     port: [9200, 9300, 5601]
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/elk/elasticsearch/data" }
       - { path: "{{ host_data_dir }}/elk/kibana/data" }
       - { path: "{{ host_data_dir }}/elk/logstash/data" }
   epg:
     port: 30000
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/epg/public" }
   freshrss:
     port: 4523
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/freshrss/app" }
       - { path: "{{ host_data_dir }}/freshrss/db", mode: "0700" }
   ghost:
     port: 2368
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/ghost/app",
@@ -129,10 +145,12 @@ app_configs:
       - { path: "{{ host_data_dir }}/ghost/db" }
   grafana:
     port: 3003
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/grafana", owner: "472", group: "472" }
   hermes:
     port: [8642, 9119]
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/hermes",
@@ -142,6 +160,7 @@ app_configs:
         }
   homarr:
     port: 7575
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/homarr/appdata",
@@ -150,17 +169,20 @@ app_configs:
         }
   immich:
     port: 2283
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/immich/app/library" }
       - { path: "{{ host_data_dir }}/immich/db/postgres", mode: "0700" }
       - { path: "{{ host_data_dir }}/immich/ml-cache" }
   jellyfin:
     port: 8096
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/jellyfin/config" }
       - { path: "{{ host_data_dir }}/mediaserver/jellyfin/cache" }
   jenkins:
     port: [8888, 50000, 10023]
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/jenkins",
@@ -169,6 +191,7 @@ app_configs:
         }
   jupyter:
     port: 2705
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/jupyter/home/jovyan",
@@ -177,12 +200,15 @@ app_configs:
         }
   lazylibrarian:
     port: 5299
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/lazylibrarian/config" }
   lb:
+    restart_on_deploy: true
     dirs: []
   mediaserver:
     port: [8989, 7878, 8686, 6767]
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/mediaserver/downloads",
@@ -231,11 +257,13 @@ app_configs:
         }
   n8n:
     port: 5678
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/n8n/app" }
       - { path: "{{ host_data_dir }}/n8n/db", mode: "0700" }
   nextcloud:
     port: 8765
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/nextcloud/db",
@@ -255,6 +283,7 @@ app_configs:
         }
   nexus:
     port: 4634
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/nexus/nexus",
@@ -263,22 +292,27 @@ app_configs:
         }
   nzbget:
     port: 6789
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/nzbget/config" }
   ollama:
     port: 11434
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/ollama" }
   ombi:
     port: 3579
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/ombi/config" }
   open-webui:
     port: 11435
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/open-webui" }
   pgadmin:
     port: 3487
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/pgadmin",
@@ -293,6 +327,7 @@ app_configs:
         }
   plex:
     port: 32400
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/mediaserver/plex/config",
@@ -326,6 +361,7 @@ app_configs:
         }
   postiz:
     port: 5000
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/postiz/app/config",
@@ -349,24 +385,29 @@ app_configs:
         }
   prometheus:
     port: [9090, 9093]
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/prometheus" }
       - { path: "{{ host_data_dir }}/alertmanager" }
   prowlarr:
     port: 9696
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/prowlarr/config" }
   registry:
     port: 5000
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/registry" }
   reverse-proxy:
     port: [80, 443, 9113]
+    restart_on_deploy: false
     dirs:
       - { path: "{{ host_data_dir }}/reverse-proxy/certbot" }
       - { path: "{{ host_data_dir }}/reverse-proxy/certificates" }
   sftpgo:
     port: [9393, 2022, 2121]
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/sftpgo/srv/sftpgo",
@@ -380,6 +421,7 @@ app_configs:
         }
   sonarqube:
     port: 3124
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/sonarqube/db",
@@ -404,6 +446,7 @@ app_configs:
         }
   stirling-pdf:
     port: 8086
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/stirling-pdf/configs",
@@ -427,15 +470,18 @@ app_configs:
         }
   tautulli:
     port: 8181
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/tautulli/config" }
   threadfin:
     port: 34400
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/threadfin/config" }
       - { path: "{{ host_data_dir }}/mediaserver/threadfin/temp" }
   upsnap:
     port: 8090
+    restart_on_deploy: true
     dirs:
       - {
           path: "{{ host_data_dir }}/upsnap/data",
@@ -444,5 +490,6 @@ app_configs:
         }
   wikijs:
     port: 3123
+    restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/wikijs/db", mode: "0700" }

@@ -178,7 +178,9 @@
       args:
         chdir: "{{ host_app_dir }}"
       loop: "{{ sync_results.results }}"
-      when: item.changed
+      when:
+        - item.changed
+        - ((app_configs[item.item] | default({})).restart_on_deploy | default(true))
       become: false
 
     - name: Restart app on env change
@@ -186,5 +188,10 @@
       args:
         chdir: "{{ host_app_dir }}"
       loop: "{{ env_sync_results.results }}"
-      when: item.changed and env_sync_results is defined and env_sync_results.results is defined
+      when:
+        - item.changed
+        - env_sync_results is defined
+        - env_sync_results.results is defined
+        - ((app_configs[item.item] | default({})).restart_on_deploy | default(true))
       become: false
+
