@@ -493,3 +493,8 @@ app_configs:
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/wikijs/db", mode: "0700" }
+  vaultwarden:
+    port: 8677
+    restart_on_deploy: true
+    dirs:
+      - { path: "{{ host_data_dir }}/vaultwarden/data", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
