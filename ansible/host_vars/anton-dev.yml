@@ -46,6 +46,7 @@ enabled_apps:
   - tautulli
   - threadfin
   - upsnap
+  - vikunja
   - wikijs
 
 blocked_env_sync_apps:

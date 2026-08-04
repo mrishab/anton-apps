@@ -493,3 +493,9 @@ app_configs:
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/wikijs/db", mode: "0700" }
+  vikunja:
+    port: 3456
+    restart_on_deploy: true
+    dirs:
+      - { path: "{{ host_data_dir }}/vikunja/db", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
+      - { path: "{{ host_data_dir }}/vikunja/files", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
