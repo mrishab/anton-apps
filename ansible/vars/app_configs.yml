@@ -493,3 +493,8 @@ app_configs:
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/wikijs/db", mode: "0700" }
+  minio:
+    port: [9000, 9001]
+    restart_on_deploy: true
+    dirs:
+      - { path: "{{ host_data_dir }}/minio/data", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
