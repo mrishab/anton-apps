@@ -493,3 +493,8 @@ app_configs:
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/wikijs/db", mode: "0700" }
+  memos:
+    port: 5230
+    restart_on_deploy: true
+    dirs:
+      - { path: "{{ host_data_dir }}/memos/data", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }

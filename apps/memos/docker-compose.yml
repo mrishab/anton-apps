@@ -1,0 +1,15 @@
+services:
+  memos:
+    image: ghcr.io/usememos/memos:v0.30.0
+    container_name: memos
+    restart: unless-stopped
+    environment:
+      MEMOS_DRIVER: ${MEMOS_DRIVER}
+      MEMOS_MODE: ${MEMOS_MODE}
+      TZ: ${HOST_TZ}
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+    volumes:
+      - ${MEMOS_MOUNT_DIR}:/var/opt/memos
+    ports:
+      - ${MEMOS_WEB_PORT}:5230
