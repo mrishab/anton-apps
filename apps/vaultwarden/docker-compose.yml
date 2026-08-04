@@ -1,0 +1,17 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:1.37.1
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
+      DOMAIN: ${VAULTWARDEN_DOMAIN}
+      ADMIN_TOKEN: ${VAULTWARDEN_ADMIN_TOKEN}
+      SIGNUPS_ALLOWED: ${VAULTWARDEN_SIGNUPS_ALLOWED}
+      WEBSOCKET_ENABLED: "true"
+    volumes:
+      - ${VAULTWARDEN_DATA_MOUNT_DIR}:/data
+    ports:
+      - ${VAULTWARDEN_WEB_PORT}:80
