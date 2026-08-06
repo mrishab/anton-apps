@@ -290,6 +290,12 @@ app_configs:
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
+  nocodb:
+    port: 8091
+    restart_on_deploy: true
+    dirs:
+      - { path: "{{ host_data_dir }}/nocodb/app" }
+      - { path: "{{ host_data_dir }}/nocodb/db", mode: "0700" }
   nzbget:
     port: 6789
     restart_on_deploy: true

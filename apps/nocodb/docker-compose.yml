@@ -1,0 +1,27 @@
+services:
+  nocodb:
+    image: nocodb/nocodb:2026.08.0
+    container_name: nocodb
+    restart: unless-stopped
+    environment:
+      TZ: ${HOST_TZ}
+      # NocoDB -> Postgres connection
+      NC_DB: ${NOCDB_DB}
+    ports:
+      - ${NOCDB_WEB_PORT}:8080
+    volumes:
+      - ${NOCDB_MOUNT_DIR}:/usr/app/data
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16.8-alpine3.21
+    container_name: nocodb_postgres
+    restart: unless-stopped
+    environment:
+      # PG Super User
+      POSTGRES_USER: ${NOCDB_PG_USER}
+      POSTGRES_PASSWORD: ${NOCDB_PG_PASSWORD}
+      POSTGRES_DB: ${NOCDB_PG_DATABASE}
+    volumes:
+      - ${NOCDB_PG_MOUNT_DIR}:/var/lib/postgresql/data

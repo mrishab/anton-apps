@@ -30,6 +30,7 @@ enabled_apps:
   - n8n
   - nextcloud
   - nexus
+  - nocodb
   - nzbget
   - ollama
   - ombi
