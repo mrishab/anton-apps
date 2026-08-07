@@ -8,9 +8,9 @@ This application manages Dynamic DNS configurations for multiple domains using D
 graph TD
     subgraph "Docker Host"
         subgraph "ddns containers"
-            C1["ddclient_cloudville"]
-            C2["ddclient_mrishab (Disabled)"]
-            C3["ddclient_rishabmanocha"]
+            C1["ddclient_<your-domain-1>"]
+            C2["ddclient_<your-domain-2> (Disabled)"]
+            C3["ddclient_<your-domain-3>"]
         end
         
         subgraph "Config Files"
@@ -57,7 +57,7 @@ graph TD
    mkdir -p static/config
    ```
 
-2. Edit configuration files inside `static/config/` for each domain (e.g., `cloudville.me.conf` and `rishabmanocha.com.conf`) with your DNS provider details:
+2. Edit configuration files inside `static/config/` for each domain (e.g., `<your-domain>.conf`) with your DNS provider details:
    ```ini
    use=web, web=dynamicdns.park-your-domain.com/getip
    protocol=namecheap
@@ -71,9 +71,9 @@ graph TD
 
 The application uses Docker Compose to run separate DDNS client containers:
 
-1. **ddclient_cloudville**: Updates DNS records for `cloudville.me` using `static/config/cloudville.me.conf`.
-2. **ddclient_mrishab**: Updates DNS records for `mrishab.io` (currently disabled with compose profiles).
-3. **ddclient_rishabmanocha**: Updates DNS records for `rishabmanocha.com` using `static/config/rishabmanocha.com.conf`.
+1. **ddclient_<your-domain-1>**: Updates DNS records for `<your-domain-1>` using `static/config/<your-domain-1>.conf`.
+2. **ddclient_<your-domain-2>**: Updates DNS records for `<your-domain-2>` (currently disabled with compose profiles).
+3. **ddclient_<your-domain-3>**: Updates DNS records for `<your-domain-3>` using `static/config/<your-domain-3>.conf`.
 
 Each container:
 - Uses the `ghcr.io/linuxserver/ddclient` image.

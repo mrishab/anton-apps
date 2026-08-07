@@ -24,4 +24,4 @@ Grafana is a multi-platform open-source analytics and interactive visualization 
    cp template.env .env
    ```
 2. Set your custom admin user credentials and mount directory path in the `.env` file.
-3. Once running, access the Grafana interface at `http://<your-server-ip>:3000` (or via reverse-proxy at `https://grafana.cloudville.me`).
+3. Once running, access the Grafana interface at `http://<your-server-ip>:3000` (or via reverse-proxy at `https://grafana.<your-domain>`).

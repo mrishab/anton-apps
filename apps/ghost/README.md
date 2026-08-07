@@ -36,8 +36,8 @@ docker compose up -d
 Key environment variables in `.env`:
 
 - `GHOST_PORT`: Host port (default `2368`; Ghost always listens on `2368` internally)
-- `PUBLIC_URL`: Your blog's public URL (e.g., `https://rishabmanocha.com`)
-- `ADMIN_URL`: Ghost admin panel URL (e.g., `https://ghost.rishabmanocha.com`)
+- `PUBLIC_URL`: Your blog's public URL (e.g., `https://<your-domain>`)
+- `ADMIN_URL`: Ghost admin panel URL (e.g., `https://ghost.<your-domain>`)
 - `GHOST_MOUNT_DIR`: Persistent volume for Ghost content (themes, images, etc.)
 - `MYSQL_ROOT_PASSWORD`: Root password for MySQL
 - `MYSQL_MOUNT_DIR`: Persistent MySQL data directory

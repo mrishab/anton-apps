@@ -25,9 +25,9 @@ apps/reverse-proxy (Nginx with Let's Encrypt SSL)
 Local Docker Applications (apps/*)
 ```
 
-- **Infrastructure as Code**: Root [/terraform](file:///Users/rishabmanocha/SourceCode/anton-apps/terraform) manages Cloudflare DNS wildcard records (`*.cloudville.me`, `*.rishabmanocha.com`), SSL settings (Full Strict), and WAF rules.
-- **Dynamic DNS**: [apps/ddns](file:///Users/rishabmanocha/SourceCode/anton-apps/apps/ddns) runs `ddclient` to refresh Cloudflare DNS A-records with the server's public IP.
-- **Reverse Proxy & SSL**: [apps/reverse-proxy](file:///Users/rishabmanocha/SourceCode/anton-apps/apps/reverse-proxy) routes incoming traffic to internal application ports and handles SSL termination.
+- **Infrastructure as Code**: Root [/terraform](terraform/) manages Cloudflare DNS wildcard records (`*.example.com`, `*.your-second-domain.com`), SSL settings (Full Strict), and WAF rules.
+- **Dynamic DNS**: [apps/ddns](apps/ddns/) runs `ddclient` to refresh Cloudflare DNS A-records with the server's public IP.
+- **Reverse Proxy & SSL**: [apps/reverse-proxy](apps/reverse-proxy/) routes incoming traffic to internal application ports and handles SSL termination.
 
 ## Table of Contents
 
@@ -140,7 +140,7 @@ Contributions to this collection are welcome! Here's how you can contribute:
    docker compose up -d
    ```
 
-4. Follow the [.agents/skills/add-new-app/SKILL.md](file:///Users/rishabmanocha/SourceCode/anton-apps/.agents/skills/add-new-app/SKILL.md) workflow to register the application in Ansible and `apps/reverse-proxy`.
+4. Follow the [.agents/skills/add-new-app/SKILL.md](.agents/skills/add-new-app/SKILL.md) workflow to register the application in Ansible and `apps/reverse-proxy`.
 
 5. Submit a pull request with your changes.
 
