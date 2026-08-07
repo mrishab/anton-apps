@@ -14,9 +14,9 @@ graph TD
         end
         
         subgraph "Config Files"
-            F1["cloudville.me.conf"]
-            F2["mrishab.io.conf"]
-            F3["rishabmanocha.com.conf"]
+            F1["<your-domain-1>.conf"]
+            F2["<your-domain-2>.conf (Disabled)"]
+            F3["<your-domain-3>.conf"]
         end
     end
 

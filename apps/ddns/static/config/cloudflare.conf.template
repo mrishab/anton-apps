@@ -12,20 +12,12 @@ ssl=yes                                 # Use SSL
 use=web, web=checkip.cloudflare.com/
 
 # ─────────────────────────────────────────────────────────────────────
-# cloudville.me (Cloudflare DNS)
+# <your-domain> (Cloudflare DNS)
 # ─────────────────────────────────────────────────────────────────────
+# Duplicate this block for each domain you want to update.
+# Replace <your-domain> with your actual domain for the zone= line.
 protocol=cloudflare
-zone=cloudville.me
-ttl=1
-login=token
-password=<redacted>
-*, @
-
-# ─────────────────────────────────────────────────────────────────────
-# rishabmanocha.com (Cloudflare DNS)
-# ─────────────────────────────────────────────────────────────────────
-protocol=cloudflare
-zone=rishabmanocha.com
+zone=<your-domain>
 ttl=1
 login=token
 password=<redacted>
