@@ -12,20 +12,20 @@ ssl=yes                                 # Use SSL
 use=web, web=checkip.cloudflare.com/
 
 # ─────────────────────────────────────────────────────────────────────
-# cloudville.me (Cloudflare DNS)
+# <your-domain> (Cloudflare DNS)
 # ─────────────────────────────────────────────────────────────────────
 protocol=cloudflare
-zone=cloudville.me
+zone=<your-domain>
 ttl=1
 login=token
 password=<redacted>
 *, @
 
 # ─────────────────────────────────────────────────────────────────────
-# rishabmanocha.com (Cloudflare DNS)
+# <your-personal-domain> (Cloudflare DNS)
 # ─────────────────────────────────────────────────────────────────────
 protocol=cloudflare
-zone=rishabmanocha.com
+zone=<your-personal-domain>
 ttl=1
 login=token
 password=<redacted>

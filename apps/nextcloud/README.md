@@ -39,7 +39,7 @@ NC_PORT=8765                  # Host port for Nextcloud web interface
 NC_ADMIN_USERNAME=admin       # Nextcloud admin username
 NC_ADMIN_PASSWORD=admin_pass  # Nextcloud admin password
 NC_MOUNT_DIR=/mnt/external_hdd/nextcloud/html  # Nextcloud data/html directory
-NC_TRUSTED_DOMAINS=nextcloud.cloudville.me     # Trusted hostname for Nextcloud access
+NC_TRUSTED_DOMAINS=nextcloud.<your-domain>     # Trusted hostname for Nextcloud access
 NC_DEFAULT_PHONE_REGION=CA   # Default phone region for contact apps
 
 # Redis Configuration (memcache.locking)
