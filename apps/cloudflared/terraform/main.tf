@@ -44,8 +44,8 @@ resource "cloudflare_zero_trust_tunnel_cloudflared" "this" {
 # Application Definitions
 #
 # Derived from the Nginx reverse-proxy templates:
-#   - domain-1-reverse-proxy.conf.template  (cloudville.me)
-#   - domain-2-reverse-proxy.conf.template  (rishabmanocha.com)
+#   - domain-1-reverse-proxy.conf.template  (primary domain)
+#   - domain-2-reverse-proxy.conf.template  (secondary domain)
 #
 # connect_timeout is set for apps that previously used timeout-params.conf
 # (proxy_read_timeout / proxy_connect_timeout = 1800s → 30m).
@@ -56,7 +56,7 @@ resource "cloudflare_zero_trust_tunnel_cloudflared" "this" {
 # ─────────────────────────────────────────────────────────────────────────────
 
 locals {
-  # Domain 1 (cloudville.me) application routes
+  # Domain 1 — primary domain application routes
   # subdomain → { port, connect_timeout (optional) }
   cloudville_apps = {
     adguardhome   = { port = 3000, path = null }
@@ -108,14 +108,14 @@ locals {
 
   # Build a flat list of all ingress rules for the tunnel config
   ingress_rules = concat(
-    # Domain 1 — cloudville.me subdomains
+    # Domain 1 — primary domain subdomains
     [for subdomain, app in local.cloudville_apps : {
       hostname        = "${subdomain}.${var.cloudville_domain}"
       service         = "http://${var.origin_ip}:${app.port}"
       connect_timeout = try(app.connect_timeout, null)
       path            = try(app.path, null)
     }],
-    # Domain 2 — rishabmanocha.com
+    # Domain 2 — secondary domain
     [
       # Forbidden path /ghost on @ root domain
       {

@@ -1,6 +1,6 @@
 # Anton Apps — Cloudflare Reverse Proxy & Wildcard DNS Terraform Setup
 
-This Terraform module sets up Cloudflare as a traditional reverse proxy (Orange Cloud) and DNS resolver for `cloudville.me` and `rishabmanocha.com`.
+This Terraform module sets up Cloudflare as a traditional reverse proxy (Orange Cloud) and DNS resolver for `<your-cloudville-domain>` and `<your-personal-domain>`.
 
 ## Architecture Overview
 
@@ -25,7 +25,7 @@ Local Docker Applications
 
 ### Key Components
 
-1. **Wildcard DNS (`*.cloudville.me`, `*.rishabmanocha.com`)**:
+1. **Wildcard DNS (`*.<your-cloudville-domain>`, `*.<your-personal-domain>`)**:
    - `A` records point to your home server's public IP address.
    - `proxied = true` (Orange Cloud) routes traffic through Cloudflare's edge for DDoS protection, caching, and WAF rules.
 2. **Full (Strict) SSL/TLS**:

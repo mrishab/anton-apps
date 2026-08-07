@@ -72,10 +72,10 @@ The Makefile provides commands to manage certificates and subdomains:
 
 - `make init-certs`: SSH into the server and run the full certificate initialization script (`init-certs.sh`).
 - `make cert-renew`: Trigger a Certbot renewal for all certificates (runs locally via Docker Compose).
-- `make subdomain-1-cert-setup SUBDOMAIN=<subdomain>`: Issue a new certificate for a subdomain under DOMAIN_1 (`cloudville.me`).
-- `make subdomain-2-cert-setup SUBDOMAIN=<subdomain>`: Issue a new certificate for a subdomain under DOMAIN_2 (`rishabmanocha.com`).
-- `make domain-1-cert-setup`: Issue a certificate for the root DOMAIN_1 (`cloudville.me`).
-- `make domain-2-cert-setup`: Issue a certificate for the root DOMAIN_2 (`rishabmanocha.com`).
+- `make subdomain-1-cert-setup SUBDOMAIN=<subdomain>`: Issue a new certificate for a subdomain under DOMAIN_1 (`$(DOMAIN_1)`).
+- `make subdomain-2-cert-setup SUBDOMAIN=<subdomain>`: Issue a new certificate for a subdomain under DOMAIN_2 (`$(DOMAIN_2)`).
+- `make domain-1-cert-setup`: Issue a certificate for the root DOMAIN_1 (`$(DOMAIN_1)`).
+- `make domain-2-cert-setup`: Issue a certificate for the root DOMAIN_2 (`$(DOMAIN_2)`).
 - `make setup-subdomain SUBDOMAIN=<subdomain>`: SSH into the server, issue the subdomain-1 certificate, and restart Nginx.
 
 ## Configuration Structure

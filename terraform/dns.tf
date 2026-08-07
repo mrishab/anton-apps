@@ -20,14 +20,14 @@ locals {
 }
 
 # ═════════════════════════════════════════════════════════════════════════════
-# cloudville.me
+# cloudville domain
 # ═════════════════════════════════════════════════════════════════════════════
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Wildcard & Root A Records — cloudville.me
+# Wildcard & Root A Records — cloudville domain
 # ─────────────────────────────────────────────────────────────────────────────
 
-# Wildcard A record: *.cloudville.me -> Origin Public IP
+# Wildcard A record: *.${var.cloudville_domain} -> Origin Public IP
 resource "cloudflare_record" "cloudville_wildcard_a" {
   zone_id = var.cloudville_zone_id
   name    = "*"
@@ -37,7 +37,7 @@ resource "cloudflare_record" "cloudville_wildcard_a" {
   ttl     = 1
 }
 
-# Root domain A record: cloudville.me -> Origin Public IP
+# Root domain A record: ${var.cloudville_domain} -> Origin Public IP
 resource "cloudflare_record" "cloudville_root_a" {
   zone_id = var.cloudville_zone_id
   name    = "@"
@@ -58,7 +58,7 @@ resource "cloudflare_record" "cloudville_www_cname" {
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
-# MX Records — cloudville.me
+# MX Records — cloudville domain
 # ─────────────────────────────────────────────────────────────────────────────
 
 resource "cloudflare_record" "cloudville_mx" {
@@ -74,7 +74,7 @@ resource "cloudflare_record" "cloudville_mx" {
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
-# TXT Records — cloudville.me
+# TXT Records — cloudville domain
 # ─────────────────────────────────────────────────────────────────────────────
 
 resource "cloudflare_record" "cloudville_spf" {
@@ -87,14 +87,14 @@ resource "cloudflare_record" "cloudville_spf" {
 }
 
 # ═════════════════════════════════════════════════════════════════════════════
-# rishabmanocha.com
+# personal domain
 # ═════════════════════════════════════════════════════════════════════════════
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Wildcard & Root A Records — rishabmanocha.com
+# Wildcard & Root A Records — personal domain
 # ─────────────────────────────────────────────────────────────────────────────
 
-# Wildcard A record: *.rishabmanocha.com -> Origin Public IP
+# Wildcard A record: *.${var.rishabmanocha_domain} -> Origin Public IP
 resource "cloudflare_record" "rishabmanocha_wildcard_a" {
   zone_id = var.rishabmanocha_zone_id
   name    = "*"
@@ -104,7 +104,7 @@ resource "cloudflare_record" "rishabmanocha_wildcard_a" {
   ttl     = 1
 }
 
-# Root domain A record: rishabmanocha.com -> Origin Public IP
+# Root domain A record: ${var.rishabmanocha_domain} -> Origin Public IP
 resource "cloudflare_record" "rishabmanocha_root_a" {
   zone_id = var.rishabmanocha_zone_id
   name    = "@"
@@ -125,7 +125,7 @@ resource "cloudflare_record" "rishabmanocha_www_cname" {
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
-# MX Records — rishabmanocha.com
+# MX Records — personal domain
 # ─────────────────────────────────────────────────────────────────────────────
 
 resource "cloudflare_record" "rishabmanocha_mx" {
@@ -141,7 +141,7 @@ resource "cloudflare_record" "rishabmanocha_mx" {
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
-# TXT Records — rishabmanocha.com
+# TXT Records — personal domain
 # ─────────────────────────────────────────────────────────────────────────────
 
 resource "cloudflare_record" "rishabmanocha_spf" {

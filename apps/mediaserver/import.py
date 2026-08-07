@@ -1,7 +1,8 @@
 import requests
 import os
 
-BASE_URL = 'https://lidarr.cloudville.me'
+# Override via LIDARR_URL env var — replace with your Lidarr instance URL
+BASE_URL = os.environ.get('LIDARR_URL', 'https://lidarr.<your-domain>')
 HEADERS = {
     'X-Api-Key': os.environ.get('X_API_KEY')
 }
