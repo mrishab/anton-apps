@@ -1,6 +1,6 @@
 services:
   jupyter:
-    image: quay.io/jupyter/pytorch-notebook:cuda12-conda-26.3.2
+    image: quay.io/jupyter/pytorch-notebook:cuda12-conda-26.7.0
     container_name: jupyter
     restart: unless-stopped
     environment:
