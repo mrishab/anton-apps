@@ -1,6 +1,6 @@
 services:
   prowlarr:
-    image: ghcr.io/linuxserver/prowlarr:0.4.7-develop
+    image: ghcr.io/linuxserver/prowlarr:2.6.1-develop
     container_name: prowlarr
     restart: unless-stopped
     environment:
