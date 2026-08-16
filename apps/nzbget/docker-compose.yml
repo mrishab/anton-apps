@@ -1,6 +1,6 @@
 services:
   nzbget:
-    image: ghcr.io/linuxserver/nzbget:latest
+    image: ghcr.io/linuxserver/nzbget:v26.2-ls258
     container_name: nzbget
     restart: unless-stopped
     environment:
