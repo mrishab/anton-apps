@@ -1,6 +1,6 @@
 services:
   ghost:
-    image: ghost:6.56.0-alpine3.23
+    image: ghost:6.57.1-alpine3.23
     container_name: ghost
     restart: unless-stopped
     ports:
