@@ -8,6 +8,7 @@ enabled_apps:
   - codeserver
   - ddns
   - deluge
+  - dockovpn
   - duplicati
   - ghost
   - grafana

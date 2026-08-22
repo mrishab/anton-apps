@@ -97,7 +97,7 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   dockovpn:
-    port: 8386
+    port: [8386, "1194/udp"]
     restart_on_deploy: true
     dirs:
       - {
