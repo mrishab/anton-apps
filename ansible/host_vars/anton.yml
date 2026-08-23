@@ -3,7 +3,6 @@ host_app_dir: /var/server/anton/apps
 host_data_dir: /mnt/external_hdd
 enabled_apps:
   - affine
-  - bentopdf
   - cadvisor
   - codeserver
   - ddns
@@ -13,23 +12,15 @@ enabled_apps:
   - ghost
   - grafana
   - hermes
-  - homarr
   - immich
   - jenkins
-  - jupyter
   - mediaserver
   - nextcloud
-  - ollama
   - ombi
-  - open-webui
   - plex
   - prowlarr
   - reverse-proxy
-  - sftpgo
   - sonarqube
-  - stirling-pdf
-  - tautulli
-  - upsnap
 
 blocked_env_sync_apps:
   # - cloudflared
