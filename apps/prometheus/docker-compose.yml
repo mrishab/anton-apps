@@ -1,6 +1,6 @@
 services:
     prometheus:
-        image: prom/prometheus:v3.13.2
+        image: prom/prometheus:v3.14.0
         container_name: prometheus
         restart: unless-stopped
         extra_hosts:
@@ -13,7 +13,7 @@ services:
             - ${PROMETHEUS_MOUNT_DIR}:/prometheus
 
     alertmanager:
-        image: prom/alertmanager:v0.33.1
+        image: prom/alertmanager:v0.34.0
         container_name: alertmanager
         restart: unless-stopped
         ports:
