@@ -17,7 +17,7 @@ services:
       - ./services/deluge_vpn/vpn/vpn.conf:/vpn/vpn.conf
 
   deluge:
-    image: ghcr.io/linuxserver/deluge:2.2.0-ls381
+    image: ghcr.io/linuxserver/deluge:2.2.0-ls382
     container_name: deluge
     restart: unless-stopped
     network_mode: service:vpn
