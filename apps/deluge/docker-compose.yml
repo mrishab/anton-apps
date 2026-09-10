@@ -1,6 +1,6 @@
 services:
   vpn:
-    image: ghcr.io/utkuozdemir/dperson-openvpn-client:alpine-3.23.4-openvpn-2.6.16
+    image: ghcr.io/utkuozdemir/dperson-openvpn-client:alpine-3.24.1-openvpn-2.7.5
     container_name: deluge_vpn
     restart: unless-stopped
     command: ["-d", "-a", "${REMOTE_USERNAME};${REMOTE_PASSWORD}"]
@@ -17,7 +17,7 @@ services:
       - ./services/deluge_vpn/vpn/vpn.conf:/vpn/vpn.conf
 
   deluge:
-    image: ghcr.io/linuxserver/deluge:2.2.0-ls381
+    image: ghcr.io/linuxserver/deluge:2.2.0-ls382
     container_name: deluge
     restart: unless-stopped
     network_mode: service:vpn
