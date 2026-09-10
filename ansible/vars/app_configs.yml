@@ -300,6 +300,12 @@ app_configs:
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
+  metabase:
+    port: 8093
+    restart_on_deploy: true
+    dirs:
+      - { path: "{{ host_data_dir }}/metabase/app" }
+      - { path: "{{ host_data_dir }}/metabase/db", mode: "0700" }
   nzbget:
     port: 6789
     restart_on_deploy: true

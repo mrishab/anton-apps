@@ -28,6 +28,7 @@ enabled_apps:
   - lazylibrarian
   - lb
   - mediaserver
+  - metabase
   - n8n
   - nextcloud
   - nexus
