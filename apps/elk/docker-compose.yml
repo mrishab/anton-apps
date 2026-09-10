@@ -37,7 +37,7 @@ services:
             - kibana
 
     logspout:
-        image: gliderlabs/logspout:v3.2.13
+        image: gliderlabs/logspout:v3.2.14
         container_name: logspout
         restart: unless-stopped
         command: udp://logstash:${LOGSTASH_UDP_PORT}
