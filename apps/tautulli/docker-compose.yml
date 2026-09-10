@@ -1,6 +1,6 @@
 services:
   tautulli:
-    image: ghcr.io/linuxserver/tautulli:2.16.0
+    image: ghcr.io/linuxserver/tautulli:2.18.1
     container_name: tautulli
     restart: unless-stopped
     environment:
