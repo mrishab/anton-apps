@@ -1,6 +1,6 @@
 services:
   jenkins:
-    image: jenkins/jenkins:2.564
+    image: jenkins/jenkins:2.580
     container_name: jenkins
     restart: unless-stopped
     ports:
@@ -12,7 +12,7 @@ services:
       - ${JENKINS_MOUNT_DIR}:/var/jenkins_home
 
   socat:
-    image: alpine/socat:1.8.0.3
+    image: alpine/socat:1.8.1.3
     container_name: jenkins_socat
     restart: unless-stopped
     ports:
