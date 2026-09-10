@@ -1,6 +1,6 @@
 services:
   ghost:
-    image: ghost:6.39.0-alpine3.23
+    image: ghost:6.62.0-alpine3.23
     container_name: ghost
     restart: unless-stopped
     ports:
@@ -27,7 +27,7 @@ services:
       - mysql
 
   mysql:
-    image: mysql:9.7.0-oraclelinux9
+    image: mysql:9.7.2-oraclelinux9
     container_name: ghost_mysql
     restart: unless-stopped
     environment:
