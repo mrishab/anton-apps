@@ -19,6 +19,7 @@ enabled_apps:
   - ghost
   - grafana
   - hermes
+  - hermes-wife
   - homarr
   - immich
   - jellyfin

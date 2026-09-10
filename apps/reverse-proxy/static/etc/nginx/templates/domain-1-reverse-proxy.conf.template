@@ -679,3 +679,19 @@ server {
   }
 }
 
+# ── Hermes-Wife Dashboard ──────────────────────────────────────────────────────
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  server_name wife-hermes.${DOMAIN_1};
+
+  ssl_certificate /etc/nginx/ssl/live/wife-hermes.${DOMAIN_1}/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/wife-hermes.${DOMAIN_1}/privkey.pem;
+
+  location / {
+    proxy_pass http://${HOST_IP}:${WIFE_HERMES_DASHBOARD_PORT};
+    include snippets/header-params.conf;
+    include snippets/websocket.conf;
+  }
+}
+
