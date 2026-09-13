@@ -19,6 +19,7 @@ enabled_apps:
   - ghost
   - grafana
   - hermes
+  - hermes-wife
   - homarr
   - immich
   - jellyfin
@@ -27,6 +28,7 @@ enabled_apps:
   - lazylibrarian
   - lb
   - mediaserver
+  - metabase
   - n8n
   - nextcloud
   - nexus
@@ -46,6 +48,7 @@ enabled_apps:
   - tautulli
   - threadfin
   - upsnap
+  - vikunja
   - wikijs
 
 blocked_env_sync_apps:

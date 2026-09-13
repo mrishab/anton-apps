@@ -56,7 +56,7 @@ Access Jenkins at:
 http://your-server-ip:JENKINS_WEB_PORT
 ```
 
-Or via reverse proxy at `https://jenkins.cloudville.me`.
+Or via reverse proxy at `https://jenkins.<your-domain>`.
 
 ### Initial Setup
 

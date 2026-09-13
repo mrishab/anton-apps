@@ -44,7 +44,7 @@ Access Code Server at:
 http://your-server-ip:CODESERVER_WEB_UI_PORT
 ```
 
-Or via reverse proxy at `https://code.cloudville.me`.
+Or via reverse proxy at `https://code.<your-domain>`.
 
 ### Initial Setup
 

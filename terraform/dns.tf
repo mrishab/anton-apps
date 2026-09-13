@@ -47,6 +47,16 @@ resource "cloudflare_record" "cloudville_root_a" {
   ttl     = 1
 }
 
+# VPN Subdomain A record: ovpn.cloudville.me -> Origin Public IP (Unproxied for UDP)
+resource "cloudflare_record" "cloudville_ovpn_a" {
+  zone_id = var.cloudville_zone_id
+  name    = "ovpn"
+  type    = "A"
+  content = var.server_public_ip
+  proxied = false
+  ttl     = 1
+}
+
 # www subdomain CNAME
 resource "cloudflare_record" "cloudville_www_cname" {
   zone_id = var.cloudville_zone_id

@@ -1,0 +1,18 @@
+services:
+  vikunja:
+    image: vikunja/vikunja:2.5.0
+    container_name: vikunja
+    restart: unless-stopped
+    environment:
+      VIKUNJA_SERVICE_PUBLICURL: ${VIKUNJA_PUBLIC_URL}
+      VIKUNJA_DATABASE_TYPE: sqlite
+      VIKUNJA_DATABASE_PATH: /db/vikunja.db
+      VIKUNJA_FILES_PATH: /app/vikunja/files
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
+    volumes:
+      - ${VIKUNJA_DB_MOUNT_DIR}:/db
+      - ${VIKUNJA_FILES_MOUNT_DIR}:/app/vikunja/files
+    ports:
+      - ${VIKUNJA_WEB_PORT}:3456

@@ -1,6 +1,6 @@
 services:
   calibre:
-    image: lscr.io/linuxserver/calibre:latest
+    image: lscr.io/linuxserver/calibre:9.13.0
     container_name: calibre
     environment:
       - PUID=${APP_PUID}
@@ -14,7 +14,7 @@ services:
     restart: unless-stopped
 
   calibre-web:
-    image: lscr.io/linuxserver/calibre-web:latest
+    image: lscr.io/linuxserver/calibre-web:0.6.27
     container_name: calibre-web
     environment:
       - PUID=${APP_PUID}
