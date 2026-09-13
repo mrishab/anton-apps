@@ -63,9 +63,9 @@ graph TD
 ### Scraper Targets (`prometheus.yml`)
 Configured to scrape metrics from:
 - Prometheus itself (`host.docker.internal:9090`)
-- Node Exporters (exposes host metrics such as CPU/Memory/Disk) on both Anton (`192.168.1.67:9100`) and Orion (`host.docker.internal:9100`)
-- cAdvisors (exposes container metrics) on both Anton (`192.168.1.67:8383`) and Orion (`host.docker.internal:8383`)
-- Nginx Exporter (exposes web server connection metrics from Anton at `192.168.1.67:9113`)
+- Node Exporters (exposes host metrics such as CPU/Memory/Disk) on both Anton (`<YOUR-NODE-IP>:9100`) and Orion (`host.docker.internal:9100`)
+- cAdvisors (exposes container metrics) on both Anton (`<YOUR-NODE-IP>:8383`) and Orion (`host.docker.internal:8383`)
+- Nginx Exporter (exposes web server connection metrics from Anton at `<YOUR-NODE-IP>:9113`)
 
 ### Alerts Rules (`rules/`)
 Evaluates rule configurations:

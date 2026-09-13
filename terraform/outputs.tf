@@ -1,20 +1,20 @@
 output "cloudville_zone_id" {
-  description = "Zone ID for cloudville.me"
+  description = "Zone ID for primary (cloudville) domain"
   value       = var.cloudville_zone_id
 }
 
 output "cloudville_wildcard_dns" {
-  description = "Wildcard DNS record for cloudville.me"
+  description = "Wildcard DNS record for primary (cloudville) domain"
   value       = cloudflare_record.cloudville_wildcard_a.hostname
 }
 
 output "rishabmanocha_zone_id" {
-  description = "Zone ID for rishabmanocha.com"
+  description = "Zone ID for personal domain"
   value       = var.rishabmanocha_zone_id
 }
 
 output "rishabmanocha_wildcard_dns" {
-  description = "Wildcard DNS record for rishabmanocha.com"
+  description = "Wildcard DNS record for personal domain"
   value       = cloudflare_record.rishabmanocha_wildcard_a.hostname
 }
 

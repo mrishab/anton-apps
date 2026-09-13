@@ -2,15 +2,15 @@
 # WAF (Web Application Firewall) Custom Rules
 #
 # Configures Cloudflare WAF rulesets for both domains:
-#   - cloudville.me: Highly restricted zone for internal/homelab audience.
+#   - Cloudville domain: Highly restricted zone for internal/homelab audience.
 #     Aggressive blockings for non-allowed countries, bots, AI scrapers,
 #     automated tools, security scanners, and threat score triggers.
-#   - rishabmanocha.com: Public SEO site. Restrictions are removed and SEO
+#   - Personal domain: Public SEO site. Restrictions are removed and SEO
 #     crawlers are explicitly allowed and prioritized for global discovery.
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ═════════════════════════════════════════════════════════════════════════════
-# cloudville.me — Restricted Homelab Environment (Aggressive Security)
+# Cloudville domain — Restricted Homelab Environment (Aggressive Security)
 # ═════════════════════════════════════════════════════════════════════════════
 
 resource "cloudflare_ruleset" "cloudville_geo_blocking" {
@@ -62,7 +62,7 @@ resource "cloudflare_ruleset" "cloudville_geo_blocking" {
 }
 
 # ═════════════════════════════════════════════════════════════════════════════
-# rishabmanocha.com — Public SEO & Discoverable Portfolio/Blog Site
+# Personal domain — Public SEO & Discoverable Portfolio/Blog Site
 # ═════════════════════════════════════════════════════════════════════════════
 
 resource "cloudflare_ruleset" "rishabmanocha_geo_blocking" {

@@ -15,7 +15,7 @@ graph TD
         
         subgraph "Config Files"
             F1["<your-domain>.conf"]
-            F2["<your-other-domain>.conf"]
+            F2["<your-other-domain>.conf (Disabled)"]
             F3["<your-personal-domain>.conf"]
         end
     end

@@ -9,5 +9,5 @@ rishabmanocha_zone_id = ""
 # Optional overrides (defaults shown)
 # tunnel_name          = "Anton Apps"
 # origin_ip            = "172.17.0.1"
-# cloudville_domain    = "cloudville.me"
-# rishabmanocha_domain = "rishabmanocha.com"
+# cloudville_domain    = "<your-domain>"
+# rishabmanocha_domain = "<your-domain>"

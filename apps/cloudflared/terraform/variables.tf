@@ -19,12 +19,12 @@ variable "cloudflare_api_token" {
 # ─────────────────────────────────────────────────────────────────────────────
 
 variable "cloudville_zone_id" {
-  description = "Cloudflare zone ID for cloudville.me"
+  description = "Cloudflare zone ID for the primary domain"
   type        = string
 }
 
 variable "rishabmanocha_zone_id" {
-  description = "Cloudflare zone ID for rishabmanocha.com"
+  description = "Cloudflare zone ID for the secondary domain"
   type        = string
 }
 
@@ -51,13 +51,11 @@ variable "origin_ip" {
 variable "cloudville_domain" {
   description = "Primary domain for homelab apps"
   type        = string
-  default     = "cloudville.me"
 }
 
 variable "rishabmanocha_domain" {
   description = "Secondary domain (blog/personal site)"
   type        = string
-  default     = "rishabmanocha.com"
 }
 
 # ─────────────────────────────────────────────────────────────────────────────

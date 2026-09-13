@@ -6,8 +6,7 @@
 #   - MX records for email forwarding (Namecheap eforward)
 #   - TXT records for SPF
 #
-# The old A records (*.cloudville.me, cloudville.me, www.cloudville.me,
-# *.rishabmanocha.com, etc. → 66.183.55.122) are intentionally NOT created.
+# The old A records (*.example.com, etc.) are intentionally NOT created.
 # The tunnel CNAME records replace them entirely.
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -25,11 +24,11 @@ locals {
 }
 
 # ═════════════════════════════════════════════════════════════════════════════
-# cloudville.me
+# Primary domain
 # ═════════════════════════════════════════════════════════════════════════════
 
 # ─────────────────────────────────────────────────────────────────────────────
-# CNAME Records — cloudville.me
+# CNAME Records — primary domain
 # ─────────────────────────────────────────────────────────────────────────────
 
 # Per-app subdomain CNAMEs (one per app in cloudville_apps)
@@ -65,7 +64,7 @@ resource "cloudflare_record" "cloudville_www_cname" {
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
-# MX Records — cloudville.me
+# MX Records — primary domain
 # ─────────────────────────────────────────────────────────────────────────────
 
 resource "cloudflare_record" "cloudville_mx" {
@@ -81,7 +80,7 @@ resource "cloudflare_record" "cloudville_mx" {
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
-# TXT Records — cloudville.me
+# TXT Records — primary domain
 # ─────────────────────────────────────────────────────────────────────────────
 
 resource "cloudflare_record" "cloudville_spf" {
@@ -94,11 +93,11 @@ resource "cloudflare_record" "cloudville_spf" {
 }
 
 # ═════════════════════════════════════════════════════════════════════════════
-# rishabmanocha.com
+# Secondary domain
 # ═════════════════════════════════════════════════════════════════════════════
 
 # ─────────────────────────────────────────────────────────────────────────────
-# CNAME Records — rishabmanocha.com
+# CNAME Records — secondary domain
 # ─────────────────────────────────────────────────────────────────────────────
 
 # Root domain → Ghost (port 2368)
@@ -122,7 +121,7 @@ resource "cloudflare_record" "rishabmanocha_www_cname" {
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
-# MX Records — rishabmanocha.com
+# MX Records — secondary domain
 # ─────────────────────────────────────────────────────────────────────────────
 
 resource "cloudflare_record" "rishabmanocha_mx" {
@@ -138,7 +137,7 @@ resource "cloudflare_record" "rishabmanocha_mx" {
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
-# TXT Records — rishabmanocha.com
+# TXT Records — secondary domain
 # ─────────────────────────────────────────────────────────────────────────────
 
 resource "cloudflare_record" "rishabmanocha_spf" {
