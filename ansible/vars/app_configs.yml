@@ -186,18 +186,6 @@ app_configs:
           group: "{{ primary_owner }}",
           mode: "0700",
         }
-  hermes-wife:
-    ports:
-      - { port: 8643, proto: any }
-      - { port: 9120, proto: any }
-    restart_on_deploy: true
-    dirs:
-      - {
-          path: "{{ host_data_dir }}/hermes-wife",
-          owner: "{{ primary_owner }}",
-          group: "{{ primary_owner }}",
-          mode: "0700",
-        }
   homarr:
     ports:
       - { port: 7575, proto: any }
