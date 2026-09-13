@@ -2,20 +2,24 @@ primary_owner: mrishab
 
 app_configs:
   adguardhome:
-    port: [3000, 53]
+    ports:
+      - { port: 3000, proto: any }
+      - { port: 53, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/adguard/work" }
       - { path: "{{ host_data_dir }}/adguard/conf" }
   affine:
-    port: 3010
+    ports:
+      - { port: 3010, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/affine/db", mode: "0700" }
       - { path: "{{ host_data_dir }}/affine/app/uploads" }
       - { path: "{{ host_data_dir }}/affine/app/config" }
   airflow:
-    port: 2364
+    ports:
+      - { port: 2364, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -36,7 +40,8 @@ app_configs:
           mode: "0700",
         }
   bentopdf:
-    port: 8085
+    ports:
+      - { port: 8085, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -50,7 +55,10 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   calibre:
-    port: [8080, 8081, 8083]
+    ports:
+      - { port: 8080, proto: any }
+      - { port: 8081, proto: any }
+      - { port: 8083, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -64,14 +72,20 @@ app_configs:
           group: "201",
         }
   cadvisor:
-    port: 8383
+    ports:
+      - { port: 8383, proto: any }
     restart_on_deploy: true
     dirs: []
   cloudflared:
+    ports: []
     restart_on_deploy: true
+    sysctl:
+      - { name: "net.core.rmem_max", value: "7500000" }
+      - { name: "net.core.wmem_max", value: "7500000" }
     dirs: []
   codeserver:
-    port: 2342
+    ports:
+      - { port: 2342, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -80,10 +94,12 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   ddns:
+    ports: []
     restart_on_deploy: true
     dirs: []
   deluge:
-    port: 8112
+    ports:
+      - { port: 8112, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -97,7 +113,9 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   dockovpn:
-    port: [8386, "1194/udp"]
+    ports:
+      - { port: 8386, proto: any }
+      - { port: 1194, proto: udp }
     restart_on_deploy: true
     dirs:
       - {
@@ -106,7 +124,8 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   duplicati:
-    port: 8200
+    ports:
+      - { port: 8200, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -116,25 +135,31 @@ app_configs:
           mode: "0700",
         }
   elk:
-    port: [9200, 9300, 5601]
+    ports:
+      - { port: 9200, proto: any }
+      - { port: 9300, proto: any }
+      - { port: 5601, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/elk/elasticsearch/data" }
       - { path: "{{ host_data_dir }}/elk/kibana/data" }
       - { path: "{{ host_data_dir }}/elk/logstash/data" }
   epg:
-    port: 30000
+    ports:
+      - { port: 30000, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/epg/public" }
   freshrss:
-    port: 4523
+    ports:
+      - { port: 4523, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/freshrss/app" }
       - { path: "{{ host_data_dir }}/freshrss/db", mode: "0700" }
   ghost:
-    port: 2368
+    ports:
+      - { port: 2368, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -144,12 +169,15 @@ app_configs:
         }
       - { path: "{{ host_data_dir }}/ghost/db" }
   grafana:
-    port: 3003
+    ports:
+      - { port: 3003, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/grafana", owner: "472", group: "472" }
   hermes:
-    port: [8642, 9119]
+    ports:
+      - { port: 8642, proto: any }
+      - { port: 9119, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -159,7 +187,9 @@ app_configs:
           mode: "0700",
         }
   hermes-wife:
-    port: [8643, 9120]
+    ports:
+      - { port: 8643, proto: any }
+      - { port: 9120, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -169,7 +199,8 @@ app_configs:
           mode: "0700",
         }
   homarr:
-    port: 7575
+    ports:
+      - { port: 7575, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -178,20 +209,25 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   immich:
-    port: 2283
+    ports:
+      - { port: 2283, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/immich/app/library" }
       - { path: "{{ host_data_dir }}/immich/db/postgres", mode: "0700" }
       - { path: "{{ host_data_dir }}/immich/ml-cache" }
   jellyfin:
-    port: 8096
+    ports:
+      - { port: 8096, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/jellyfin/config" }
       - { path: "{{ host_data_dir }}/mediaserver/jellyfin/cache" }
   jenkins:
-    port: [8888, 50000, 10023]
+    ports:
+      - { port: 8888, proto: any }
+      - { port: 50000, proto: any }
+      - { port: 10023, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -200,7 +236,8 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   jupyter:
-    port: 2705
+    ports:
+      - { port: 2705, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -209,15 +246,21 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   lazylibrarian:
-    port: 5299
+    ports:
+      - { port: 5299, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/lazylibrarian/config" }
   lb:
+    ports: []
     restart_on_deploy: true
     dirs: []
   mediaserver:
-    port: [8989, 7878, 8686, 6767]
+    ports:
+      - { port: 8989, proto: any }
+      - { port: 7878, proto: any }
+      - { port: 8686, proto: any }
+      - { port: 6767, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -266,13 +309,15 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   n8n:
-    port: 5678
+    ports:
+      - { port: 5678, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/n8n/app" }
       - { path: "{{ host_data_dir }}/n8n/db", mode: "0700" }
   nextcloud:
-    port: 8765
+    ports:
+      - { port: 8765, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -292,7 +337,8 @@ app_configs:
           group: "999",
         }
   nexus:
-    port: 4634
+    ports:
+      - { port: 4634, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -301,33 +347,39 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   metabase:
-    port: 8093
+    ports:
+      - { port: 8093, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/metabase/app" }
       - { path: "{{ host_data_dir }}/metabase/db", mode: "0700" }
   nzbget:
-    port: 6789
+    ports:
+      - { port: 6789, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/nzbget/config" }
   ollama:
-    port: 11434
+    ports:
+      - { port: 11434, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/ollama" }
   ombi:
-    port: 3579
+    ports:
+      - { port: 3579, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/ombi/config" }
   open-webui:
-    port: 11435
+    ports:
+      - { port: 11435, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/open-webui" }
   pgadmin:
-    port: 3487
+    ports:
+      - { port: 3487, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -342,7 +394,8 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   plex:
-    port: 32400
+    ports:
+      - { port: 32400, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -376,7 +429,8 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   postiz:
-    port: 5000
+    ports:
+      - { port: 5000, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -400,29 +454,39 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   prometheus:
-    port: [9090, 9093]
+    ports:
+      - { port: 9090, proto: any }
+      - { port: 9093, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/prometheus" }
       - { path: "{{ host_data_dir }}/alertmanager" }
   prowlarr:
-    port: 9696
+    ports:
+      - { port: 9696, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/prowlarr/config" }
   registry:
-    port: 5000
+    ports:
+      - { port: 5000, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/registry" }
   reverse-proxy:
-    port: [80, 443, 9113]
+    ports:
+      - { port: 80, proto: any }
+      - { port: 443, proto: any }
+      - { port: 9113, proto: any }
     restart_on_deploy: false
     dirs:
       - { path: "{{ host_data_dir }}/reverse-proxy/certbot" }
       - { path: "{{ host_data_dir }}/reverse-proxy/certificates" }
   sftpgo:
-    port: [9393, 2022, 2121]
+    ports:
+      - { port: 9393, proto: any }
+      - { port: 2022, proto: any }
+      - { port: 2121, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -436,8 +500,11 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   sonarqube:
-    port: 3124
+    ports:
+      - { port: 3124, proto: any }
     restart_on_deploy: true
+    sysctl:
+      - { name: "vm.max_map_count", value: "262144" }
     dirs:
       - {
           path: "{{ host_data_dir }}/sonarqube/db",
@@ -461,7 +528,8 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   stirling-pdf:
-    port: 8086
+    ports:
+      - { port: 8086, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -485,18 +553,21 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   tautulli:
-    port: 8181
+    ports:
+      - { port: 8181, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/tautulli/config" }
   threadfin:
-    port: 34400
+    ports:
+      - { port: 34400, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/threadfin/config" }
       - { path: "{{ host_data_dir }}/mediaserver/threadfin/temp" }
   upsnap:
-    port: 8090
+    ports:
+      - { port: 8090, proto: any }
     restart_on_deploy: true
     dirs:
       - {
@@ -505,12 +576,14 @@ app_configs:
           group: "{{ primary_owner }}",
         }
   wikijs:
-    port: 3123
+    ports:
+      - { port: 3123, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/wikijs/db", mode: "0700" }
   vikunja:
-    port: 3456
+    ports:
+      - { port: 3456, proto: any }
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/vikunja/db", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
