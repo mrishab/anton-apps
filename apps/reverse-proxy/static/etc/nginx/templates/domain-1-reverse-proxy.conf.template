@@ -525,6 +525,7 @@ server {
   location / {
     proxy_pass http://${HOST_IP}:${METABASE_WEB_PORT};
     include snippets/header-params.conf;
+    include snippets/websocket.conf;
     proxy_set_header X-Forwarded-Proto $scheme;
   }
 }

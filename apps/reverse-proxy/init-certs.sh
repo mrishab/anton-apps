@@ -40,6 +40,7 @@ make subdomain-1-cert-setup SUBDOMAIN=postiz &&\
 make subdomain-1-cert-setup SUBDOMAIN=immich &&\
 make subdomain-1-cert-setup SUBDOMAIN=affine &&\
 make subdomain-1-cert-setup SUBDOMAIN=n8n &&\
+make subdomain-1-cert-setup SUBDOMAIN=metabase &&\
 make subdomain-1-cert-setup SUBDOMAIN=threadfin &&\
 make subdomain-1-cert-setup SUBDOMAIN=epg &&\
 make subdomain-1-cert-setup SUBDOMAIN=upsnap &&\
