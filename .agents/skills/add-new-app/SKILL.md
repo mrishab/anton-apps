@@ -134,11 +134,15 @@ Add the app definition under `app_configs`:
 app_configs:
   ...
   new-app-name:
-    port: 1234  # The primary web port
+    ports:
+      - { port: 1234, proto: any }  # The primary web port
     restart_on_deploy: true  # Set to false if app should not automatically restart on deploy
     dirs:
       - { path: "{{ host_data_dir }}/new-app-name/config", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
       - { path: "{{ host_data_dir }}/new-app-name/data", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
+    # Optional: Kernel sysctl tuning parameters
+    # sysctl:
+    #   - { name: "vm.max_map_count", value: "262144" }
 ```
 
 

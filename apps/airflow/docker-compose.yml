@@ -1,6 +1,6 @@
 services:
   airflow_setup:
-    image: apache/airflow:2.3.4
+    image: apache/airflow:2.11.2
     container_name: airflow_setup
     entrypoint: []
     command: >
@@ -24,7 +24,7 @@ services:
       - ${AIRFLOW_MOUNT_DIR_LOGS}:/opt/airflow/logs
 
   airflow_webserver:
-    image: apache/airflow:2.3.4
+    image: apache/airflow:2.11.2
     container_name: airflow_webserver
     restart: unless-stopped
     command: ["webserver"]
@@ -43,7 +43,7 @@ services:
       - airflow_setup
 
   airflow_scheduler:
-    image: apache/airflow:2.3.4
+    image: apache/airflow:2.11.2
     container_name: airflow_scheduler
     restart: unless-stopped
     command: ["scheduler"]

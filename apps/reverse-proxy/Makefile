@@ -8,24 +8,24 @@ cert-renew:
 	docker compose run --rm certbot renew
 
 subdomain-1-cert-setup:
-	docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d ${SUBDOMAIN}.cloudville.me
+	docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d ${SUBDOMAIN}.<your-domain>
 
 subdomain-2-cert-setup:
-	docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d ${SUBDOMAIN}.rishabmanocha.com
+	docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d ${SUBDOMAIN}.<your-personal-domain>
 
 domain-1-cert-setup:
-	docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d cloudville.me
+	docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d <your-domain>
 
 domain-2-cert-setup:
-	docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d rishabmanocha.com
+	docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d <your-personal-domain>
 
 
 subdmain-1-delete-cert:
-	docker compose run --rm certbot delete --cert-name ${SUBDOMAIN}.cloudville.me
+	docker compose run --rm certbot delete --cert-name ${SUBDOMAIN}.<your-domain>
 
 init-certs:
 	ssh ${HOST} "cd ${HOST_APP_DIR} && ./init-certs.sh"
 
 delete-cert:
-	docker compose run --rm certbot delete --cert-name mrishab.io
-	docker compose run --rm certbot delete --cert-name ghost.mrishab.io
+	docker compose run --rm certbot delete --cert-name <your-other-domain>
+	docker compose run --rm certbot delete --cert-name ghost.<your-other-domain>

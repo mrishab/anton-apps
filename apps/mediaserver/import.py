@@ -1,7 +1,7 @@
 import requests
 import os
 
-BASE_URL = 'https://lidarr.cloudville.me'
+BASE_URL = 'https://lidarr.<your-domain>'
 HEADERS = {
     'X-Api-Key': os.environ.get('X_API_KEY')
 }

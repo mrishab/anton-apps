@@ -19,12 +19,12 @@ variable "cloudflare_api_token" {
 # ─────────────────────────────────────────────────────────────────────────────
 
 variable "cloudville_zone_id" {
-  description = "Cloudflare zone ID for cloudville.me"
+  description = "Cloudflare zone ID for primary (cloudville) domain"
   type        = string
 }
 
 variable "rishabmanocha_zone_id" {
-  description = "Cloudflare zone ID for rishabmanocha.com"
+  description = "Cloudflare zone ID for personal domain"
   type        = string
 }
 
@@ -35,13 +35,13 @@ variable "rishabmanocha_zone_id" {
 variable "cloudville_domain" {
   description = "Primary domain for homelab apps"
   type        = string
-  default     = "cloudville.me"
+  default     = "<your-cloudville-domain>"
 }
 
 variable "rishabmanocha_domain" {
   description = "Secondary domain (blog/personal site)"
   type        = string
-  default     = "rishabmanocha.com"
+  default     = "<your-personal-domain>"
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -51,7 +51,7 @@ variable "rishabmanocha_domain" {
 variable "server_public_ip" {
   description = "Public IP address of origin server (Anton) used for DNS A records"
   type        = string
-  default     = "1.2.3.4"
+  default     = "<your-server-public-ip>"
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -65,7 +65,7 @@ variable "ssl_mode" {
 }
 
 variable "allowed_countries" {
-  description = "List of allowed country codes for WAF geo-blocking"
+  description = "List of allowed country codes for WAF geo-blocking (customize for your region)"
   type        = list(string)
   default     = ["US", "CA", "IN", "GB"]
 }
