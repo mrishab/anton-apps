@@ -49,5 +49,3 @@ enabled_apps:
   - upsnap
   - vikunja
   - wikijs
-
-blocked_env_sync_apps:

@@ -102,6 +102,7 @@
           - "--exclude=.git"
           - "--exclude=*.log"
           - "--exclude=template.env"
+          - "--exclude=.env"
           - "--exclude=README.md"
           - "--exclude=*.tf*"
           - "--no-perms"

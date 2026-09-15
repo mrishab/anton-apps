@@ -4,7 +4,6 @@ host_data_dir: /mnt/external_hdd
 enabled_apps:
   - affine
   - cadvisor
-  - codeserver
   - ddns
   - deluge
   - dockovpn
@@ -21,6 +20,3 @@ enabled_apps:
   - prowlarr
   - reverse-proxy
   - sonarqube
-
-blocked_env_sync_apps:
-  # - cloudflared

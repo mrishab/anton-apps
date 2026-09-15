@@ -5,5 +5,3 @@ enabled_apps:
   - cadvisor
   - prometheus
   - sftpgo
-
-blocked_env_sync_apps:
