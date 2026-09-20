@@ -1,6 +1,6 @@
 services:
   metabase:
-    image: metabase/metabase:v0.58.24
+    image: metabase/metabase:v0.58.34
     container_name: metabase
     restart: unless-stopped
     environment:
