@@ -1,6 +1,6 @@
 services:
   ombi:
-    image: ghcr.io/linuxserver/ombi:4.53.10
+    image: ghcr.io/linuxserver/ombi:4.60.16
     container_name: ombi
     restart: unless-stopped
     environment:
