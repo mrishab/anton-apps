@@ -13,7 +13,7 @@ services:
             - ${PROMETHEUS_MOUNT_DIR}:/prometheus
 
     alertmanager:
-        image: prom/alertmanager:v0.34.0
+        image: prom/alertmanager:v0.34.1
         container_name: alertmanager
         restart: unless-stopped
         ports:
