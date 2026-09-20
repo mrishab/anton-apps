@@ -1,6 +1,6 @@
 services:
   n8n:
-    image: n8nio/n8n:2.38.3-3a77307
+    image: n8nio/n8n:2.40.3-d94da13
     container_name: n8n
     restart: unless-stopped
     environment:
