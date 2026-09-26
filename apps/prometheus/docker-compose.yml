@@ -1,27 +1,40 @@
 services:
-    prometheus:
-        image: prom/prometheus:v3.14.0
-        container_name: prometheus
-        restart: unless-stopped
-        extra_hosts:
-            - "host.docker.internal:host-gateway"
-        ports:
-            - ${PROMETHEUS_UI_PORT}:9090
-        command: ["--config.file=/etc/prometheus/prometheus.yml"]
-        volumes:
-            - ./static/services/prometheus/etc/prometheus:/etc/prometheus
-            - ${PROMETHEUS_MOUNT_DIR}:/prometheus
+  prometheus-config-init:
+    image: alpine:latest
+    container_name: prometheus-config-init
+    environment:
+      MONITORED_HOST_IP: ${MONITORED_HOST_IP}
+    volumes:
+      - ./static/services/prometheus/etc/prometheus:/etc/prometheus
+    command: >
+      sh -c "apk add --no-cache gettext && envsubst < /etc/prometheus/prometheus.yml.tmpl > /etc/prometheus/prometheus.yml"
 
-    alertmanager:
-        image: prom/alertmanager:v0.34.0
-        container_name: alertmanager
-        restart: unless-stopped
-        ports:
-            - ${ALERTMANAGER_PORT}:9093
-        volumes:
-            - ./static/services/prometheus/etc/alertmanager:/etc/alertmanager
-            - ./alertmanager-data:/alertmanager
-            - ${ALERTMANAGER_MOUNT_DIR}:/prometheus
-        command:
-            - "--config.file=/etc/alertmanager/alertmanager.yml"
-            - "--storage.path=/alertmanager"
+  prometheus:
+    image: prom/prometheus:v3.14.0
+    container_name: prometheus
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - ${PROMETHEUS_UI_PORT}:9090
+    command: ["--config.file=/etc/prometheus/prometheus.yml"]
+    volumes:
+      - ./static/services/prometheus/etc/prometheus:/etc/prometheus
+      - ${PROMETHEUS_MOUNT_DIR}:/prometheus
+    depends_on:
+      prometheus-config-init:
+        condition: service_completed_successfully
+
+  alertmanager:
+    image: prom/alertmanager:v0.34.0
+    container_name: alertmanager
+    restart: unless-stopped
+    ports:
+      - ${ALERTMANAGER_PORT}:9093
+    volumes:
+      - ./static/services/prometheus/etc/alertmanager:/etc/alertmanager
+      - ./alertmanager-data:/alertmanager
+      - ${ALERTMANAGER_MOUNT_DIR}:/prometheus
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--storage.path=/alertmanager"

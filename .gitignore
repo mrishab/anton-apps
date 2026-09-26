@@ -10,6 +10,10 @@ launch.json
 apps/ddns/**/*.conf
 slack_webhook.txt
 
+# Generated at runtime by envsubst init container
+prometheus.yml
+
+
 # Terraform
 .terraform/
 *.tfstate

@@ -15,13 +15,12 @@ scrape_configs:
 
   - job_name: node_anton
     static_configs:
-      # Replace with your server's internal LAN IP
-      - targets: ['<YOUR-HOST-IP>:9100']
+      - targets: ['${MONITORED_HOST_IP}:9100']
 
   - job_name: cadvisor_anton
     static_configs: 
       - targets: 
-          - "<YOUR-HOST-IP>:8383"
+          - "${MONITORED_HOST_IP}:8383"
 
   - job_name: node_orion
     static_configs: 
@@ -35,7 +34,7 @@ scrape_configs:
 
   - job_name: nginx_exporter
     static_configs:
-      - targets: ['<YOUR-HOST-IP>:9113']
+      - targets: ['${MONITORED_HOST_IP}:9113']
 
 rule_files:
   - "rules/node_rules.yml"
