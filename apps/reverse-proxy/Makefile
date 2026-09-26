@@ -1,5 +1,7 @@
 HOST=anton
 HOST_APP_DIR:=/var/server/anton/apps/reverse-proxy
+DOMAIN_1=cloudville.me
+DOMAIN_2=rishabmanocha.com
 
 setup-subdomain:
 	ssh ${HOST} "cd ${HOST_APP_DIR} && make subdomain-1-cert-setup SUBDOMAIN=${SUBDOMAIN} && make restart"

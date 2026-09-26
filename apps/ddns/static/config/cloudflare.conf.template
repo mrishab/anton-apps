@@ -9,7 +9,7 @@ pid=/var/run/ddclient/ddclient.pid      # Record PID in file
 ssl=yes                                 # Use SSL
 
 # Detect public IP address via Cloudflare checkip service
-use=web, web=checkip.cloudflare.com/
+use=web, web=cloudflare.com/cdn-cgi/trace
 
 # ─────────────────────────────────────────────────────────────────────
 # <your-domain> (Cloudflare DNS)
@@ -21,4 +21,4 @@ zone=<your-domain>
 ttl=1
 login=token
 password=<redacted>
-*, @
+domain.com,*.domain.com,ovpn.domain.com
