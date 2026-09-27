@@ -10,7 +10,7 @@ services:
       sh -c "apk add --no-cache gettext && envsubst < /etc/prometheus/prometheus.yml.tmpl > /etc/prometheus/prometheus.yml"
 
   prometheus:
-    image: prom/prometheus:v3.14.0
+    image: prom/prometheus:v3.15.0
     container_name: prometheus
     restart: unless-stopped
     extra_hosts:
@@ -26,7 +26,7 @@ services:
         condition: service_completed_successfully
 
   alertmanager:
-    image: prom/alertmanager:v0.34.0
+    image: prom/alertmanager:v0.34.1
     container_name: alertmanager
     restart: unless-stopped
     ports:
