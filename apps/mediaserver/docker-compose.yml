@@ -1,6 +1,6 @@
 services:
   sonarr:
-    image: ghcr.io/linuxserver/sonarr:4.0.20.3014-ls325
+    image: ghcr.io/linuxserver/sonarr:4.0.20.3014-ls326
     container_name: sonarr
     restart: unless-stopped
     environment:
@@ -20,7 +20,7 @@ services:
           cpus: "0.5"
 
   radarr:
-    image: ghcr.io/linuxserver/radarr:6.4.4.10685-ls317
+    image: ghcr.io/linuxserver/radarr:6.4.4.10685-ls318
     container_name: radarr
     restart: unless-stopped
     environment:
