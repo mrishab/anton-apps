@@ -13,11 +13,6 @@ services:
       - ${DOWNLOADS_MOUNT_DIR}:/downloads
     ports:
       - ${SONARR_WEB_UI_PORT}:8989
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-          cpus: "0.5"
 
   radarr:
     image: ghcr.io/linuxserver/radarr:6.3.0.10514-ls314
