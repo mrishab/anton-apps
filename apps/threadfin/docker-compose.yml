@@ -7,9 +7,10 @@ services:
       PUID: ${APP_PUID}
       PGID: ${APP_PGID}
       TZ: ${HOST_TZ}
+    tmpfs:
+      - /tmp/threadfin:size=256M
     volumes:
       - ${THREADFIN_CONFIG_MOUNT_DIR}:/home/threadfin/conf
-      - ${THREADFIN_TEMP_MOUNT_DIR}:/tmp/threadfin:rw
     ports:
       - ${THREADFIN_WEB_UI_PORT}:34400
     deploy:
