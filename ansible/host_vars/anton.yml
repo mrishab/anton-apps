@@ -12,7 +12,6 @@ enabled_apps:
   - grafana
   - hermes
   - immich
-  - jellyfin
   - jenkins
   - mediaserver
   - nextcloud

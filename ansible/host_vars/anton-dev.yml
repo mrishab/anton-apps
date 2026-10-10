@@ -21,7 +21,6 @@ enabled_apps:
   - hermes
   - homarr
   - immich
-  - jellyfin
   - jenkins
   - jupyter
   - lazylibrarian
