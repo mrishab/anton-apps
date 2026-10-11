@@ -73,14 +73,15 @@ Configuration parameters:
 | `OPENREADER_BASE_URL` | Externally accessible base URL | `https://openreader.cloudville.me` |
 | `OPENREADER_AUTH_SECRET` | 32+ character random secret for session encryption | *(auto-generated)* |
 | `OPENREADER_BOOTSTRAP_ADMIN_EMAIL` | Initial admin user email address | `admin@cloudville.me` |
-| `OPENREADER_BOOTSTRAP_ADMIN_PASSWORD` | Initial admin password (16+ characters required) | `AdminPasswordOpenReader1234!` |
+| `OPENREADER_BOOTSTRAP_ADMIN_PASSWORD` | Initial admin password (16+ characters required) | *(user-defined, min 16 chars)* |
 | `OPENREADER_COMPUTE_WORKER_PUBLIC_URL` | Public audio URL accessed by browsers | `https://openreader.cloudville.me` |
 | `OPENREADER_TTS_API_BASE` | Base URL pointing to the Kokoro TTS service | `http://172.17.0.1:8880/v1` |
+| `OPENREADER_TTS_API_KEY` | API key / Bearer token for authenticating with Kokoro TTS | *(matches `KOKORO_TTS_API_KEY`)* |
 | `OPENREADER_TTS_API_MODEL_NAME` | Default TTS model name | `kokoro` |
 
 ### Seed Configuration (`RUNTIME_SEED_JSON`)
 
-On first boot, OpenReader automatically seeds Kokoro as the default shared TTS provider:
+On first boot, OpenReader automatically seeds Kokoro with the authentication key as the default shared TTS provider:
 ```json
 {
   "version": 1,
@@ -93,12 +94,16 @@ On first boot, OpenReader automatically seeds Kokoro as the default shared TTS p
       "displayName": "Kokoro (Local GPU)",
       "providerType": "custom-openai",
       "baseUrl": "http://172.17.0.1:8880/v1",
+      "apiKey": "<KOKORO_TTS_API_KEY>",
       "defaultModel": "kokoro",
       "enabled": true
     }
   ]
 }
 ```
+
+> **Note for Existing Deployments**: `RUNTIME_SEED_JSON` seeds providers during the first initialization only. If OpenReader has already completed its initial setup, update the API key in the web interface: navigate to **Settings → Admin → Shared providers**, edit **Kokoro (Local GPU)**, enter your `KOKORO_TTS_API_KEY` into the **API Key** field, and save.
+
 
 ## Usage
 
