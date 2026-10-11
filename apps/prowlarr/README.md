@@ -30,7 +30,7 @@ DOWNLOADS_MOUNT_DIR=/mnt/external_hdd/mediaserver/downloads   # Common downloads
 
 # Prowlarr
 PROWLARR_WEB_UI_PORT=9696                      # Web UI port
-PROWLARR_CONFIG_MOUNT_DIR=/mnt/external_hdd/prowlarr/config   # Config directory
+PROWLARR_CONFIG_MOUNT_DIR=/mnt/external_hdd/mediaserver/prowlarr/config   # Config directory
 ```
 
 ### Data Directories

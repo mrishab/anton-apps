@@ -67,7 +67,6 @@
         owner: "{{ host_user }}"
         group: "{{ host_user }}"
         mode: "0755"
-      check_mode: no
 
     - name: Setup host data directories and permissions
       file:
@@ -79,7 +78,6 @@
       loop:
         "{{ target_apps | select('in', app_configs) | map('extract', app_configs)
         | map(attribute='dirs', default=[]) | flatten }}"
-      check_mode: no
 
     - name: Ensure app directory exists
       file:
@@ -89,7 +87,6 @@
         group: "{{ host_user }}"
         mode: "0755"
       loop: "{{ target_apps }}"
-      check_mode: no
 
     - name: Synchronize app files to host
       synchronize:
@@ -110,7 +107,6 @@
           - "--no-group"
       loop: "{{ target_apps }}"
       become: false
-      check_mode: no
       register: sync_results
       notify: Restart app
 

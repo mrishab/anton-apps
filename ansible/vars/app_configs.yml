@@ -130,7 +130,7 @@ app_configs:
     dirs:
       - {
           path: "{{ host_data_dir }}/duplicati/config",
-          owner: "2234",
+          owner: "{{ primary_owner }}",
           group: "2234",
           mode: "0700",
         }
@@ -182,8 +182,8 @@ app_configs:
     dirs:
       - {
           path: "{{ host_data_dir }}/hermes",
-          owner: "{{ primary_owner }}",
-          group: "{{ primary_owner }}",
+          owner: "10000",
+          group: "10000",
           mode: "0700",
         }
   homarr:
@@ -278,22 +278,22 @@ app_configs:
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/sonarr/config",
-          owner: "201",
-          group: "201",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/radarr/config",
-          owner: "201",
-          group: "201",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/lidarr/config",
-          owner: "201",
-          group: "201",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
         }
       - {
           path: "{{ host_data_dir }}/mediaserver/bazarr/config",
-          owner: "70",
+          owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
   n8n:
@@ -454,7 +454,12 @@ app_configs:
       - { port: 9696, proto: any }
     restart_on_deploy: true
     dirs:
-      - { path: "{{ host_data_dir }}/mediaserver/prowlarr/config" }
+      - {
+          path: "{{ host_data_dir }}/mediaserver/prowlarr/config",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
+          mode: "0755",
+        }
   registry:
     ports:
       - { port: 5000, proto: any }
