@@ -50,6 +50,8 @@ make subdomain-1-cert-setup SUBDOMAIN=stirlingpdf &&\
 make subdomain-1-cert-setup SUBDOMAIN=homarr &&\
 make subdomain-1-cert-setup SUBDOMAIN=hermes &&\
 make subdomain-1-cert-setup SUBDOMAIN=ghost &&\
+make subdomain-1-cert-setup SUBDOMAIN=openreader &&\
+make subdomain-1-cert-setup SUBDOMAIN=kokoro-tts &&\
 
 make domain-2-cert-setup &&\
 

@@ -14,9 +14,11 @@ enabled_apps:
   - immich
   - jellyfin
   - jenkins
+  - kokoro-tts
   - mediaserver
   - nextcloud
   - ombi
+  - openreader
   - plex
   - prowlarr
   - reverse-proxy

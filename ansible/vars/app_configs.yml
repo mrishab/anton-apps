@@ -233,6 +233,21 @@ app_configs:
           owner: "{{ primary_owner }}",
           group: "{{ primary_owner }}",
         }
+  kokoro-tts:
+    ports:
+      - { port: 8880, proto: any }
+    restart_on_deploy: true
+    dirs:
+      - {
+          path: "{{ host_data_dir }}/kokoro-tts/config",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
+        }
+      - {
+          path: "{{ host_data_dir }}/kokoro-tts/data",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
+        }
   lazylibrarian:
     ports:
       - { port: 5299, proto: any }
@@ -365,6 +380,22 @@ app_configs:
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/open-webui" }
+  openreader:
+    ports:
+      - { port: 3005, proto: any }
+      - { port: 8087, proto: any }
+    restart_on_deploy: true
+    dirs:
+      - {
+          path: "{{ host_data_dir }}/openreader/config",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
+        }
+      - {
+          path: "{{ host_data_dir }}/openreader/data",
+          owner: "{{ primary_owner }}",
+          group: "{{ primary_owner }}",
+        }
   pgadmin:
     ports:
       - { port: 3487, proto: any }

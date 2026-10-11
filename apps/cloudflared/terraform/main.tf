@@ -78,6 +78,7 @@ locals {
     jenkins       = { port = 8888, path = null }
     jupyter       = { port = 2705, path = null }
     kibana        = { port = 5601, path = null }
+    kokoro-tts    = { port = 8880, path = null }
     lazylibrarian = { port = 5299, path = null }
     lidarr        = { port = 8686, path = null }
     n8n           = { port = 5678, path = null }
@@ -87,6 +88,7 @@ locals {
     ollama        = { port = 11434, path = null }
     ombi          = { port = 3579, path = null }
     open-webui    = { port = 11435, path = null }
+    openreader    = { port = 3005, path = null }
     ovpn          = { port = 8386, path = null }
     pgadmin       = { port = 3487, path = null }
     plex          = { port = 32400, path = null }
@@ -108,6 +110,15 @@ locals {
 
   # Build a flat list of all ingress rules for the tunnel config
   ingress_rules = concat(
+    # OpenReader playback route (compute worker audio streams must precede the general web route)
+    [
+      {
+        hostname        = "openreader.${var.cloudville_domain}"
+        path            = "/v1/tts-playback/.*"
+        service         = "http://${var.origin_ip}:8087"
+        connect_timeout = null
+      }
+    ],
     # Domain 1 — primary domain subdomains
     [for subdomain, app in local.cloudville_apps : {
       hostname        = "${subdomain}.${var.cloudville_domain}"

@@ -1,0 +1,27 @@
+services:
+  kokoro-tts:
+    image: ghcr.io/remsky/kokoro-fastapi-gpu:v0.9.0
+    container_name: kokoro-tts
+    restart: unless-stopped
+    environment:
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
+      USE_GPU: ${KOKORO_TTS_USE_GPU}
+      DEVICE_TYPE: ${KOKORO_TTS_DEVICE_TYPE}
+      DEFAULT_VOICE: ${KOKORO_TTS_DEFAULT_VOICE}
+      API_LOG_LEVEL: ${KOKORO_TTS_API_LOG_LEVEL}
+      ENABLE_WEB_PLAYER: ${KOKORO_TTS_ENABLE_WEB_PLAYER}
+      CORS_ENABLED: ${KOKORO_TTS_CORS_ENABLED}
+    volumes:
+      - ${KOKORO_TTS_CONFIG_MOUNT_DIR}:/app/config
+      - ${KOKORO_TTS_DATA_MOUNT_DIR}:/home/appuser/.cache
+    ports:
+      - ${KOKORO_TTS_PORT}:8880
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

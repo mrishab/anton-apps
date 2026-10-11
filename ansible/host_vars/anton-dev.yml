@@ -24,6 +24,7 @@ enabled_apps:
   - jellyfin
   - jenkins
   - jupyter
+  - kokoro-tts
   - lazylibrarian
   - lb
   - mediaserver
@@ -35,6 +36,7 @@ enabled_apps:
   - ollama
   - ombi
   - open-webui
+  - openreader
   - pgadmin
   - plex
   - postiz
