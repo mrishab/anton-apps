@@ -16,8 +16,8 @@ services:
     volumes:
       - ${KOKORO_TTS_CONFIG_MOUNT_DIR}:/app/config
       - ${KOKORO_TTS_DATA_MOUNT_DIR}:/home/appuser/.cache
-    ports:
-      - ${KOKORO_TTS_PORT}:8880
+    expose:
+      - "8880"
     deploy:
       resources:
         reservations:
@@ -25,3 +25,18 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+
+  kokoro-tts-proxy:
+    image: nginx:stable-alpine-perl
+    container_name: kokoro-tts-proxy
+    restart: unless-stopped
+    environment:
+      KOKORO_TTS_PORT: ${KOKORO_TTS_PORT}
+      KOKORO_TTS_API_KEY: ${KOKORO_TTS_API_KEY}
+      NGINX_ENVSUBST_FILTER: "KOKORO_TTS_"
+    volumes:
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+    ports:
+      - ${KOKORO_TTS_PORT}:8880
+    depends_on:
+      - kokoro-tts

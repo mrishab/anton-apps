@@ -1,0 +1,143 @@
+map_hash_bucket_size 256;
+map_hash_max_size 2048;
+
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    '' close;
+}
+
+# Expected API key from environment
+map $host $expected_api_key {
+    default "${KOKORO_TTS_API_KEY}";
+}
+
+# Extract token from Authorization header (supports "Bearer <token>", "Token <token>", or raw "<token>")
+map $http_authorization $auth_bearer_token {
+    default "";
+    "~*^Bearer[ \t]+([^ \t]+)[ \t]*$" $1;
+    "~*^Token[ \t]+([^ \t]+)[ \t]*$" $1;
+    "~^([^ \t]+)$" $1;
+}
+
+# Extract token from X-API-Key header
+map $http_x_api_key $auth_header_token {
+    default "";
+    "~^[ \t]*([^ \t]+)[ \t]*$" $1;
+}
+
+# Extract token from query params (?api_key=, ?token=, ?key=)
+map $arg_api_key $query_token_step {
+    default $arg_api_key;
+    "" $arg_token;
+}
+map $query_token_step $auth_query_token {
+    default $query_token_step;
+    "" $arg_key;
+}
+
+# Validate extracted credentials against configured API key
+map "$expected_api_key\t$auth_bearer_token" $valid_bearer {
+    default 0;
+    "~^([^\t]+)\t\\1$" 1;
+}
+
+map "$expected_api_key\t$auth_header_token" $valid_header {
+    default 0;
+    "~^([^\t]+)\t\\1$" 1;
+}
+
+map "$expected_api_key\t$auth_query_token" $valid_query {
+    default 0;
+    "~^([^\t]+)\t\\1$" 1;
+}
+
+map "$expected_api_key\t$cookie_kokoro_session" $valid_cookie {
+    default 0;
+    "~^([^\t]+)\t\\1$" 1;
+}
+
+# Combine authentication checks
+map "$valid_bearer:$valid_header:$valid_query:$valid_cookie" $is_authenticated {
+    default 0;
+    "~1" 1;
+}
+
+# Set session cookie on valid query parameter authentication
+map $valid_query $set_cookie_val {
+    default "";
+    1 "kokoro_session=${KOKORO_TTS_API_KEY}; Path=/; HttpOnly; SameSite=Lax";
+}
+
+map $status $www_authenticate_header {
+    401 'Bearer realm="kokoro-tts"';
+    default "";
+}
+
+server {
+    listen 8880;
+    server_name _;
+    default_type application/json;
+
+    client_max_body_size 50M;
+
+    add_header Access-Control-Allow-Origin * always;
+    add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, HEAD" always;
+    add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-API-Key, Accept, Origin, X-Requested-With" always;
+    add_header Access-Control-Max-Age 86400 always;
+    add_header WWW-Authenticate $www_authenticate_header always;
+    add_header Set-Cookie $set_cookie_val;
+    add_header Cache-Control "no-store" always;
+
+    # Health check endpoint (allowed unauthenticated for probes)
+    location ~ ^/health/?$ {
+        proxy_pass http://kokoro-tts:8880;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+
+        proxy_hide_header Access-Control-Allow-Origin;
+        proxy_hide_header Access-Control-Allow-Methods;
+        proxy_hide_header Access-Control-Allow-Headers;
+        proxy_hide_header Access-Control-Max-Age;
+    }
+
+    # All API and Web endpoints require authentication
+    location / {
+        if ($request_method = "OPTIONS") {
+            return 204;
+        }
+
+        if ($is_authenticated = 0) {
+            return 401 '{"error":{"message":"Unauthorized: Invalid or missing API key. Provide Authorization: Bearer <key>, X-API-Key header, or ?api_key=<key> query parameter.","type":"authentication_error","code":"invalid_api_key"}}';
+        }
+
+        proxy_pass http://kokoro-tts:8880;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+
+        # WebSocket support
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+
+        # Disable buffering for progressive audio streaming
+        proxy_buffering off;
+        proxy_request_buffering off;
+
+        # Extended timeouts for audio synthesis
+        proxy_connect_timeout 300s;
+        proxy_send_timeout 300s;
+        proxy_read_timeout 300s;
+
+        # Hide backend CORS headers to prevent duplicate header conflicts with Nginx proxy
+        proxy_hide_header Access-Control-Allow-Origin;
+        proxy_hide_header Access-Control-Allow-Methods;
+        proxy_hide_header Access-Control-Allow-Headers;
+        proxy_hide_header Access-Control-Max-Age;
+    }
+}

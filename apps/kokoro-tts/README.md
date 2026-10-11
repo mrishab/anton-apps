@@ -45,6 +45,7 @@ APP_PGID=1001
 
 # Kokoro-TTS
 KOKORO_TTS_PORT=8880
+KOKORO_TTS_API_KEY=<PUT-KOKORO-TTS-API-KEY-HERE>
 KOKORO_TTS_CONFIG_MOUNT_DIR=/mnt/external_hdd/kokoro-tts/config
 KOKORO_TTS_DATA_MOUNT_DIR=/mnt/external_hdd/kokoro-tts/data # Mounted to /home/appuser/.cache
 KOKORO_TTS_USE_GPU=true
@@ -54,6 +55,17 @@ KOKORO_TTS_API_LOG_LEVEL=INFO
 KOKORO_TTS_ENABLE_WEB_PLAYER=true
 KOKORO_TTS_CORS_ENABLED=true
 ```
+
+### Security & Authentication
+
+Kokoro-FastAPI is protected by a reverse proxy sidecar (`kokoro-tts-proxy`) that authenticates every incoming request before forwarding it to the Kokoro model engine:
+- **Bearer Token**: `Authorization: Bearer <KOKORO_TTS_API_KEY>` or `Authorization: Token <KOKORO_TTS_API_KEY>` (standard OpenAI API header, used by OpenReader and OpenAI SDKs)
+- **API Key Header**: `X-API-Key: <KOKORO_TTS_API_KEY>`
+- **Query Parameter**: `?api_key=<KOKORO_TTS_API_KEY>`, `?token=<KOKORO_TTS_API_KEY>`, or `?key=<KOKORO_TTS_API_KEY>` (convenient for web browsers and quick testing)
+- **Session Cookie**: Visiting `/?token=<KOKORO_TTS_API_KEY>` or `/?api_key=<KOKORO_TTS_API_KEY>` in a browser sets a session cookie (`kokoro_session`) so the embedded web player and static assets work seamlessly.
+- **Health Probes**: The `/health` and `/health/` endpoints remain open for container and uptime monitoring probes.
+- **Unauthenticated Requests**: Automatically rejected with `HTTP 401 Unauthorized` and `WWW-Authenticate: Bearer` challenge.
+
 
 ## Usage
 
@@ -84,16 +96,32 @@ docker compose logs -f
 docker logs kokoro-tts
 ```
 
-### Verifying the API
+### Verifying the API & Security
 
-Test that the service is running and GPU inference is responsive:
-
+1. Test that unauthenticated requests are rejected:
 ```bash
-# List available voices
-curl http://localhost:8880/v1/audio/voices
+curl -i http://localhost:8880/v1/audio/voices
+# Returns: HTTP/1.1 401 Unauthorized
+```
 
-# Generate a sample audio file
+2. Test that requests with the API key succeed:
+```bash
+# List available voices using Bearer authorization
+curl http://localhost:8880/v1/audio/voices \
+  -H "Authorization: Bearer <KOKORO_TTS_API_KEY>"
+
+# Alternatively, using X-API-Key header
+curl http://localhost:8880/v1/audio/voices \
+  -H "X-API-Key: <KOKORO_TTS_API_KEY>"
+
+# Or query parameter in a web browser
+curl "http://localhost:8880/v1/audio/voices?api_key=<KOKORO_TTS_API_KEY>"
+```
+
+3. Generate a sample audio file:
+```bash
 curl -X POST http://localhost:8880/v1/audio/speech \
+  -H "Authorization: Bearer <KOKORO_TTS_API_KEY>" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "kokoro",
@@ -106,14 +134,14 @@ curl -X POST http://localhost:8880/v1/audio/speech \
 
 ## Integration with OpenReader
 
-OpenReader connects to this Kokoro-TTS instance via the Docker host IP bridge (`http://172.17.0.1:8880/v1`) or host gateway (`http://host.docker.internal:8880/v1`).
+OpenReader connects to this Kokoro-TTS instance via the Docker host IP bridge (`http://172.17.0.1:8880/v1`) using the shared API key (`OPENREADER_TTS_API_KEY` matching `KOKORO_TTS_API_KEY`).
 
 To start both services together:
 ```bash
-make start APPS="kokoro-tts openreader"
+make start APPS="kokoro-tts,openreader"
 ```
 
-OpenReader auto-probes `/v1/audio/voices`, discovers the available voices, and performs background TTS generation as you stream or export documents and audiobooks.
+OpenReader sends `Authorization: Bearer <key>` on its background requests, probes `/v1/audio/voices`, discovers the available voices, and performs synchronized TTS generation.
 
 ## Troubleshooting
 
