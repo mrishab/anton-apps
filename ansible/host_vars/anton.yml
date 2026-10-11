@@ -8,6 +8,7 @@ enabled_apps:
   - deluge
   - dockovpn
   - duplicati
+  - flaresolverr
   - ghost
   - grafana
   - hermes

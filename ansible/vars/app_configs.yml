@@ -150,6 +150,10 @@ app_configs:
     restart_on_deploy: true
     dirs:
       - { path: "{{ host_data_dir }}/mediaserver/epg/public" }
+  flaresolverr:
+    ports: []
+    restart_on_deploy: true
+    dirs: []
   freshrss:
     ports:
       - { port: 4523, proto: any }

@@ -15,6 +15,7 @@ enabled_apps:
   - duplicati
   - elk
   - epg
+  - flaresolverr
   - freshrss
   - ghost
   - grafana

@@ -1,0 +1,19 @@
+services:
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:v3.5.2
+    container_name: flaresolverr
+    restart: unless-stopped
+    environment:
+      PUID: ${APP_PUID}
+      PGID: ${APP_PGID}
+      TZ: ${HOST_TZ}
+      LOG_LEVEL: ${FLARESOLVERR_LOG_LEVEL}
+      LOG_HTML: ${FLARESOLVERR_LOG_HTML}
+      CAPTCHA_SOLVER: ${FLARESOLVERR_CAPTCHA_SOLVER}
+    ports:
+      - ${FLARESOLVERR_PORT}:8191
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1024M

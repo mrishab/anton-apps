@@ -96,8 +96,7 @@ http://your-server-ip:PROWLARR_WEB_UI_PORT
 
 ### Common Issues
 
-- **Indexer Connection Errors**: Check API keys and site availability
-- **Integration Failures**: Verify app connection details and API keys
+- **Blocked by Cloudflare**: Configure FlareSolverr as an Indexer Proxy in **Settings** > **Indexer Proxies** (or **Settings** > **Indexers**) using Host: `http://172.17.0.1:8191` (or `http://localhost:8191` if running on host network), and assign the proxy tag (e.g. `flaresolverr`) to the blocked indexer. Increase the proxy timeout (e.g. to 60-120 seconds) if challenges take longer to resolve.
 - **Search Timeouts**: Increase timeout values for slower indexers
 
 ### Logs
