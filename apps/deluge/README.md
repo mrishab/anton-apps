@@ -38,6 +38,7 @@ docker compose up -d
 - `REMOTE_USERNAME` / `REMOTE_PASSWORD`: OpenVPN authentication credentials
 - `APP_PUID` / `APP_PGID`: User/group identity for the Deluge process
 - `HOST_TZ`: Timezone setting
+- `LAN_NETWORK`: Subnet for LAN/reverse-proxy access to Deluge web UI (default: `192.168.0.0/16`)
 
 ## Usage
 - Access the web interface at `http://your-server-ip:DELUGE_WEB_UI_PORT`

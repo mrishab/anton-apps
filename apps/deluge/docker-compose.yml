@@ -3,7 +3,7 @@ services:
     image: ghcr.io/utkuozdemir/dperson-openvpn-client:alpine-3.24.1-openvpn-2.7.5
     container_name: deluge_vpn
     restart: unless-stopped
-    command: ["-d", "-a", "${REMOTE_USERNAME};${REMOTE_PASSWORD}"]
+    command: ["-d", "-f", "", "-r", "${LAN_NETWORK:-192.168.0.0/16}", "-a", "${REMOTE_USERNAME};${REMOTE_PASSWORD}"]
     cap_add:
       - net_admin
     security_opt:
@@ -15,6 +15,12 @@ services:
     volumes:
       - /dev/net/tun:/dev/net/tun:z # tun device
       - ./services/deluge_vpn/vpn/vpn.conf:/vpn/vpn.conf
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -f --interface tun0 https://1.1.1.1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   deluge:
     image: ghcr.io/linuxserver/deluge:2.2.0-ls382
@@ -30,4 +36,5 @@ services:
       - ${DELUGE_CONFIG_MOUNT_DIR}:/config
       - ${DOWNLOADS_MOUNT_DIR}:/downloads
     depends_on:
-      - vpn
+      vpn:
+        condition: service_healthy
