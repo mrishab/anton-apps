@@ -13,7 +13,6 @@ enabled_apps:
   - grafana
   - hermes
   - immich
-  - jellyfin
   - jenkins
   - kokoro-tts
   - mediaserver

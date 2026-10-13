@@ -7,9 +7,10 @@ services:
       PLEX_UID: ${APP_PUID}
       PLEX_GID: ${APP_PGID}
       ALLOWED_NETWORKS: ${PLEX_ALLOWED_NETWORKS}
+    tmpfs:
+      - /transcode:size=2G,uid=1000,gid=1000
     volumes:
       - ${PLEX_CONFIG_MOUNT_DIR}:/config
-      - ${PLEX_TRANSCODE_MOUNT_DIR}:/transcode
       - ${MEDIA_MUSIC_MOUNT_DIR}:/music
       - ${MEDIA_MOVIES_MOUNT_DIR}:/movies
       - ${MEDIA_TV_MOUNT_DIR}:/tv
