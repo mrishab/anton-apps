@@ -25,7 +25,7 @@ apps/reverse-proxy (Nginx with Let's Encrypt SSL)
 Local Docker Applications (apps/*)
 ```
 
-- **Infrastructure as Code**: Root [/terraform](file:///Users/rishabmanocha/SourceCode/anton-apps/terraform) manages Cloudflare DNS wildcard records (`*.cloudville.me`, `*.rishabmanocha.com`), SSL settings (Full Strict), and WAF rules.
+- **Infrastructure as Code**: Root [/terraform](file:///Users/rishabmanocha/SourceCode/anton-apps/terraform) manages Cloudflare DNS records (pointing `rishabmanocha.com` to GitHub Pages, and `*.cloudville.me`, `blog.rishabmanocha.com`, `*.rishabmanocha.com` to the server), SSL settings (Full Strict), and WAF rules.
 - **Dynamic DNS**: [apps/ddns](file:///Users/rishabmanocha/SourceCode/anton-apps/apps/ddns) runs `ddclient` to refresh Cloudflare DNS A-records with the server's public IP.
 - **Reverse Proxy & SSL**: [apps/reverse-proxy](file:///Users/rishabmanocha/SourceCode/anton-apps/apps/reverse-proxy) routes incoming traffic to internal application ports and handles SSL termination.
 

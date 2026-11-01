@@ -51,11 +51,19 @@ variable "origin_ip" {
 variable "cloudville_domain" {
   description = "Primary domain for homelab apps"
   type        = string
+  default     = "<your-cloudville-domain>"
 }
 
 variable "rishabmanocha_domain" {
   description = "Secondary domain (blog/personal site)"
   type        = string
+  default     = "<your-personal-domain>"
+}
+
+variable "github_pages_target" {
+  description = "Target hostname for GitHub Pages custom domain (e.g. username.github.io)"
+  type        = string
+  default     = "mrishab.github.io"
 }
 
 # ─────────────────────────────────────────────────────────────────────────────

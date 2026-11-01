@@ -1,38 +1,33 @@
 # Anton Dynamic DNS Client
 
-This application manages Dynamic DNS configurations for multiple domains using Docker containers. It allows a home server to maintain up-to-date DNS records that point to its public IP address, even when that address changes.
+This application manages Dynamic DNS configurations using `ddclient` running in Docker. It periodically refreshes Cloudflare DNS A-records with the server's public IP address, allowing homelab services and subdomains to stay reachable even when your ISP reassigns your IP.
 
-## Overview Flowchart
+## Architecture
 
 ```mermaid
 graph TD
-    subgraph "Docker Host"
-        subgraph "ddns containers"
-            C1["ddclient_cloudville"]
-            C2["ddclient_mrishab (Disabled)"]
-            C3["ddclient_rishabmanocha"]
-        end
-        
-        subgraph "Config Files"
-            F1["<your-domain>.conf"]
-            F2["<your-other-domain>.conf (Disabled)"]
-            F3["<your-personal-domain>.conf"]
-        end
+    subgraph "Docker Host (Anton)"
+        C1["ddclient_cloudflare"]
+        F1["static/config/cloudflare.conf"]
     end
 
-    subgraph "DNS Providers (External)"
-        P1["Namecheap / DNS Registry"]
+    subgraph "Cloudflare DNS (Managed)"
+        P1["Primary Domain (<your-domain>)<br/>@, *, ovpn -> Origin IP"]
+        P2["Secondary Domain (<your-personal-domain>)<br/>blog, * -> Origin IP<br/>@, www -> GitHub Pages"]
     end
 
-    %% Volume Mounts
     F1 -.->|Mounted to /config/ddclient.conf| C1
-    F2 -.->|Mounted to /config/ddclient.conf| C2
-    F3 -.->|Mounted to /config/ddclient.conf| C3
-
-    %% Updates
-    C1 -->|HTTPS Updates| P1
-    C3 -->|HTTPS Updates| P1
+    C1 -->|Cloudflare API (HTTPS)| P1
+    C1 -->|Cloudflare API (HTTPS)| P2
 ```
+
+### DNS Layout
+
+- **Primary Domain (`<your-cloudville-domain>`)**: The apex (`@`), wildcard (`*`), and specific subdomains (e.g. `ovpn`) point to Anton's public IP.
+- **Secondary Domain (`<your-personal-domain>`)**:
+  - Apex (`@`) and `www` point to GitHub Pages (`<username>.github.io`, DNS-only / `proxied = false`).
+  - Subdomain `blog.<your-personal-domain>` and wildcard `*.<your-personal-domain>` point to Anton's public IP (`proxied = true`) and are maintained by `ddclient`.
+  - The apex domain is deliberately **omitted** from `cloudflare.conf` so `ddclient` does not overwrite the GitHub Pages CNAME.
 
 ## Setup Instructions
 
@@ -50,32 +45,33 @@ graph TD
    HOST_TZ=America/Los_Angeles  # Your local timezone
    ```
 
-### DDNS Configuration Files
+### DDNS Configuration File
 
-1. Create the configuration directory:
+1. Copy the template configuration file:
    ```sh
-   mkdir -p static/config
+   cp static/config/cloudflare.conf.template static/config/cloudflare.conf
    ```
 
-2. Edit configuration files inside `static/config/` for each domain (e.g., `<your-domain>.conf` and `<your-personal-domain>.conf`) with your DNS provider details:
+2. Edit `static/config/cloudflare.conf` with your Cloudflare API token and domains:
    ```ini
-   use=web, web=dynamicdns.park-your-domain.com/getip
-   protocol=namecheap
-   server=dynamicdns.park-your-domain.com
-   login=yourdomain.com
-   password=your-namecheap-ddns-password
-   *, @
+   protocol=cloudflare
+   zone=example.com
+   ttl=1
+   login=token
+   password=your-cloudflare-api-token
+   example.com,*.example.com,ovpn.example.com
+
+   protocol=cloudflare
+   zone=personal.com
+   ttl=1
+   login=token
+   password=your-cloudflare-api-token
+   blog.personal.com,*.personal.com
    ```
 
 ## Docker Compose Configuration
 
-The application uses Docker Compose to run separate DDNS client containers:
-
-1. **ddclient_cloudville**: Updates DNS records for `<your-domain>` using `static/config/<your-domain>.conf`.
-2. **ddclient_mrishab**: Updates DNS records for `<your-other-domain>` (currently disabled with compose profiles).
-3. **ddclient_rishabmanocha**: Updates DNS records for `<your-personal-domain>` using `static/config/<your-personal-domain>.conf`.
-
-Each container:
-- Uses the `ghcr.io/linuxserver/ddclient` image.
-- Is configured with run-as user and group identity from the `.env` file (`DDNS_PUID`/`DDNS_PGID`).
-- Is set to restart automatically unless stopped manually.
+The application uses Docker Compose to run the `ddclient_cloudflare` container:
+- Image: `ghcr.io/linuxserver/ddclient:4.0.0`
+- Config mount: `./static/config/cloudflare.conf:/config/ddclient.conf`
+- Automatically restarts unless manually stopped.
