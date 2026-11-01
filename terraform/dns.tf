@@ -101,8 +101,21 @@ resource "cloudflare_record" "cloudville_spf" {
 # ═════════════════════════════════════════════════════════════════════════════
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Wildcard & Root A Records — personal domain
+# DNS Records — personal domain
+#   - Root (@) and www -> GitHub Pages app
+#   - blog subdomain -> Origin Public IP (proxied)
+#   - Wildcard (*) -> Origin Public IP (proxied)
 # ─────────────────────────────────────────────────────────────────────────────
+
+# Blog subdomain A record: blog.${var.rishabmanocha_domain} -> Origin Public IP
+resource "cloudflare_record" "rishabmanocha_blog_a" {
+  zone_id = var.rishabmanocha_zone_id
+  name    = "blog"
+  type    = "A"
+  content = var.server_public_ip
+  proxied = true
+  ttl     = 1
+}
 
 # Wildcard A record: *.${var.rishabmanocha_domain} -> Origin Public IP
 resource "cloudflare_record" "rishabmanocha_wildcard_a" {
@@ -114,23 +127,23 @@ resource "cloudflare_record" "rishabmanocha_wildcard_a" {
   ttl     = 1
 }
 
-# Root domain A record: ${var.rishabmanocha_domain} -> Origin Public IP
-resource "cloudflare_record" "rishabmanocha_root_a" {
+# Root domain CNAME record: ${var.rishabmanocha_domain} -> GitHub Pages app
+resource "cloudflare_record" "rishabmanocha_root_cname" {
   zone_id = var.rishabmanocha_zone_id
   name    = "@"
-  type    = "A"
-  content = var.server_public_ip
-  proxied = true
+  type    = "CNAME"
+  content = var.github_pages_target
+  proxied = false
   ttl     = 1
 }
 
-# www subdomain CNAME
+# www subdomain CNAME: www.${var.rishabmanocha_domain} -> GitHub Pages app
 resource "cloudflare_record" "rishabmanocha_www_cname" {
   zone_id = var.rishabmanocha_zone_id
   name    = "www"
   type    = "CNAME"
-  content = var.rishabmanocha_domain
-  proxied = true
+  content = var.github_pages_target
+  proxied = false
   ttl     = 1
 }
 

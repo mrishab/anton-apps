@@ -13,6 +13,16 @@ output "rishabmanocha_zone_id" {
   value       = var.rishabmanocha_zone_id
 }
 
+output "rishabmanocha_root_dns" {
+  description = "Root domain DNS record pointing to GitHub Pages app"
+  value       = cloudflare_record.rishabmanocha_root_cname.hostname
+}
+
+output "rishabmanocha_blog_dns" {
+  description = "Blog DNS record pointing to private server IP"
+  value       = cloudflare_record.rishabmanocha_blog_a.hostname
+}
+
 output "rishabmanocha_wildcard_dns" {
   description = "Wildcard DNS record for personal domain"
   value       = cloudflare_record.rishabmanocha_wildcard_a.hostname

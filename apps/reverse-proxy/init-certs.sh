@@ -1,5 +1,6 @@
-# For cert-setup, the nginx needs to be started without reverse-proxy.conf.template file.
-mv static/etc/nginx/templates/reverse-proxy.conf.template static/etc/nginx/templates/reverse-proxy.conf.template.bak &&\
+# For cert-setup, the nginx needs to be started without reverse-proxy templates.
+mv static/etc/nginx/templates/domain-1-reverse-proxy.conf.template static/etc/nginx/templates/domain-1-reverse-proxy.conf.template.bak &&\
+mv static/etc/nginx/templates/domain-2-reverse-proxy.conf.template static/etc/nginx/templates/domain-2-reverse-proxy.conf.template.bak &&\
 make restart &&\
 
 make domain-1-cert-setup &&\
@@ -53,8 +54,9 @@ make subdomain-1-cert-setup SUBDOMAIN=ghost &&\
 make subdomain-1-cert-setup SUBDOMAIN=openreader &&\
 make subdomain-1-cert-setup SUBDOMAIN=kokoro-tts &&\
 
-make domain-2-cert-setup &&\
+make subdomain-2-cert-setup SUBDOMAIN=blog &&\
 
 
-mv static/etc/nginx/templates/reverse-proxy.conf.template.bak static/etc/nginx/templates/reverse-proxy.conf.template &&\
+mv static/etc/nginx/templates/domain-1-reverse-proxy.conf.template.bak static/etc/nginx/templates/domain-1-reverse-proxy.conf.template &&\
+mv static/etc/nginx/templates/domain-2-reverse-proxy.conf.template.bak static/etc/nginx/templates/domain-2-reverse-proxy.conf.template &&\
 make restart

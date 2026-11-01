@@ -22,3 +22,16 @@ ttl=1
 login=token
 password=<redacted>
 domain.com,*.domain.com,ovpn.domain.com
+
+# ─────────────────────────────────────────────────────────────────────
+# <your-personal-domain> (Cloudflare DNS) — when apex is on GitHub Pages
+# ─────────────────────────────────────────────────────────────────────
+# If the root domain points to GitHub Pages, only update self-hosted
+# subdomains (e.g. blog) and wildcard records with ddclient.
+# Do NOT list the apex domain here so ddclient does not overwrite GitHub Pages.
+# protocol=cloudflare
+# zone=<your-personal-domain>
+# ttl=1
+# login=token
+# password=<redacted>
+# blog.<your-personal-domain>,*.<your-personal-domain>
