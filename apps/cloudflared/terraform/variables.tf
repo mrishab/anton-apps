@@ -55,7 +55,7 @@ variable "cloudville_domain" {
 }
 
 variable "rishabmanocha_domain" {
-  description = "Secondary domain (blog/personal site)"
+  description = "Secondary domain (personal site, blog, and apps)"
   type        = string
   default     = "<your-personal-domain>"
 }

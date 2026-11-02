@@ -2,8 +2,9 @@
 # DNS Records
 #
 # Configures Cloudflare DNS records for both domains:
-#   - Wildcard A records (*.domain) and Root A records (@) with proxied = true
-#   - www CNAME records with proxied = true
+#   - Primary domain: Wildcard (*), root (@) proxied = true, ovpn proxied = false
+#   - Personal domain: Root (@), www, and apps CNAMEs to GitHub Pages (proxied = false);
+#     blog A record (proxied = true); wildcard (*) A record (proxied = true)
 #   - MX records for Namecheap email forwarding
 #   - TXT records for SPF / Mailgun
 # ─────────────────────────────────────────────────────────────────────────────
@@ -102,7 +103,7 @@ resource "cloudflare_record" "cloudville_spf" {
 
 # ─────────────────────────────────────────────────────────────────────────────
 # DNS Records — personal domain
-#   - Root (@) and www -> GitHub Pages app
+#   - Root (@), www, and apps subdomains -> GitHub Pages app
 #   - blog subdomain -> Origin Public IP (proxied)
 #   - Wildcard (*) -> Origin Public IP (proxied)
 # ─────────────────────────────────────────────────────────────────────────────
@@ -141,6 +142,16 @@ resource "cloudflare_record" "rishabmanocha_root_cname" {
 resource "cloudflare_record" "rishabmanocha_www_cname" {
   zone_id = var.rishabmanocha_zone_id
   name    = "www"
+  type    = "CNAME"
+  content = var.github_pages_target
+  proxied = false
+  ttl     = 1
+}
+
+# apps subdomain CNAME: apps.${var.rishabmanocha_domain} -> GitHub Pages app
+resource "cloudflare_record" "rishabmanocha_apps_cname" {
+  zone_id = var.rishabmanocha_zone_id
+  name    = "apps"
   type    = "CNAME"
   content = var.github_pages_target
   proxied = false

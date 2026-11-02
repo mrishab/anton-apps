@@ -27,7 +27,7 @@ Local Docker Applications
 
 1. **DNS Architecture**:
    - Primary domain (`<your-cloudville-domain>`): Wildcard `*` and root `@` point to home server public IP via Cloudflare Orange Cloud proxy.
-   - Secondary domain (`<your-personal-domain>`): Root `@` and `www` CNAME point to GitHub Pages (`<username>.github.io`, DNS-only `proxied = false`). Subdomain `blog.<your-personal-domain>` points to home server public IP (`proxied = true`) and is updated by dynamic DNS (`ddclient`).
+   - Secondary domain (`<your-personal-domain>`): Root `@`, `www`, and `apps` CNAME point to GitHub Pages (`<username>.github.io`, DNS-only `proxied = false`). Subdomain `blog.<your-personal-domain>` points to home server public IP (`proxied = true`) and is updated by dynamic DNS (`ddclient`).
 2. **Full (Strict) SSL/TLS**:
    - SSL mode is explicitly set to `strict`.
    - Your local reverse proxy (Traefik/Nginx) terminates TLS using Let's Encrypt certificates (e.g. via DNS-01 challenge or HTTP-01 challenge).

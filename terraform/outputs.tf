@@ -18,6 +18,16 @@ output "rishabmanocha_root_dns" {
   value       = cloudflare_record.rishabmanocha_root_cname.hostname
 }
 
+output "rishabmanocha_www_dns" {
+  description = "WWW subdomain DNS record pointing to GitHub Pages app"
+  value       = cloudflare_record.rishabmanocha_www_cname.hostname
+}
+
+output "rishabmanocha_apps_dns" {
+  description = "Apps subdomain DNS record pointing to GitHub Pages app"
+  value       = cloudflare_record.rishabmanocha_apps_cname.hostname
+}
+
 output "rishabmanocha_blog_dns" {
   description = "Blog DNS record pointing to private server IP"
   value       = cloudflare_record.rishabmanocha_blog_a.hostname

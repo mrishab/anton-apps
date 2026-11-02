@@ -98,6 +98,8 @@ resource "cloudflare_record" "cloudville_spf" {
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CNAME Records — secondary domain
+#   - Root (@), www, and apps subdomains -> GitHub Pages app
+#   - blog subdomain -> Cloudflare Tunnel (Ghost)
 # ─────────────────────────────────────────────────────────────────────────────
 
 # Root domain → GitHub Pages app
@@ -114,6 +116,16 @@ resource "cloudflare_record" "rishabmanocha_root_cname" {
 resource "cloudflare_record" "rishabmanocha_www_cname" {
   zone_id = var.rishabmanocha_zone_id
   name    = "www"
+  type    = "CNAME"
+  content = var.github_pages_target
+  proxied = false
+  ttl     = 1
+}
+
+# Apps subdomain → GitHub Pages app
+resource "cloudflare_record" "rishabmanocha_apps_cname" {
+  zone_id = var.rishabmanocha_zone_id
+  name    = "apps"
   type    = "CNAME"
   content = var.github_pages_target
   proxied = false

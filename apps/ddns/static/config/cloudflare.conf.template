@@ -24,11 +24,11 @@ password=<redacted>
 domain.com,*.domain.com,ovpn.domain.com
 
 # ─────────────────────────────────────────────────────────────────────
-# <your-personal-domain> (Cloudflare DNS) — when apex is on GitHub Pages
+# <your-personal-domain> (Cloudflare DNS) — when apex/www/apps are on GitHub Pages
 # ─────────────────────────────────────────────────────────────────────
-# If the root domain points to GitHub Pages, only update self-hosted
+# If the root domain, www, and apps subdomains point to GitHub Pages, only update self-hosted
 # subdomains (e.g. blog) and wildcard records with ddclient.
-# Do NOT list the apex domain here so ddclient does not overwrite GitHub Pages.
+# Do NOT list the apex domain or GitHub Pages subdomains (e.g. www, apps) here so ddclient does not overwrite GitHub Pages.
 # protocol=cloudflare
 # zone=<your-personal-domain>
 # ttl=1

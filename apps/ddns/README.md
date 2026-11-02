@@ -13,7 +13,7 @@ graph TD
 
     subgraph "Cloudflare DNS (Managed)"
         P1["Primary Domain (<your-domain>)<br/>@, *, ovpn -> Origin IP"]
-        P2["Secondary Domain (<your-personal-domain>)<br/>blog, * -> Origin IP<br/>@, www -> GitHub Pages"]
+        P2["Secondary Domain (<your-personal-domain>)<br/>blog, * -> Origin IP<br/>@, www, apps -> GitHub Pages"]
     end
 
     F1 -.->|Mounted to /config/ddclient.conf| C1
@@ -25,9 +25,9 @@ graph TD
 
 - **Primary Domain (`<your-cloudville-domain>`)**: The apex (`@`), wildcard (`*`), and specific subdomains (e.g. `ovpn`) point to Anton's public IP.
 - **Secondary Domain (`<your-personal-domain>`)**:
-  - Apex (`@`) and `www` point to GitHub Pages (`<username>.github.io`, DNS-only / `proxied = false`).
+  - Apex (`@`), `www`, and `apps` point to GitHub Pages (`<username>.github.io`, DNS-only / `proxied = false`).
   - Subdomain `blog.<your-personal-domain>` and wildcard `*.<your-personal-domain>` point to Anton's public IP (`proxied = true`) and are maintained by `ddclient`.
-  - The apex domain is deliberately **omitted** from `cloudflare.conf` so `ddclient` does not overwrite the GitHub Pages CNAME.
+  - The apex domain and GitHub Pages subdomains (such as `www` and `apps`) are deliberately **omitted** from `cloudflare.conf` so `ddclient` does not overwrite the GitHub Pages CNAME.
 
 ## Setup Instructions
 
