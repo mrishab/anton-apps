@@ -49,6 +49,30 @@
         "{{ target_apps | select('in', app_configs) | map('extract', app_configs)
         | map(attribute='sysctl', default=[]) | flatten }}"
 
+    - name: Create app groups
+      group:
+        name: "{{ item.name }}"
+        gid: "{{ item.gid }}"
+        system: "{{ item.system | default(true) }}"
+        state: present
+      loop:
+        "{{ target_apps | select('in', app_configs) | map('extract', app_configs)
+        | map(attribute='groups', default=[]) | flatten | unique(attribute='name') | list }}"
+
+    - name: Create app users
+      user:
+        name: "{{ item.name }}"
+        uid: "{{ item.uid }}"
+        group: "{{ item.group | default(item.name) }}"
+        groups: "{{ item.groups | default(omit) }}"
+        system: "{{ item.system | default(true) }}"
+        create_home: "{{ item.create_home | default(false) }}"
+        shell: "{{ item.shell | default('/usr/sbin/nologin') }}"
+        state: present
+      loop:
+        "{{ target_apps | select('in', app_configs) | map('extract', app_configs)
+        | map(attribute='users', default=[]) | flatten | unique(attribute='name') | list }}"
+
     - name: Set ACL for duplicati group on external hdd
       ansible.posix.acl:
         path: /mnt/external_hdd
