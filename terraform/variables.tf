@@ -39,9 +39,15 @@ variable "cloudville_domain" {
 }
 
 variable "rishabmanocha_domain" {
-  description = "Secondary domain (blog/personal site)"
+  description = "Secondary domain (personal site, blog, and apps)"
   type        = string
   default     = "<your-personal-domain>"
+}
+
+variable "github_pages_target" {
+  description = "Target hostname for GitHub Pages custom domain (e.g. username.github.io)"
+  type        = string
+  default     = "mrishab.github.io"
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
