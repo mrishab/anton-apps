@@ -140,6 +140,11 @@ app_configs:
     dirs:
       - { path: "{{ host_data_dir }}/new-app-name/config", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
       - { path: "{{ host_data_dir }}/new-app-name/data", owner: "{{ primary_owner }}", group: "{{ primary_owner }}" }
+    # Optional: Custom container user and group to create on host machine
+    # groups:
+    #   - { name: appname, gid: 1234 }
+    # users:
+    #   - { name: appname, uid: 1234, group: appname }
     # Optional: Kernel sysctl tuning parameters
     # sysctl:
     #   - { name: "vm.max_map_count", value: "262144" }

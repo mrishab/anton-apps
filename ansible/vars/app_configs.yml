@@ -60,6 +60,10 @@ app_configs:
       - { port: 8081, proto: any }
       - { port: 8083, proto: any }
     restart_on_deploy: true
+    groups:
+      - { name: calibre, gid: 201 }
+    users:
+      - { name: calibre, uid: 201, group: calibre }
     dirs:
       - {
           path: "{{ host_data_dir }}/calibre/calibre-db/books",
@@ -127,6 +131,10 @@ app_configs:
     ports:
       - { port: 8200, proto: any }
     restart_on_deploy: true
+    groups:
+      - { name: duplicati, gid: 2234 }
+    users:
+      - { name: duplicati, uid: 2234, group: duplicati }
     dirs:
       - {
           path: "{{ host_data_dir }}/duplicati/config",
@@ -176,6 +184,10 @@ app_configs:
     ports:
       - { port: 3003, proto: any }
     restart_on_deploy: true
+    groups:
+      - { name: grafana, gid: 472 }
+    users:
+      - { name: grafana, uid: 472, group: grafana }
     dirs:
       - { path: "{{ host_data_dir }}/grafana", owner: "472", group: "472" }
   hermes:
@@ -183,6 +195,10 @@ app_configs:
       - { port: 8642, proto: any }
       - { port: 9119, proto: any }
     restart_on_deploy: true
+    groups:
+      - { name: hermes, gid: 10000 }
+    users:
+      - { name: hermes, uid: 10000, group: hermes }
     dirs:
       - {
           path: "{{ host_data_dir }}/hermes",
@@ -326,6 +342,10 @@ app_configs:
     ports:
       - { port: 8765, proto: any }
     restart_on_deploy: true
+    groups:
+      - { name: postgres, gid: 70 }
+    users:
+      - { name: postgres, uid: 70, group: postgres }
     dirs:
       - {
           path: "{{ host_data_dir }}/nextcloud/db",
@@ -531,6 +551,10 @@ app_configs:
     ports:
       - { port: 3124, proto: any }
     restart_on_deploy: true
+    groups:
+      - { name: postgres, gid: 70 }
+    users:
+      - { name: postgres, uid: 70, group: postgres }
     sysctl:
       - { name: "vm.max_map_count", value: "262144" }
     dirs:
