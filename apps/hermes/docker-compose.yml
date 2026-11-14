@@ -25,5 +25,5 @@ services:
     image: redis:7-alpine
     container_name: hermes-redis-cache
     restart: unless-stopped
-    ports:
+    expose:
       - "6379"

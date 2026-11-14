@@ -235,7 +235,6 @@ app_configs:
     ports:
       - { port: 8888, proto: any }
       - { port: 50000, proto: any }
-      - { port: 10023, proto: any }
     restart_on_deploy: true
     dirs:
       - {
