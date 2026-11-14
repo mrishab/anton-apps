@@ -12,7 +12,7 @@ graph LR
     DockerSock["/var/run/docker.sock"]
 
     Browser -->|Port JENKINS_WEB_PORT| Jenkins
-    Jenkins -->|TCP Port SOCAT_HOST_PORT| Socat
+    Jenkins -->|Internal TCP Port 2375| Socat
     Socat -->|Forwards to| DockerSock
 ```
 
@@ -35,7 +35,6 @@ JENKINS_TIMEZOME=America/Vancouver # Timezone passed to JVM via -Duser.timezone
 JENKINS_MOUNT_DIR=/mnt/external_hdd/jenkins  # Persistent Jenkins home directory
 
 SOCAT_HOST_DOCKER_SOCK=/var/run/docker.sock  # Docker socket on the host
-SOCAT_HOST_PORT=10023             # TCP port socat listens on to forward Docker API calls
 ```
 
 > [!NOTE]
