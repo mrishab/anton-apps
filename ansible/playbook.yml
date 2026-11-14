@@ -39,17 +39,6 @@
       loop_control:
         loop_var: port_item
 
-    - name: Remove obsolete insecure ports from UFW
-      community.general.ufw:
-        rule: allow
-        port: "{{ item.port }}"
-        proto: "{{ item.proto | default('any') }}"
-        delete: true
-      loop:
-        - { port: "10023", proto: "any" }
-        - { port: "10023", proto: "tcp" }
-      ignore_errors: true
-
     - name: Set app sysctl settings
       sysctl:
         name: "{{ item.name }}"
