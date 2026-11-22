@@ -1,6 +1,6 @@
 services:
   sonarr:
-    image: ghcr.io/linuxserver/sonarr:4.0.20.3014-ls326
+    image: ghcr.io/linuxserver/sonarr:4.0.20.3014-ls6
     container_name: sonarr
     restart: unless-stopped
     environment:
@@ -15,7 +15,7 @@ services:
       - ${SONARR_WEB_UI_PORT}:8989
 
   radarr:
-    image: ghcr.io/linuxserver/radarr:6.4.4.10685-ls318
+    image: ghcr.io/linuxserver/radarr:7.0.3.10918-ls328
     container_name: radarr
     restart: unless-stopped
     environment:
@@ -30,7 +30,7 @@ services:
       - ${RADARR_WEB_UI_PORT}:7878
 
   lidarr:
-    image: ghcr.io/linuxserver/lidarr:3.1.0
+    image: ghcr.io/linuxserver/lidarr:3.1.6
     container_name: lidarr
     restart: unless-stopped
     environment:

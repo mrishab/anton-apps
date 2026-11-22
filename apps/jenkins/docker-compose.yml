@@ -1,6 +1,6 @@
 services:
   jenkins:
-    image: jenkins/jenkins:2.584
+    image: jenkins/jenkins:2.591
     container_name: jenkins
     restart: unless-stopped
     ports:

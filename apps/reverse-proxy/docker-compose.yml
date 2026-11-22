@@ -1,6 +1,6 @@
 services:
   certbot:
-    image: certbot/certbot:v1.29.0
+    image: certbot/certbot:v5.10.0
     container_name: certbot
     volumes:
       - ${CERTBOT_MOUNT_DIR}:/var/www/certbot/:rw
@@ -76,7 +76,7 @@ services:
       - ${CERTIFICATES_MOUNT_DIR}:/etc/nginx/ssl/:ro
 
   nginx-exporter:
-    image: nginx/nginx-prometheus-exporter:1.1.0
+    image: nginx/nginx-prometheus-exporter:1.5.3
     container_name: nginx-exporter
     restart: unless-stopped
     command:

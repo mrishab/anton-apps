@@ -1,6 +1,6 @@
 services:
   registry:
-    image: registry:2
+    image: registry:2.8.3
     container_name: registry
     restart: unless-stopped
     ports:
