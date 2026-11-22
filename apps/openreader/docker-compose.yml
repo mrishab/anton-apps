@@ -1,6 +1,6 @@
 services:
   openreader:
-    image: ghcr.io/richardr1126/openreader:v5.1.0
+    image: ghcr.io/richardr1126/openreader:v5.5.2
     container_name: openreader
     restart: unless-stopped
     environment:

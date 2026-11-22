@@ -1,7 +1,7 @@
 #
 # Use a temporary image to compile and test the libraries
 #
-FROM nextcloud:32.0-apache AS builder
+FROM nextcloud:33.0-apache AS builder
 # Build and install dlib on builder
 #
 RUN apt-get update ; \
@@ -51,7 +51,7 @@ RUN git clone https://github.com/matiasdelellis/pdlib-min-test-suite.git \
 #
 # If pass the tests, we are able to create the final image.
 #
-FROM nextcloud:32.0-apache
+FROM nextcloud:33.0-apache
 
 # Install dependencies to image
 
