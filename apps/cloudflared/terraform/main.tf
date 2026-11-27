@@ -126,18 +126,18 @@ locals {
       connect_timeout = try(app.connect_timeout, null)
       path            = try(app.path, null)
     }],
-    # Domain 2 — secondary domain
+    # Domain 2 — secondary domain (blog)
     [
-      # Forbidden path /ghost on @ root domain
+      # Forbidden path /ghost on blog subdomain
       {
-        hostname        = var.rishabmanocha_domain
+        hostname        = "blog.${var.rishabmanocha_domain}"
         path            = "/ghost.*"
         service         = "http_status:403"
         connect_timeout = null
       },
-      # Root domain routing (excluding /ghost as it matched above)
+      # Blog subdomain routing (excluding /ghost as it matched above)
       {
-        hostname        = var.rishabmanocha_domain
+        hostname        = "blog.${var.rishabmanocha_domain}"
         path            = null
         service         = "http://${var.origin_ip}:2368"
         connect_timeout = null
